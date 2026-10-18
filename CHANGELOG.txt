@@ -4,6 +4,17 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-18 (newest 6)
+---------------------
+- Add a Character: removed the helper sentence under Region/Server, added
+  divider lines under Region/Server and above the Add character button with a
+  little more space.
+- Item Level and Highest run boxes removed from Add a Character (the game
+  lookup fills in item level; Highest run defaults to Auto).
+- Estimated Income keeps the manual Item Level box and Highest run, so item
+  level can still be typed in without a lookup.
+
+
 2026-10-18 (newest 5)
 ---------------------
 - Import button (Backup & transfer) is now green.

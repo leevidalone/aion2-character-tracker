@@ -108,6 +108,9 @@ label{font-size:.85rem;color:var(--mu);display:flex;flex-direction:column;gap:2p
 .sec .row+.row{justify-content:flex-start}
 .rfb{padding:2px 8px;margin-left:8px;font-size:1rem;line-height:1.2;vertical-align:middle}
 .rfb.spin{opacity:.5;pointer-events:none}
+#addlk:empty{display:none}
+.brk{grid-column:1/-1;border-top:1px solid var(--bd);margin:6px 0}
+#add{margin-top:6px}
 .cpw{color:#3aa0ff;font-weight:700;font-size:1.05rem;margin-left:10px;white-space:nowrap}
 button:disabled{opacity:.4;cursor:default}
 .bl{color:#2f8fff;font-weight:600}
@@ -139,7 +142,7 @@ button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;
   <div class="row">
     <h2 style="flex-basis:100%;margin:0;font-size:1.1rem;display:flex;align-items:center;gap:8px"><button class="g tog" id="addtog" type="button">▾</button>Add a Character</h2>
     
-    </div><div class="grid2"><label style="grid-column:1/-1">Character Name<input id="n" placeholder="Character name" maxlength="30"></label><input type="hidden" id="clssel"><label>Region<select id="addreg"><option value="">No lookup</option></select></label><label>Server<select id="addsrv" disabled><option value="">Select region first</option></select></label><div class="mu" id="addlk" style="grid-column:1/-1;margin-top:-4px">Pick a region and server and Add character will fill in the item level and class icon from the game.</div><label>Energy<input id="e" type="number" min="0" inputmode="numeric" placeholder="0~840"></label><label>Charged Energy<input id="eb" type="number" min="0" max="2000" inputmode="numeric" placeholder="0~2000"></label><label>Nightmare Tickets<input id="nm" type="number" min="0" max="14" inputmode="numeric" placeholder="0~14"></label><label>Nightmare Extra Count<input id="nmb" type="number" min="0" max="14" inputmode="numeric" placeholder="0~14"></label><label>Ascension Trial Tickets<input id="asc" type="number" min="0" max="3" inputmode="numeric" placeholder="0~3"></label><label>Ascension Trial Extra Count<input id="ascb" type="number" min="0" max="30" inputmode="numeric" placeholder="0~30"></label><label>Item Level<input id="il" type="number" min="0" max="10000" inputmode="numeric" placeholder="e.g. 2100"></label><label>Highest run<select id="runsel"></select></label><button id="add" style="grid-column:1/-1">Add character</button>
+    </div><div class="grid2"><label style="grid-column:1/-1">Character Name<input id="n" placeholder="Character name" maxlength="30"></label><input type="hidden" id="clssel"><label>Region<select id="addreg"><option value="">No lookup</option></select></label><label>Server<select id="addsrv" disabled><option value="">Select region first</option></select></label><div class="mu" id="addlk" style="grid-column:1/-1;margin-top:-4px"></div><div class="brk"></div><label>Energy<input id="e" type="number" min="0" inputmode="numeric" placeholder="0~840"></label><label>Charged Energy<input id="eb" type="number" min="0" max="2000" inputmode="numeric" placeholder="0~2000"></label><label>Nightmare Tickets<input id="nm" type="number" min="0" max="14" inputmode="numeric" placeholder="0~14"></label><label>Nightmare Extra Count<input id="nmb" type="number" min="0" max="14" inputmode="numeric" placeholder="0~14"></label><label>Ascension Trial Tickets<input id="asc" type="number" min="0" max="3" inputmode="numeric" placeholder="0~3"></label><label>Ascension Trial Extra Count<input id="ascb" type="number" min="0" max="30" inputmode="numeric" placeholder="0~30"></label><input type="hidden" id="il"><input type="hidden" id="runsel" value="auto"><div class="brk"></div><button id="add" style="grid-column:1/-1">Add character</button>
   </div>
 </div>
 
@@ -560,7 +563,7 @@ B.onclick=()=>{const t=cur()==="dark"?"light":"dark";R.setAttribute("data-theme"
 a.onclick=()=>{a.hidden=true;b.hidden=false};
 document.getElementById("hrn").onclick=()=>{b.hidden=true;a.hidden=false};
 document.getElementById("hry").onclick=()=>{try{Object.keys(localStorage).filter(k=>k.indexOf(KEY)===0).forEach(k=>localStorage.removeItem(k))}catch(e){}location.reload()}})();
-document.getElementById("runsel").innerHTML=runOpts("auto");
+
 document.getElementById("clssel").innerHTML=clsOpts("");
 document.getElementById("list").onchange=ev=>{
   const t=ev.target;
