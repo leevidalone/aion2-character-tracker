@@ -4,8 +4,25 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
-2026-10-18 (latest)
--------------------
+2026-10-18 (evening update)
+---------------------------
+- Shugo Festival and Spacetime Rift countdown timers at the top of the page.
+  Shugo Festival starts every hour on the hour. Spacetime Rift opens every
+  3 hours (02:00, 05:00, 08:00 ... UTC). Both schedules are community-observed,
+  not official.
+- Hard reset button at the bottom of the page (red, with a confirmation step)
+  that deletes all characters and settings in this browser.
+- "Created by daveeb" credit with a Discord icon at the bottom of the page.
+- Add a Character: Character Name and Class now share the first row with titles
+  above them, and all boxes use a 65% / 35% column split.
+- "Left" count and "Resets in" text are larger and clearer in Weekly Odyle
+  Energy (shared) and Daily Dungeon.
+- Collapsed cards show the 80-energy run count first, then the 40-energy count.
+- Removed the footer note about estimates and browser storage.
+
+
+2026-10-18 (earlier today)
+--------------------------
 - Light / dark mode slider (sun and moon) in the top-right corner. One click
   switches theme. Amber track in light mode, indigo at night. The choice is
   remembered per browser; until chosen it follows the device setting.
