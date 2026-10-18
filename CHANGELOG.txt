@@ -1,0 +1,65 @@
+AION 2 CHARACTER TRACKER - CHANGELOG
+====================================
+All data is stored only in each person's own browser (localStorage).
+Updating the site never resets anyone's saved characters.
+
+
+2026-10-18 (latest)
+-------------------
+- Light / dark mode slider (sun and moon) in the top-right corner. One click
+  switches theme. Amber track in light mode, indigo at night. The choice is
+  remembered per browser; until chosen it follows the device setting.
+- New subtitle under the title describing what the tracker covers.
+- Slightly wider +1 / -1 buttons in Daily Dungeon and Weekly Odyle Energy (shared).
+- Weekly Odyle Energy (shared): Craft / Craft All renamed Morph / Morph All,
+  text box now reads "Amount morphed".
+- Info (i) button on Weekly Odyle Energy (shared): hover to see that morphs left
+  are added to the first character's estimated Kina.
+- Collapsed character card shows "N or M runs left" (at 40 or 80 energy each)
+  in the top-right corner.
+- Remove button is now a red trashcan icon in the bottom-right of each card.
+- Item level shows as "iLv 2,100" next to the character name.
+- Class dropdown when adding a character (also in each character's Settings),
+  with a class icon shown beside the name.
+- All buttons are grey with a coloured outline and fill with colour on hover.
+  Button text is brighter.
+- Nightmare / Ascension rows: -1 | Use All | +1 | Extra (negatives on the left,
+  positives on the right). Use All spends every remaining ticket.
+- Odyle Shop Purchases: Purchase All button, same layout as Odyle Morph.
+- Add Charged Energy box and button moved under Charged Energy.
+
+
+Earlier updates
+---------------
+Characters and energy
+- Odyle Energy and Charged Energy per character, with a recharge of +15 every
+  3 hours on the hour (Energy cap 840, Charged Energy cap 2000).
+- Odyle Energy Cubes shown at 40 and 80 energy each.
+- Spend buttons for Expedition and Transcendence (40 or 80) that also add to the
+  server run count.
+- Sync buttons for Energy and Charged Energy, plus an Add Charged Energy box.
+- Collapsible character cards and a collapsible Add a Character card.
+- Character names larger; red Remove button.
+
+Weekly and daily trackers
+- Nightmare tickets with Extra count (cap 14) and Ascension Trial entries with
+  Extra count (cap 30), including reset handling.
+- Odyle Morph (4 per character per week) with Morph All.
+- Odyle Shop Purchases (20 per character per week) with remove-by-amount.
+- Weekly Odyle Energy (shared, 16 per server) with a custom-amount box.
+- Daily Dungeon (shared) with Use, Use All and an amount box.
+- Daily and weekly reset countdowns at the top of the page.
+- Show on page tickboxes to hide Add a Character, Weekly Odyle Energy,
+  Daily Dungeon and Server Run Count.
+
+Kina and server run count
+- Estimated Kina income per character from item level and highest run, based on
+  current energy plus Morph and Shop Purchases left.
+- Server Run Count for Expedition and Transcendence with the cumulative Kina
+  reduction tiers, runs until the next threshold, and a reset timer.
+- Shared Weekly Odyle Energy crafts count toward the first character's estimate.
+
+Page and hosting
+- Page titled "Aion 2 Character Tracker" with a moon favicon.
+- Backup and transfer panel: Export and Import by copy and paste.
+- Hosted on GitHub Pages with browser-only data storage.
