@@ -4,6 +4,15 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-18 (newest 2)
+---------------------
+- Combat power from the game is shown in blue with a crossed-swords icon next
+  to the item level (for example 147.1K). Hover for the full number.
+- Refresh button (circular arrow) next to the item level and combat power of
+  any looked-up character. One press updates item level, combat power and class.
+- Region label in Add a Character no longer says (optional).
+
+
 2026-10-18 (newest)
 -------------------
 - Game lookup: item level and class icon can be pulled automatically from the

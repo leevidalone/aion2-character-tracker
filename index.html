@@ -105,6 +105,9 @@ label{font-size:.85rem;color:var(--mu);display:flex;flex-direction:column;gap:2p
 .sec{border-top:1px solid var(--bd);margin-top:12px;padding-top:10px}
 .sec .row{justify-content:space-between}
 .sec .row+.row{justify-content:flex-start}
+.rfb{padding:2px 8px;margin-left:8px;font-size:1rem;line-height:1.2;vertical-align:middle}
+.rfb.spin{opacity:.5;pointer-events:none}
+.cpw{color:#3aa0ff;font-weight:700;font-size:1.05rem;margin-left:10px;white-space:nowrap}
 button:disabled{opacity:.4;cursor:default}
 .bl{color:#2f8fff;font-weight:600}
 button{--hc:var(--ac);background:transparent!important;color:var(--tx,#e8eaed)!important;font-weight:600;border:1.5px solid var(--hc)!important;transition:background .15s,color .15s,border-color .15s}
@@ -135,7 +138,7 @@ button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;
   <div class="row">
     <h2 style="flex-basis:100%;margin:0;font-size:1.1rem;display:flex;align-items:center;gap:8px"><button class="g tog" id="addtog" type="button">▾</button>Add a Character</h2>
     
-    </div><div class="grid2"><label style="grid-column:1/-1">Character Name<input id="n" placeholder="Character name" maxlength="30"></label><input type="hidden" id="clssel"><label>Region (optional)<select id="addreg"><option value="">No lookup</option></select></label><label>Server<select id="addsrv" disabled><option value="">Select region first</option></select></label><div class="mu" id="addlk" style="grid-column:1/-1;margin-top:-4px">Pick a region and server and Add character will fill in the item level and class icon from the game.</div><label>Energy<input id="e" type="number" min="0" inputmode="numeric" placeholder="0~840"></label><label>Charged Energy<input id="eb" type="number" min="0" max="2000" inputmode="numeric" placeholder="0~2000"></label><label>Nightmare Tickets<input id="nm" type="number" min="0" max="14" inputmode="numeric" placeholder="0~14"></label><label>Nightmare Extra Count<input id="nmb" type="number" min="0" max="14" inputmode="numeric" placeholder="0~14"></label><label>Ascension Trial Tickets<input id="asc" type="number" min="0" max="3" inputmode="numeric" placeholder="0~3"></label><label>Ascension Trial Extra Count<input id="ascb" type="number" min="0" max="30" inputmode="numeric" placeholder="0~30"></label><label>Item Level<input id="il" type="number" min="0" max="10000" inputmode="numeric" placeholder="e.g. 2100"></label><label>Highest run<select id="runsel"></select></label><button id="add" style="grid-column:1/-1">Add character</button>
+    </div><div class="grid2"><label style="grid-column:1/-1">Character Name<input id="n" placeholder="Character name" maxlength="30"></label><input type="hidden" id="clssel"><label>Region<select id="addreg"><option value="">No lookup</option></select></label><label>Server<select id="addsrv" disabled><option value="">Select region first</option></select></label><div class="mu" id="addlk" style="grid-column:1/-1;margin-top:-4px">Pick a region and server and Add character will fill in the item level and class icon from the game.</div><label>Energy<input id="e" type="number" min="0" inputmode="numeric" placeholder="0~840"></label><label>Charged Energy<input id="eb" type="number" min="0" max="2000" inputmode="numeric" placeholder="0~2000"></label><label>Nightmare Tickets<input id="nm" type="number" min="0" max="14" inputmode="numeric" placeholder="0~14"></label><label>Nightmare Extra Count<input id="nmb" type="number" min="0" max="14" inputmode="numeric" placeholder="0~14"></label><label>Ascension Trial Tickets<input id="asc" type="number" min="0" max="3" inputmode="numeric" placeholder="0~3"></label><label>Ascension Trial Extra Count<input id="ascb" type="number" min="0" max="30" inputmode="numeric" placeholder="0~30"></label><label>Item Level<input id="il" type="number" min="0" max="10000" inputmode="numeric" placeholder="e.g. 2100"></label><label>Highest run<select id="runsel"></select></label><button id="add" style="grid-column:1/-1">Add character</button>
   </div>
 </div>
 
@@ -238,6 +241,10 @@ function incomeInfo(c,now){
   const cw=base+mo+sh+sv,cost=(mo+sv)*50000+sh*100000,total=sum(cw);
   return {sel,cw,base,mo,sh,sv,first,mm:mo+sv,en,isT,cnt,m:mult(t,cnt),cost,total,net:total-cost,now:sum(base),full:sel.k*cw};
 }
+const CPI='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><path d="M4 4l9 9M20 4l-9 9"/><path d="M3 12l4 4M21 12l-4 4"/><path d="M6 14l-3 3 4 4 3-3M18 14l3 3-4 4-3-3"/></svg>';
+function cpFmt(v){v=Math.round(v);return v>=1e6?(v/1e6).toFixed(2).replace(/\.?0+$/,"")+"M":v>=1e4?(v/1e3).toFixed(1).replace(/\.0$/,"")+"K":String(v)}
+function rfHtml(c){return c.lk?`<button class="g rfb" data-a="refresh" type="button" title="Refresh item level and combat power from the game" aria-label="Refresh from game">&#8635;</button>`:""}
+function cpHtml(c){return c.cp?`<span class="cpw" title="Combat power ${c.cp.toLocaleString("en-US")}">${CPI} ${cpFmt(c.cp)}</span>`:""}
 const RELAY="https://aion2-lookup.leedavi-98.workers.dev";
 const REGIONS=[["naw","North America - West"],["nae","North America - East"],["eu","Europe"],["as","Asia"],["la","Latin America"]];
 const SRVL={"naw": ["Israphel", "Kaisinel", "Lumiel", "Marchutan", "Nezekan", "Siel", "Triniel", "Vaizel", "Yustiel", "Zikel"], "nae": ["Ariel", "Azphel", "Beritra", "Ereshkigal", "Fregion", "Hithanya", "Israphel", "Kaisinel", "Lumiel", "Marchutan", "Meslamtaeda", "Nemon", "Nezekan", "Siel", "Triniel", "Vaizel", "Yustiel", "Zikel"], "eu": ["Agnita", "Ariel", "Atiel", "Azphel", "Baba", "Bakarma", "Beritra", "Daminu", "Ereshkigal", "Fafnir", "Fregion", "Gauss", "Hadala", "Hithanya", "Indnath", "Ishtar", "Israphel", "Kaisinel", "Kasaka", "Kochi", "Kromede", "Lamuatan", "Ludra", "Lumiel", "Luteros", "Marchutan", "Meslamtaeda", "Munin", "Nania", "Nathara", "Nemon", "Nezekan", "Odar", "Phernos", "Quai", "Siel", "Tahavatha", "Tassin", "Tiamat", "Triniel", "Tsenka", "Ulgorn", "Vaizel", "Yustiel", "Zemurru", "Zikel"], "as": ["Ariel", "Azphel", "Beritra", "Ereshkigal", "Fregion", "Hadala", "Hithanya", "Israphel", "Kaisinel", "Lumiel", "Marchutan", "Meslamtaeda", "Nania", "Nemon", "Nezekan", "Siel", "Triniel", "Vaizel", "Yustiel", "Zikel"], "la": ["Ariel", "Azphel", "Israphel", "Kaisinel", "Lumiel", "Marchutan", "Nezekan", "Siel", "Triniel", "Vaizel", "Yustiel", "Zikel"]};
@@ -256,7 +263,7 @@ async function fetchIL(name,region,serverId){
 function applyIL(c,j,name,region,server){
   const now=Date.now();
   if(j&&j.itemLevel!=null){
-    c.il=Math.min(10000,Math.round(j.itemLevel));c.lk={name,region,server:j.serverName,serverId:j.serverId};c.lkIn=null;c.lkAt=now;c.lkMatches=null;
+    c.il=Math.min(10000,Math.round(j.itemLevel));c.lk={name,region,server:j.serverName,serverId:j.serverId};c.lkIn=null;c.lkAt=now;c.lkMatches=null;if(j.combatPower)c.cp=Math.round(j.combatPower);
     if(!c.cls&&CLS[j.className])c.cls=j.className;
     c.lkm="Updated: "+j.className+" Lv "+j.level+" on "+j.serverName+" · item level "+c.il;return true}
   if(j&&j.matches){c.lkIn={name,region,server};c.lkMatches=null;c.lkm="No character found with that name on this server.";c.lkIn={name,region,server};return false}
@@ -278,12 +285,20 @@ async function doLookup(c,card){
   }catch(e){j=null}
   applyIL(c,j,name,region,server);save();render();
 }
+async function doRefresh(c,b){
+  if(!c.lk)return;b.classList.add("spin");b.disabled=true;
+  let ok=false;
+  try{const j=await fetchIL(c.lk.name,c.lk.region,c.lk.serverId);
+    if(j&&j.itemLevel!=null){c.il=Math.min(10000,Math.round(j.itemLevel));if(j.combatPower)c.cp=Math.round(j.combatPower);if(!c.cls&&CLS[j.className])c.cls=j.className;c.lkAt=Date.now();c.lkm="Updated: "+j.className+" Lv "+j.level+" on "+j.serverName+" · item level "+c.il;ok=true}}catch(e){}
+  if(!ok){c.lkm="Refresh failed. Try again later.";b.title="Refresh failed. Try again later."}
+  save();render();
+}
 async function autoIL(){
   const now=Date.now();let ch=false;
   for(const c of chars){
     if(!c.lk||now-(c.lkAt||0)<1800000)continue;
     try{const j=await fetchIL(c.lk.name,c.lk.region,c.lk.serverId);
-      if(j&&j.itemLevel!=null){c.il=Math.min(10000,Math.round(j.itemLevel));c.lkAt=Date.now();ch=true}}catch(e){}
+      if(j&&j.itemLevel!=null){c.il=Math.min(10000,Math.round(j.itemLevel));if(j.combatPower)c.cp=Math.round(j.combatPower);c.lkAt=Date.now();ch=true}}catch(e){}
   }
   if(ch){save();render()}
 }
@@ -363,7 +378,7 @@ function render(){
   el.innerHTML=chars.map(c=>{
     const r=calc(c,now),pct=Math.min(100,r.cur/c.cap*100);
     return `<div class="card${c.col?" col":""}" data-id="${c.id}">
-      <div class="row"><button class="g tog" data-a="tog">${c.col?"▸":"▾"}</button><span class="name">${clsIcon(c.cls)}${esc(c.name)}${c.il?`<span style="font-weight:400;font-size:1.1rem;color:var(--mu)"> · iLv ${c.il.toLocaleString("en-US")}</span>`:""}</span>${c.col?`<span class="runs"><b>${Math.floor((r.cur+(c.eb||0))/80)}</b> or <b>${Math.floor((r.cur+(c.eb||0))/40)}</b> runs left<small style="display:block;text-align:right;font-size:.75rem">at 80 or 40 energy each</small></span>`:""}</div>
+      <div class="row"><button class="g tog" data-a="tog">${c.col?"▸":"▾"}</button><span class="name">${clsIcon(c.cls)}${esc(c.name)}${c.il?`<span style="font-weight:400;font-size:1.1rem;color:var(--mu)"> · iLv ${c.il.toLocaleString("en-US")}</span>`:""}${cpHtml(c)}${rfHtml(c)}</span>${c.col?`<span class="runs"><b>${Math.floor((r.cur+(c.eb||0))/80)}</b> or <b>${Math.floor((r.cur+(c.eb||0))/40)}</b> runs left<small style="display:block;text-align:right;font-size:.75rem">at 80 or 40 energy each</small></span>`:""}</div>
       ${c.col?mini(c,r,now):`
       <div class="big">${r.cur} <span class="mu">/ ${c.cap}</span>${c.eb?` <span class="bl">(+${c.eb})</span>`:""}</div>
       <div class="bar ${r.cur>=c.cap?"full":""}"><i style="width:${pct}%"></i></div>
@@ -392,7 +407,7 @@ document.getElementById("add").onclick=async()=>{
   const name=n.value.trim(),v0=parseInt(e.value,10),v=isNaN(v0)?0:Math.min(840,v0);
   if(!name||v<0)return;
   const region=document.getElementById("addreg").value,server=document.getElementById("addsrv").value;
-  let lk=null;
+  let lk=null,lkcp=0;
   if(region&&!server){msg.textContent="Please pick a server for the lookup, or set Region back to No lookup.";return}
   if(region&&!skipLk){
     const ab=document.getElementById("add");ab.disabled=true;ab.textContent="Looking up...";
@@ -404,7 +419,7 @@ document.getElementById("add").onclick=async()=>{
     if(j&&j.itemLevel!=null){
       document.getElementById("il").value=Math.min(10000,Math.round(j.itemLevel));
       if(CLS[j.className])document.getElementById("clssel").value=j.className;
-      lk={name,region,server:j.serverName,serverId:j.serverId};
+      lk={name,region,server:j.serverName,serverId:j.serverId};lkcp=Math.round(j.combatPower||0);
       msg.textContent="Found: "+j.className+" Lv "+j.level+" on "+j.serverName+" · item level "+Math.round(j.itemLevel)}
     else{
       skipLk=true;
@@ -413,7 +428,7 @@ document.getElementById("add").onclick=async()=>{
   const g=id=>{const x=parseInt(document.getElementById(id).value,10);return isNaN(x)||x<0?0:x};
   const now=Date.now(),left=document.getElementById("asc").value.trim()===""?3:Math.min(3,g("asc"));
   const c={id:now+Math.random(),name,base:v,at:now,cap:840,amt:15,hrs:3,eb:Math.min(2000,g("eb")),nm:Math.min(14,g("nm")),nmAt:now,nmb:Math.min(14,g("nmb")),asc:3-left,ascAt:now,ascb:Math.min(30,g("ascb")),il:g("il"),run:document.getElementById("runsel").value,cls:document.getElementById("clssel").value};
-  if(lk){c.lk=lk;c.lkAt=now}
+  if(lk){c.lk=lk;c.lkAt=now;if(lkcp)c.cp=lkcp}
   chars.push(c);
   ["eb","nm","nmb","asc","ascb","il"].forEach(i=>document.getElementById(i).value="");document.getElementById("clssel").value="";
   n.value="";e.value="";skipLk=false;
@@ -425,6 +440,7 @@ document.getElementById("list").onclick=ev=>{
   const card=b.closest(".card"),i=chars.findIndex(c=>String(c.id)===card.dataset.id);if(i<0)return;
   const c=chars[i],f=k=>card.querySelector('[data-f="'+k+'"]');
   if(b.dataset.a==="lookup"){doLookup(c,card);return}
+  if(b.dataset.a==="refresh"){doRefresh(c,b);return}
   if(b.dataset.a==="del"){chars.splice(i,1)}
   else if(b.dataset.a==="s"){
     const k=b.dataset.k,now=Date.now(),step=c.hrs*3600000;
