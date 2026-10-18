@@ -4,6 +4,12 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-18 (latest)
+-------------------
+- Character limit of 8. The Add character button shows the count (for example
+  3/8) and is disabled once the limit is reached.
+
+
 2026-10-18 (late update)
 ------------------------
 - Characters now show two per row on wide screens (one per row on phones).

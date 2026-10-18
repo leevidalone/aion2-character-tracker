@@ -297,8 +297,10 @@ function parseDur(s){
   return NaN;
 }
 let vis={add:1,srv:1,dd:1,pc:1};try{Object.assign(vis,JSON.parse(localStorage.getItem(KEY+"-vis")))}catch(e){}
+const MAXC=8;
 function render(){
   const now=Date.now();
+  {const ab=document.getElementById("add"),full=chars.length>=MAXC;ab.disabled=full;ab.textContent=full?"Character limit reached ("+MAXC+"/"+MAXC+")":"Add character ("+chars.length+"/"+MAXC+")"}
   for(const [k,id] of [["add","addcard"],["srv","srv"],["dd","dd"],["pc","pc"]])document.getElementById(id).style.display=vis[k]?"":"none";
   document.querySelector(".pair").style.display=(vis.srv||vis.dd)?"":"none";
   document.querySelectorAll("#vis input").forEach(i=>{i.checked=!!vis[i.dataset.v]});
@@ -332,6 +334,7 @@ function render(){
     </div>`}).join("");
 }
 document.getElementById("add").onclick=()=>{
+  if(chars.length>=MAXC)return;
   const n=document.getElementById("n"),e=document.getElementById("e");
   const name=n.value.trim(),v0=parseInt(e.value,10),v=isNaN(v0)?0:Math.min(840,v0);
   if(!name||v<0)return;
