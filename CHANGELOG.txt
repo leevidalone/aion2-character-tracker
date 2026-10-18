@@ -4,6 +4,17 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-18 (newest 9)
+---------------------
+- Membership switch (with the membership icon) in the Show on page card. When
+  off, Odyle Shop Purchases are hidden on every character and left out of
+  Estimated Income and the Kina cost. On by default; remembered in your
+  browser.
+- Small info (i) icons: Est. Kina (counts current energy, plus morphs and shop
+  purchases left; not energy that recharges later) and Shop Purchases
+  (membership required, sold by the Windbreeze Merchants).
+
+
 2026-10-18 (newest 8)
 ---------------------
 - Divider lines between the page sections (Timers, Setup, Shared Weekly
