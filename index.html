@@ -241,9 +241,9 @@ function incomeInfo(c,now){
   const cw=base+mo+sh+sv,cost=(mo+sv)*50000+sh*100000,total=sum(cw);
   return {sel,cw,base,mo,sh,sv,first,mm:mo+sv,en,isT,cnt,m:mult(t,cnt),cost,total,net:total-cost,now:sum(base),full:sel.k*cw};
 }
-const CPI='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><path d="M4 4l9 9M20 4l-9 9"/><path d="M3 12l4 4M21 12l-4 4"/><path d="M6 14l-3 3 4 4 3-3M18 14l3 3-4 4-3-3"/></svg>';
+const CPI='⚔️';
 function cpFmt(v){v=Math.round(v);return v>=1e6?(v/1e6).toFixed(2).replace(/\.?0+$/,"")+"M":v>=1e4?(v/1e3).toFixed(1).replace(/\.0$/,"")+"K":String(v)}
-function rfHtml(c){return c.lk?`<button class="g rfb" data-a="refresh" type="button" title="Refresh item level and combat power from the game" aria-label="Refresh from game">&#8635;</button>`:""}
+function rfHtml(c){return c.lk?`<button class="g rfb" data-a="refresh" type="button" title="Refresh item level and combat power from the game" aria-label="Refresh from game">↻</button>`:""}
 function cpHtml(c){return c.cp?`<span class="cpw" title="Combat power ${c.cp.toLocaleString("en-US")}">${CPI} ${cpFmt(c.cp)}</span>`:""}
 const RELAY="https://aion2-lookup.leedavi-98.workers.dev";
 const REGIONS=[["naw","North America - West"],["nae","North America - East"],["eu","Europe"],["as","Asia"],["la","Latin America"]];

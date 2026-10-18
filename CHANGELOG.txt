@@ -4,6 +4,12 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-18 (newest 3)
+---------------------
+- Combat power now uses the crossed swords emoji; refresh button uses the
+  circular arrow symbol.
+
+
 2026-10-18 (newest 2)
 ---------------------
 - Combat power from the game is shown in blue with a crossed-swords icon next
