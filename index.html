@@ -1,0 +1,413 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aion 2 Character Tracker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='50' font-size='72' text-anchor='middle' dominant-baseline='central'%3E%F0%9F%8C%99%3C/text%3E%3C/svg%3E">
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1a1d23;--mu:#667085;--bd:#e2e5ea;--ac:#4f6bed;--ok:#1a9d5c;--wa:#d98a00;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14161a;--card:#1d2026;--tx:#eceef2;--mu:#9aa1ad;--bd:#2d323b;--ac:#7f95ff;--ok:#3ec98a;--wa:#f0b13a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14161a;--card:#1d2026;--tx:#eceef2;--mu:#9aa1ad;--bd:#2d323b;--ac:#7f95ff;--ok:#3ec98a;--wa:#f0b13a;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:1.4rem;margin:0 0 4px}
+.sub{color:var(--mu);font-size:.9rem;margin:0 0 16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input{background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;font:inherit;min-width:0}
+input[type=number]{width:145px;max-width:100%;-moz-appearance:textfield;appearance:textfield}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+label{min-width:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.grid2 input[type=number]{width:100%}
+.fld{display:flex;flex-direction:column;gap:2px;min-width:0;font-size:.85rem;color:var(--mu)}
+.ib{display:flex;gap:4px}
+.ib input{flex:1;min-width:0}
+.ib button{padding:10px 18px;font-size:.95rem}
+button{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer}
+button.g{background:transparent;color:var(--mu);border:1px solid var(--bd)}
+.name{font-weight:600;font-size:1.4rem;flex:1}
+button.del{background:#e5484d;color:#fff;border:0}
+button[data-a="adj"][data-d="1"]{background:#1a9d5c;color:#fff;border:0}
+button[data-a="adj"][data-d="-1"]{background:#e5484d;color:#fff;border:0}
+.tog{padding:4px 10px}
+#vis label{flex-direction:row;align-items:center;gap:8px;font-size:.95rem;color:var(--tx);cursor:pointer}
+#vis input[type=checkbox]{width:18px;height:18px;padding:0;margin:0;accent-color:var(--ac)}
+.pair{display:flex;gap:12px;flex-wrap:wrap;align-items:stretch}
+.pair>.card{flex:1 1 300px;min-width:0}
+#dd .sbtn,#srv .sbtn{gap:4px;flex-shrink:0}
+#dd .sbtn button,#srv .sbtn button{padding:6px 7px;font-size:.78rem;white-space:nowrap}
+#dd .srow,#srv .srow{gap:6px}
+#dd .srow b,#srv .srow b{font-size:1rem}
+#dd .srow>div:first-child,#srv .srow>div:first-child{min-width:0}
+#wk.closed .pair{display:none}
+.spr{display:flex;align-items:center;gap:8px;margin-top:8px}
+.spl{font-size:1rem;font-weight:600;color:var(--tx);min-width:130px}
+.spb{padding:8px 20px;font-size:1rem;font-weight:600;line-height:1.2}
+select{background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%239aa1ad' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 14px center;-webkit-appearance:none;-moz-appearance:none;appearance:none;color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:8px 36px 8px 10px;font:inherit;width:100%;min-width:0}
+.sm{padding:8px 4px;font-size:.85rem;line-height:1.15}
+.row3{display:grid;grid-template-columns:1fr 1fr 2fr;gap:8px;margin-top:8px}
+.row3 button{padding:8px 4px;font-size:.85rem;line-height:1.15}
+.srow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0}
+.srow+.srow{border-top:1px solid var(--bd)}
+.srow small{display:block;color:var(--mu);font-size:.8rem}
+.srow b{font-size:1.1rem}
+.sbtn{display:flex;gap:6px}
+.sbtn button{padding:8px 16px}
+button[data-sk][data-d="1"],button[data-dk][data-d="1"]{background:#1a9d5c;color:#fff;border:0}
+button[data-sk][data-d="-1"],button[data-sk][data-d="all"],button[data-dk][data-d="-1"]{background:#e5484d;color:#fff;border:0}
+.card.closed #n,.card.closed .grid2{display:none}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 16px;margin-top:14px}
+.row+.mini{border-top:1px solid var(--bd);padding-top:14px;margin-top:12px}
+.mini>div{min-width:0}
+.mini small{margin-bottom:3px}
+.mini small{display:block;color:var(--mu);font-size:.8rem}
+.mini b{font-size:1.1rem}
+.big{font-size:1.6rem;font-weight:700}
+.bar{height:10px;border-radius:6px;background:var(--bd);overflow:hidden;margin:10px 0 6px}
+.bar>i{display:block;height:100%;background:var(--ac)}
+.bar.full>i{background:var(--wa)}
+.mu{color:var(--mu);font-size:.88rem}
+details{margin-top:8px}summary{cursor:pointer;color:var(--mu);font-size:.88rem}
+label{font-size:.85rem;color:var(--mu);display:flex;flex-direction:column;gap:2px}
+.reset{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+.rc{flex:1;min-width:140px;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 14px}
+.rc small{display:block;color:var(--mu);font-size:.8rem}
+.rc b{display:block;color:var(--ok);font-size:1.25rem;margin-top:2px}
+.empty{text-align:center;color:var(--mu);padding:24px}
+.sec{border-top:1px solid var(--bd);margin-top:12px;padding-top:10px}
+.sec .row{justify-content:space-between}
+.sec .row+.row{justify-content:flex-start}
+button:disabled{opacity:.4;cursor:default}
+.bl{color:#2f8fff;font-weight:600}
+</style>
+</head>
+<body>
+<main>
+<h1>Aion 2 Character Tracker</h1>
+<p class="sub">Enter each character’s in-game energy once; the page estimates the rest. <span class="reset" id="reset"></span></p>
+<div class="card" id="vis"><b>Show on page</b><div class="row" style="margin-top:8px;gap:16px"><label><input type="checkbox" data-v="add">Add a Character</label><label><input type="checkbox" data-v="srv">Weekly Odyle Energy</label><label><input type="checkbox" data-v="dd">Daily Dungeon</label><label><input type="checkbox" data-v="pc">Server Run Count</label></div></div>
+
+<div class="card" id="addcard">
+  <div class="row">
+    <h2 style="flex-basis:100%;margin:0;font-size:1.1rem;display:flex;align-items:center;gap:8px"><button class="g tog" id="addtog" type="button">▾</button>Add a Character</h2><input id="n" placeholder="Character name" maxlength="30" style="flex:1;min-width:140px">
+    
+    </div><div class="grid2"><label>Energy<input id="e" type="number" min="0" inputmode="numeric" placeholder="0~840"></label><label>Charged Energy<input id="eb" type="number" min="0" max="2000" inputmode="numeric" placeholder="0~2000"></label><label>Nightmare Tickets<input id="nm" type="number" min="0" max="14" inputmode="numeric" placeholder="0~14"></label><label>Nightmare Extra Count<input id="nmb" type="number" min="0" max="14" inputmode="numeric" placeholder="0~14"></label><label>Ascension Trial Tickets<input id="asc" type="number" min="0" max="3" inputmode="numeric" placeholder="0~3"></label><label>Ascension Trial Extra Count<input id="ascb" type="number" min="0" max="30" inputmode="numeric" placeholder="0~30"></label><label>Item Level<input id="il" type="number" min="0" max="10000" inputmode="numeric" placeholder="e.g. 2100"></label><label>Highest run<select id="runsel"></select></label><button id="add" style="grid-column:1/-1">Add character</button>
+  </div>
+</div>
+
+<div id="wk"><div class="pair"><div class="card" id="srv"></div>
+<div class="card" id="dd"></div></div></div>
+<div class="card" id="pc"></div>
+<div id="list"></div>
+<details class="card" id="bk"><summary>Backup &amp; transfer your data</summary>
+<div class="mu" style="margin-top:8px">Your data is stored only in this browser. Export it to back it up or move it to another browser or device, then paste it into the box there and press Import. Importing replaces the data here.</div>
+<textarea id="bkt" rows="4" style="width:100%;margin-top:8px;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:8px;font:12px monospace" placeholder="Your backup appears here after Export, or paste a backup here to import"></textarea>
+<div class="row" style="margin-top:8px"><button id="bkx" type="button">Export</button><button class="del" id="bki" type="button">Import</button></div>
+<div class="mu" id="bkm" style="margin-top:6px"></div></details>
+<p class="mu">Estimates assume regeneration from the moment you saved a value. Re-sync from the game whenever you like. Data is stored in this browser only.</p>
+</main>
+<script>
+try{document.querySelectorAll('link[rel~="icon"]').forEach(x=>x.remove());const ic=document.createElement("link");ic.rel="icon";ic.type="image/svg+xml";ic.href="data:image/svg+xml,"+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50' y='50' font-size='72' text-anchor='middle' dominant-baseline='central'>🌙</text></svg>");document.head.appendChild(ic)}catch(e){}
+const KEY="aion2-energy-v1";
+let chars=[];
+function load(){try{chars=JSON.parse(localStorage.getItem(KEY))||[]}catch(e){chars=[]}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(chars))}catch(e){}}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function nextTick(ms){const d=new Date(ms);return new Date(d.getFullYear(),d.getMonth(),d.getDate(),Math.floor(d.getHours()/3)*3+3,0,0,0).getTime()}
+function calc(c,now){
+  let t=nextTick(c.at),n=0;
+  while(t<=now&&n<1000){n++;t=nextTick(t)}
+  const cur=Math.max(c.base,Math.min(c.cap,c.base+n*c.amt));
+  let full=null;
+  if(cur<c.cap){const rem=Math.ceil((c.cap-cur)/c.amt);let tt=nextTick(now);for(let i=1;i<rem&&i<1000;i++)tt=nextTick(tt);full=tt-now}
+  return {cur,full};
+}
+function fmt(ms){
+  if(ms<=0)return "now";
+  const m=Math.round(ms/60000),d=Math.floor(m/1440),h=Math.floor(m%1440/60),mm=m%60;
+  return (d?d+"d ":"")+(h?h+"h ":"")+mm+"m";
+}
+function nextReset(){
+  const n=new Date(),d=new Date(Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate(),7));
+  d.setUTCDate(d.getUTCDate()+((3-d.getUTCDay()+7)%7));
+  if(d<=n)d.setUTCDate(d.getUTCDate()+7);
+  return d;
+}
+function lastDaily(now){const d=new Date(now),r=Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate(),7);return r<=now?r:r-86400000}
+function lastWeekly(now){const d=new Date(now);let r=Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate(),7);r-=((d.getUTCDay()-3+7)%7)*86400000;if(r>now)r-=7*86400000;return r}
+function nmCalc(c,now){
+  const base=c.nm??0,at=c.nmAt??now;
+  const n=Math.max(0,Math.round((lastDaily(now)-lastDaily(at))/86400000));
+  return {cur:Math.max(base,Math.min(14,base+2*n)),next:lastDaily(now)+86400000};
+}
+function ascCalc(c,now){
+  const at=c.ascAt??0,used=lastWeekly(now)>at?0:(c.asc??0);
+  return {used,left:3-used};
+}
+function mini(c,r,now){
+  const n=nmCalc(c,now),a=ascCalc(c,now);
+  const bl=x=>x?` <span class="bl">(+${x})</span>`:"";
+  return `<div class="mini"><div><small>Energy</small><b>${r.cur}/${c.cap}${bl(c.eb)}</b></div><div><small>Nightmare</small><b>${n.cur}/14${bl(c.nmb)}</b></div><div><small>Ascension</small><b>${a.left}/3${bl(c.ascb)}</b></div></div><div class="mini"><div><small>Odyle Morph</small><b>${4-crUsed(c,now)}/4</b></div><div><small>Odyle Shop Purchases</small><b>${20-shUsed(c,now)}/20</b></div>${incomeInfo(c,now)?`<div><small>Est. Kina</small><b>${(incomeInfo(c,now).total/1e6).toFixed(1)}M</b></div>`:""}</div>`;
+}
+const SKEY=KEY+"-srv";
+let srv={cu:0,cat:0,su:0,sat:0,du:0,dat:0,db:0,xc:0,xcat:0,tc:0,tcat:0};
+function loadSrv(){try{const x=JSON.parse(localStorage.getItem(SKEY));if(x)srv=Object.assign(srv,x)}catch(e){}}
+function saveSrv(){try{localStorage.setItem(SKEY,JSON.stringify(srv))}catch(e){}}
+function srvUsed(k,now){return lastWeekly(now)>srv[k+"at"]?0:srv[k+"u"]}
+const SRV=[["c","Server crafts",16]];
+function srvHtml(now){
+  return SRV.map(([k,l,m])=>{const left=m-srvUsed(k,now);
+    return `<div class="srow"><div><small>Resets in ${fmt(nextReset()-now)}</small><b>${left} / ${m} left</b></div><div class="sbtn"><button data-sk="${k}" data-d="1" ${left<m?"":"disabled"}>+1</button><button data-sk="${k}" data-d="-1" ${left>0?"":"disabled"}>-1</button></div></div>
+    <div class="ib"><input type="number" min="1" max="${m}" inputmode="numeric" placeholder="Amount crafted" id="srvn"><button class="del" data-sk="${k}" data-d="amt" ${left>0?"":"disabled"}>Craft</button><button class="del" data-sk="${k}" data-d="all" ${left>0?"":"disabled"}>Craft All</button></div>`}).join("");
+}
+function crUsed(c,now){return lastWeekly(now)>(c.crAt??0)?0:(c.cr??0)}
+const CONTENT=[
+  {id:"c1",name:"Conquest Tier 1",il:700,k:200000},
+  {id:"c2",name:"Conquest Tier 2",il:1400,k:300000},
+  {id:"c3",name:"Conquest Tier 3",il:2100,k:400000},
+  {id:"t1",name:"Transcendence Stage 1",il:1600,k:300000},
+  {id:"t2",name:"Transcendence Stage 2",il:1900,k:360000},
+  {id:"t3",name:"Transcendence Stage 3",il:2200,k:420000},
+  {id:"t4",name:"Transcendence Stage 4",il:2500,k:480000}
+];
+function runOpts(sel){
+  return `<option value="auto"${!sel||sel==="auto"?" selected":""}>Auto (best for item level)</option>`+CONTENT.map(x=>`<option value="${x.id}"${sel===x.id?" selected":""}>${x.name} (IL ${x.il})</option>`).join("");
+}
+const EXP_T=[[83,1],[104,.8],[125,.6],[146,.4]],TRA_T=[[55,1],[69,.8],[83,.6],[97,.4]];
+function mult(t,c){for(const [m,v] of t)if(c<=m)return v;return .2}
+function srvCount(k,now){return lastWeekly(now)>srv[k+"at"]?0:srv[k]}
+function incomeInfo(c,now){
+  const il=c.il||0;let sel=null;
+  if(c.run&&c.run!=="auto")sel=CONTENT.find(x=>x.id===c.run)||null;
+  else for(const x of CONTENT)if(il>=x.il&&(!sel||x.k>=sel.k))sel=x;
+  if(!sel)return null;
+  const isT=sel.id[0]==="t",t=isT?TRA_T:EXP_T,cnt=srvCount(isT?"tc":"xc",now);
+  const en=calc(c,now).cur+(c.eb||0),base=Math.floor(en/40);
+  const mo=Math.max(0,4-crUsed(c,now)),sh=Math.max(0,20-shUsed(c,now));
+  const first=chars.length>0&&String(chars[0].id)===String(c.id),sv=first&&vis.srv?Math.max(0,16-srvUsed("c",now)):0;
+  const sum=n=>{let x=0;for(let i=0;i<n;i++)x+=sel.k*mult(t,cnt+i);return Math.round(x)};
+  const cw=base+mo+sh+sv,cost=(mo+sv)*50000+sh*100000,total=sum(cw);
+  return {sel,cw,base,mo,sh,sv,first,mm:mo+sv,en,isT,cnt,m:mult(t,cnt),cost,total,net:total-cost,now:sum(base),full:sel.k*cw};
+}
+function incomeSec(c,now){
+  const i=incomeInfo(c,now),n=x=>x.toLocaleString("en-US");
+  const sum=i?`<b style="font-size:1.1rem">${n(i.total)} Kina</b><div class="mu">${i.sel.name} · ${n(i.sel.k)} per cube × ${i.cw} cubes${(c.il||0)<i.sel.il?` · needs item level ${n(i.sel.il)}`:""}</div>
+    <div class="mu">${i.base} from energy (${n(i.en)} ÷ 40) + ${i.mo} from Odyle Morph + ${i.sh} from Odyle Shop Purchases${i.first&&vis.srv?` + ${i.sv} from Weekly Odyle Energy (shared)`:""}</div>
+    <div class="mu">${i.mo+i.sv+i.sh?`Kina costs ${n(i.cost)} (morph ${n((i.mo+i.sv)*50000)} + shop ${n(i.sh*100000)}) · net ${n(i.net)} Kina · `:""}Current energy only: ${n(i.now)} Kina</div>
+    ${i.mm?`<div class="mu">Morph materials: ${n(i.mm*25)} Odyle · ${i.mm*5} Fine Odyle (Bound) · ${i.mm} Pure Odyle (Bound)</div>`:""}
+    <div class="mu">${i.isT?"Transcendence":"Expedition"} server runs ${i.cnt} · starts at ${Math.round(i.m*100)}% Kina${i.total<i.full?` · ${n(i.full)} with no reduction`:""}</div>`:`<div class="mu">Enter an item level of 700 or more to see an estimate.</div>`;
+  return `<div class="sec"><div class="row"><b>Estimated Income</b></div>${sum}
+    <div class="grid2" style="margin-top:8px">${fld("Item Level","il",'type="number" min="0" max="10000" inputmode="numeric" placeholder="0"',' style="grid-column:1/-1"')}<div class="fld" style="grid-column:1/-1"><span>Highest run</span><select data-f="run">${runOpts(c.run)}</select></div></div>
+    <div class="mu" style="margin-top:6px">Estimate only: each Odyle Morph or shop purchase left is counted as one more cube (40 energy). Morph costs 50,000 Kina plus 25 Odyle, 5 Fine Odyle and 1 Pure Odyle each; only the Kina is taken off the net figure. Each cube counts as one run on the server count, and runs by your other characters aren’t added. Weekly Odyle Energy (shared) crafts are added ONLY to the first character in Your Characters.</div></div>`;
+}
+let pcClosed=false;try{pcClosed=localStorage.getItem(KEY+"-pcclosed")==="1"}catch(e){}
+function pcHtml(now){
+  const rows=[["xc","Expedition",EXP_T],["tc","Transcendence",TRA_T]];
+  const head=`<h2 style="margin:0 0 8px;font-size:1.1rem;display:flex;align-items:center;gap:8px"><button class="g tog" data-pt="1" type="button">${pcClosed?"▸":"▾"}</button>Server Run Count (resets in ${fmt(nextReset()-now)})</h2>`;
+  if(pcClosed)return head+`<div class="grid2" style="margin-top:0">`+rows.map(([k,l,t])=>{const c=srvCount(k,now),m=mult(t,c),nx=t.find(x=>c<=x[0]),left=nx?nx[0]-c+1:null,nm=nx?(t[t.indexOf(nx)+1]?t[t.indexOf(nx)+1][1]:.2):null;return `<div class="fld"><span>${l}</span><div style="color:var(--tx)"><b style="font-size:1.4rem">${c}</b> <span class="mu">runs</span> · <b style="color:${m===1?"var(--ok)":m<=.4?"#e5484d":"var(--wa)"}">${Math.round(m*100)}% Kina</b></div><div class="mu">${nx?`${left} more run${left===1?"":"s"} until ${Math.round(nm*100)}%`:"Lowest rate reached"}</div></div>`}).join("")+`</div>`;
+  return head+`<div class="grid2">`+
+    rows.map(([k,l,t])=>{const c=srvCount(k,now),m=mult(t,c),nx=t.find(x=>c<=x[0]),left=nx?nx[0]-c+1:null,nm=nx?(t[t.indexOf(nx)+1]?t[t.indexOf(nx)+1][1]:.2):null;
+      return `<div class="fld"><span>${l}</span>
+        <div style="color:var(--tx)"><span style="font-size:2rem;font-weight:700">${c}</span> <span class="mu">runs</span></div>
+        <div style="color:${m===1?"var(--ok)":m<=.4?"#e5484d":"var(--wa)"};font-weight:600;font-size:1.05rem">${Math.round(m*100)}% Kina</div>
+        <div class="mu">${nx?`${left} more run${left===1?"":"s"} until ${Math.round(nm*100)}%`:"Lowest rate reached"}</div>
+        <div class="ib" style="margin-top:6px"><input type="number" min="0" max="9999" inputmode="numeric" placeholder="Set count" data-pk="${k}"><button data-set="${k}">Set</button></div></div>`}).join("")+
+    `</div><div class="mu" style="margin-top:8px">Each Spend button on a character adds 1 run to its mode. You can also set the number from the game. Counted across the whole server, and reset at the weekly reset.</div>`;
+}
+function ddState(now){const used=lastWeekly(now)>srv.dat?0:srv.du;return {used,left:14-used,db:srv.db||0}}
+let ddClosed=false;try{ddClosed=localStorage.getItem(KEY+"-ddclosed")==="1"}catch(e){}
+function ddHtml(now){
+  const s=ddState(now),sb='';
+  const head=`<h2 style="margin:0 0 4px;font-size:1.1rem">Daily Dungeon (shared)</h2>`;
+  return head+`
+    <div class="srow" style="padding-top:0;flex-wrap:nowrap"><div><small>Resets in ${fmt(nextReset()-now)}</small><b>${s.left} / 14 left${s.db?` <span class="bl">(+${s.db})</span>`:""}</b></div>
+    <div class="sbtn"><button data-dk="d" data-d="1" ${sb} ${s.left<14?"":"disabled"}>+1</button><button data-dk="db" data-d="1" ${sb} ${s.db<30?"":"disabled"}>Extra</button><button data-dk="d" data-d="-1" ${sb} ${s.left+s.db>0?"":"disabled"}>-1</button></div></div>
+    <div class="ib"><input type="number" min="1" max="44" inputmode="numeric" placeholder="Amount Used" id="ddn"><button class="del" data-dk="rm">Use</button><button class="del" data-dk="rmall" ${s.left+s.db>0?"":"disabled"}>Use All</button></div>`;
+}
+function shUsed(c,now){return lastWeekly(now)>(c.shAt??0)?0:(c.sh??0)}
+function fld(label,k,attrs,extra){
+  return `<div class="fld"${extra||""}><span>${label}</span><div class="ib"><input ${attrs} data-f="${k}"><button data-a="s" data-k="${k}">Sync</button></div></div>`;
+}
+function trackers(c,now){
+  const n=nmCalc(c,now),a=ascCalc(c,now);
+  return `<div class="sec"><div class="row"><b>Nightmare Tickets</b><span class="mu">${n.cur} / 14${c.nmb?` <span class="bl">(+${c.nmb})</span>`:""} · +2 in ${fmt(n.next-now)}</span></div>
+    <div class="row3"><button class="g" data-a="adj" data-k="nm" data-d="1" ${n.cur<14?"":"disabled"}>+1</button><button class="g" data-a="adj" data-k="nmb" data-d="1" ${(c.nmb||0)<14?"":"disabled"}>Extra</button><button class="g" data-a="adj" data-k="nm" data-d="-1" ${n.cur+(c.nmb||0)>0?"":"disabled"}>-1</button></div></div>
+    <div class="sec"><div class="row"><b>Ascension Trial</b><span class="mu">${a.left} / 3${c.ascb?` <span class="bl">(+${c.ascb})</span>`:""} entries left · resets in ${fmt(nextReset()-now)}</span></div>
+    <div class="row3"><button class="g" data-a="adj" data-k="asc" data-d="1" ${a.left<3?"":"disabled"}>+1</button><button class="g" data-a="adj" data-k="ascb" data-d="1" ${(c.ascb||0)<30?"":"disabled"}>Extra</button><button class="g" data-a="adj" data-k="asc" data-d="-1" ${a.left+(c.ascb||0)>0?"":"disabled"}>-1</button></div></div>
+    <div class="sec"><div class="row"><b>Odyle Morph</b><span class="mu">${4-crUsed(c,now)} / 4 left · resets in ${fmt(nextReset()-now)}</span></div>
+    <div class="grid2" style="margin-top:8px;grid-template-columns:1fr 1fr 2fr"><button class="g sm" data-a="adj" data-k="cr" data-d="-1" ${crUsed(c,now)<4?"":"disabled"}>-1</button><button class="del sm" data-a="crall" ${crUsed(c,now)<4?"":"disabled"}>Morph All</button><button class="g" data-a="adj" data-k="cr" data-d="1" ${crUsed(c,now)>0?"":"disabled"}>+1</button></div></div>
+    <div class="sec"><div class="row"><b>Odyle Shop Purchases</b><span class="mu">${20-shUsed(c,now)} / 20 left · resets in ${fmt(nextReset()-now)}</span></div>
+    <div class="grid2" style="margin-top:8px"><button class="g" data-a="adj" data-k="sh" data-d="-1" ${shUsed(c,now)<20?"":"disabled"}>-1</button><button class="g" data-a="adj" data-k="sh" data-d="1" ${shUsed(c,now)>0?"":"disabled"}>+1</button></div>
+    <div class="ib" style="margin-top:8px"><input type="number" min="1" max="20" inputmode="numeric" placeholder="Amount to remove" data-f="shn"><button class="del" data-a="shrm">Remove</button></div></div>`;
+}
+function parseDur(s){
+  s=String(s||"").trim().toLowerCase();if(!s)return NaN;
+  let m=s.match(/^(\d+)\s*:\s*(\d{1,2})$/);if(m)return +m[1]*60+ +m[2];
+  m=s.match(/^(?:(\d+(?:\.\d+)?)\s*h(?:ours?|rs?)?)?\s*(?:(\d+(?:\.\d+)?)\s*m(?:in(?:ute)?s?)?)?$/);
+  if(m&&(m[1]||m[2]))return (+m[1]||0)*60+(+m[2]||0);
+  if(/^\d+(\.\d+)?$/.test(s))return +s;
+  return NaN;
+}
+let vis={add:1,srv:1,dd:1,pc:1};try{Object.assign(vis,JSON.parse(localStorage.getItem(KEY+"-vis")))}catch(e){}
+function render(){
+  const now=Date.now();
+  for(const [k,id] of [["add","addcard"],["srv","srv"],["dd","dd"],["pc","pc"]])document.getElementById(id).style.display=vis[k]?"":"none";
+  document.querySelector(".pair").style.display=(vis.srv||vis.dd)?"":"none";
+  document.querySelectorAll("#vis input").forEach(i=>{i.checked=!!vis[i.dataset.v]});
+  document.getElementById("reset").innerHTML='<span class="rc"><small>Daily reset in</small><b>'+fmt(lastDaily(now)+86400000-now)+'</b></span><span class="rc"><small>Weekly reset in</small><b>'+fmt(nextReset()-now)+'</b></span>';
+  document.getElementById("srv").innerHTML='<h2 style="margin:0 0 4px;font-size:1.1rem">Weekly Odyle Energy (shared)</h2>'+srvHtml(now);
+  document.getElementById("dd").innerHTML=ddHtml(now);
+  
+  document.getElementById("pc").innerHTML=pcHtml(now);
+  const el=document.getElementById("list");
+  if(!chars.length){el.innerHTML='<div class="card empty">No characters yet. Add one above.</div>';return}
+  el.innerHTML=chars.map(c=>{
+    const r=calc(c,now),pct=Math.min(100,r.cur/c.cap*100);
+    return `<div class="card" data-id="${c.id}">
+      <div class="row"><button class="g tog" data-a="tog">${c.col?"▸":"▾"}</button><span class="name">${esc(c.name)}${c.il?`<span style="font-weight:400;font-size:1.1rem;color:var(--mu)"> · ${c.il.toLocaleString("en-US")}</span>`:""}</span><button class="del" data-a="del">Remove</button></div>
+      ${c.col?mini(c,r,now):`
+      <div class="big">${r.cur} <span class="mu">/ ${c.cap}</span>${c.eb?` <span class="bl">(+${c.eb})</span>`:""}</div>
+      <div class="bar ${r.cur>=c.cap?"full":""}"><i style="width:${pct}%"></i></div>
+      <div class="mu">Odyle Energy Cubes: ${Math.floor((r.cur+(c.eb||0))/40)} at 40 each · ${Math.floor((r.cur+(c.eb||0))/80)} at 80 each<br>${r.full===null?"At cap, spend it!":"Next +"+c.amt+" in "+fmt(nextTick(now)-now)+" · Full in "+fmt(r.full)}</div>
+      <div style="margin-top:10px">${[["xc","Expedition"],["tc","Transcendence"]].map(([m,l])=>`<div class="spr"><span class="spl">${l}:</span>${[40,80].map(a=>`<button class="spb" data-a="espend" data-n="${a}" data-m="${m}" ${r.cur+(c.eb||0)>=a?"":"disabled"}>${a}</button>`).join("")}</div>`).join("")}</div>
+      <div class="grid2" style="margin-top:10px">${fld("Energy","sync",'type="number" min="0" inputmode="numeric" placeholder="0"')}${fld("Charged Energy","eb",'type="number" min="0" max="2000" inputmode="numeric" placeholder="0"')}<div class="fld"><span>Add Charged Energy</span><div class="ib"><input type="number" min="1" max="2000" inputmode="numeric" placeholder="Amount to add" data-f="eadd"><button data-a="eadd" style="background:#1a9d5c">Add</button></div></div></div>
+      
+      ${trackers(c,now)}${incomeSec(c,now)}
+      <details><summary>Settings</summary>
+        <div class="row" style="margin-top:8px">
+          <label>Cap<input type="number" min="1" value="${c.cap}" data-f="cap"></label>
+          <label>Gain per tick<input type="number" min="1" value="${c.amt}" data-f="amt"></label>
+          <button class="g" data-a="cfg" style="align-self:end">Save</button>
+        </div>
+      </details>`}
+    </div>`}).join("");
+}
+document.getElementById("add").onclick=()=>{
+  const n=document.getElementById("n"),e=document.getElementById("e");
+  const name=n.value.trim(),v=parseInt(e.value,10);
+  if(!name||isNaN(v)||v<0)return;
+  const g=id=>{const x=parseInt(document.getElementById(id).value,10);return isNaN(x)||x<0?0:x};
+  const now=Date.now(),left=document.getElementById("asc").value.trim()===""?3:Math.min(3,g("asc"));
+  chars.push({id:now+Math.random(),name,base:v,at:now,cap:840,amt:15,hrs:3,eb:Math.min(2000,g("eb")),nm:Math.min(14,g("nm")),nmAt:now,nmb:Math.min(14,g("nmb")),asc:3-left,ascAt:now,ascb:Math.min(30,g("ascb")),il:g("il"),run:document.getElementById("runsel").value});
+  ["eb","nm","nmb","asc","ascb","il"].forEach(i=>document.getElementById(i).value="");
+  n.value="";e.value="";save();render();
+};
+document.getElementById("list").onclick=ev=>{
+  const b=ev.target.closest("button");if(!b)return;
+  const card=b.closest(".card"),i=chars.findIndex(c=>String(c.id)===card.dataset.id);if(i<0)return;
+  const c=chars[i],f=k=>card.querySelector('[data-f="'+k+'"]');
+  if(b.dataset.a==="del"){chars.splice(i,1)}
+  else if(b.dataset.a==="s"){
+    const k=b.dataset.k,now=Date.now(),step=c.hrs*3600000;
+    {const v=parseInt(f(k).value,10);if(isNaN(v)||v<0)return;
+      if(k==="sync"){c.base=v;c.at=now}
+      else if(k==="eb")c.eb=Math.min(2000,v);
+      else if(k==="nm"){c.nm=Math.min(14,v);c.nmAt=now}
+      else if(k==="nmb")c.nmb=Math.min(14,v);
+      else if(k==="asc"){c.asc=3-Math.min(3,v);c.ascAt=now}
+      else if(k==="ascb")c.ascb=Math.min(30,v);
+      else if(k==="il")c.il=Math.min(10000,v)}}
+  else if(b.dataset.a==="tog"){c.col=!c.col}
+  else if(b.dataset.a==="espend"){
+    const now=Date.now(),amt=parseInt(b.dataset.n,10),cur=calc(c,now).cur,eb=c.eb||0;
+    if(cur+eb<amt)return;
+    const fromBasic=Math.min(cur,amt);
+    c.base=cur-fromBasic;c.eb=eb-(amt-fromBasic);
+    const pm=b.dataset.m;if(pm){srv[pm]=Math.min(9999,srvCount(pm,now)+1);srv[pm+"at"]=now;saveSrv()}
+    
+    c.at=now}
+  else if(b.dataset.a==="eadd"){const v=parseInt(f("eadd").value,10);if(isNaN(v)||v<1)return;c.eb=Math.min(2000,(c.eb||0)+v)}
+  else if(b.dataset.a==="crall"){c.cr=4;c.crAt=Date.now()}
+  else if(b.dataset.a==="shrm"){const now=Date.now(),v=parseInt(f("shn").value,10);if(isNaN(v)||v<1)return;c.sh=Math.min(20,shUsed(c,now)+v);c.shAt=now}
+  else if(b.dataset.a==="adj"){
+    const k=b.dataset.k,d=parseInt(b.dataset.d,10),now=Date.now();
+    if(k==="nm"){const cur=nmCalc(c,now).cur,v=cur+d;
+      if(d<0&&cur===0&&(c.nmb||0)>0)c.nmb--;
+      else{if(v<0||v>14)return;c.nm=v;c.nmAt=now}}
+    else if(k==="nmb"){const v=(c.nmb||0)+d;if(v<0||v>14||(d<0&&nmCalc(c,now).cur>0))return;c.nmb=v}
+    else if(k==="asc"){const u=ascCalc(c,now).used,v=u-d;
+      if(d<0&&u>=3&&(c.ascb||0)>0)c.ascb--;
+      else{if(v<0||v>3)return;c.asc=v;c.ascAt=now}}
+    else if(k==="ascb"){const v=(c.ascb||0)+d;if(v<0||v>30||(d<0&&ascCalc(c,now).left>0))return;c.ascb=v}
+    else if(k==="cr"){const v=crUsed(c,now)-d;if(v<0||v>4)return;c.cr=v;c.crAt=now}
+    else if(k==="sh"){const v=shUsed(c,now)-d;if(v<0||v>20)return;c.sh=v;c.shAt=now}}
+  else if(b.dataset.a==="cfg"){
+    const cur=calc(c,Date.now()).cur;
+    const cap=parseInt(f("cap").value,10),amt=parseInt(f("amt").value,10);
+    if(cap>0&&amt>0){c.base=cur;c.at=Date.now();c.cap=cap;c.amt=amt}
+  }
+  save();render();
+};
+document.getElementById("addtog").onclick=()=>{
+  const t=document.getElementById("addtog"),x=t.closest(".card").classList.toggle("closed");
+  t.textContent=x?"▸":"▾";
+  try{localStorage.setItem(KEY+"-addclosed",x?"1":"0")}catch(e){}
+};
+try{if(localStorage.getItem(KEY+"-addclosed")==="1")document.getElementById("addtog").click()}catch(e){}
+loadSrv();
+document.getElementById("srv").onclick=ev=>{
+  const b=ev.target.closest("button");if(!b||b.disabled)return;
+  const k=b.dataset.sk,now=Date.now(),m=k==="c"?16:20,left0=m-srvUsed(k,now);let d;
+  if(b.dataset.d==="all")d=-left0;
+  else if(b.dataset.d==="amt"){const v=parseInt(document.getElementById("srvn").value,10);if(isNaN(v)||v<1)return;d=-Math.min(v,left0)}
+  else d=parseInt(b.dataset.d,10);
+  const u=srvUsed(k,now)-d;
+  if(u<0||u>m)return;
+  srv[k+"u"]=u;srv[k+"at"]=now;saveSrv();render();
+};
+document.getElementById("dd").onclick=ev=>{
+  const b=ev.target.closest("button");if(!b||b.disabled)return;
+  if(b.dataset.dk==="tog"){ddClosed=!ddClosed;try{localStorage.setItem(KEY+"-ddclosed",ddClosed?"1":"0")}catch(e){}render();return}
+  const now=Date.now(),d=parseInt(b.dataset.d,10),s=ddState(now);
+  if(b.dataset.dk==="rmall"){srv.du=14;srv.dat=now;srv.db=0;saveSrv();render();return}
+  if(b.dataset.dk==="rm"){
+    const v=parseInt(document.getElementById("ddn").value,10);if(isNaN(v)||v<1)return;
+    const take=Math.min(v,s.left+s.db),fromDef=Math.min(take,s.left);
+    srv.du=s.used+fromDef;srv.dat=now;srv.db=s.db-(take-fromDef);
+    saveSrv();render();return;
+  }
+  if(b.dataset.dk==="d"){
+    if(d<0&&s.left===0){if(s.db>0)srv.db=s.db-1;else return}
+    else{const v=s.used-d;if(v<0||v>14)return;srv.du=v;srv.dat=now}
+  }else{const v=s.db+d;if(v<0||v>30)return;srv.db=v}
+  saveSrv();render();
+};
+document.getElementById("vis").onchange=ev=>{const t=ev.target;if(!t.dataset||!t.dataset.v)return;vis[t.dataset.v]=t.checked?1:0;try{localStorage.setItem(KEY+"-vis",JSON.stringify(vis))}catch(e){}t.blur();render()};
+const bkm=t=>{document.getElementById("bkm").textContent=t};
+function bkData(){const o={};try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.indexOf(KEY)===0)o[k]=localStorage.getItem(k)}}catch(e){}return JSON.stringify({app:"aion2-tracker",v:1,data:o})}
+document.getElementById("bkx").onclick=()=>{const t=document.getElementById("bkt");t.value=bkData();t.select();try{navigator.clipboard.writeText(t.value).then(()=>bkm("Backup copied to the clipboard and shown above."),()=>bkm("Backup shown above. Select it and copy it."))}catch(e){bkm("Backup shown above. Select it and copy it.")}};
+document.getElementById("bki").onclick=()=>{
+  let o;try{o=JSON.parse(document.getElementById("bkt").value)}catch(e){bkm("That doesn't look like a backup.");return}
+  if(!o||o.app!=="aion2-tracker"||!o.data||typeof o.data!=="object"){bkm("That doesn't look like a backup.");return}
+  try{Object.keys(o.data).forEach(k=>{if(k.indexOf(KEY)===0&&typeof o.data[k]==="string")localStorage.setItem(k,o.data[k])})}catch(e){bkm("Couldn't save the data in this browser.");return}
+  srv={cu:0,cat:0,su:0,sat:0,du:0,dat:0,db:0,xc:0,xcat:0,tc:0,tcat:0};vis={add:1,srv:1,dd:1,pc:1};
+  try{Object.assign(vis,JSON.parse(localStorage.getItem(KEY+"-vis")))}catch(e){}
+  try{pcClosed=localStorage.getItem(KEY+"-pcclosed")==="1";ddClosed=localStorage.getItem(KEY+"-ddclosed")==="1"}catch(e){}
+  load();loadSrv();render();bkm("Backup imported.");
+};
+document.getElementById("runsel").innerHTML=runOpts("auto");
+document.getElementById("list").onchange=ev=>{
+  const t=ev.target;if(!t.matches||!t.matches('select[data-f="run"]'))return;
+  const card=t.closest(".card"),c=chars.find(x=>String(x.id)===card.dataset.id);if(!c)return;
+  c.run=t.value;save();render();
+};
+document.getElementById("pc").onclick=ev=>{
+  const b=ev.target.closest("button");
+  if(b&&b.dataset.pt){pcClosed=!pcClosed;try{localStorage.setItem(KEY+"-pcclosed",pcClosed?"1":"0")}catch(e){}render();return}
+  if(!b||!b.dataset.set)return;
+  const k=b.dataset.set,inp=document.querySelector('#pc input[data-pk="'+k+'"]'),v=parseInt(inp.value,10);
+  if(isNaN(v)||v<0)return;
+  srv[k]=Math.min(9999,v);srv[k+"at"]=Date.now();saveSrv();render();
+};
+load();chars.forEach(c=>{if(c.eb>2000)c.eb=2000;if(c.nmb>14)c.nmb=14;if(c.ascb>30)c.ascb=30});render();setInterval(()=>{if(!document.activeElement||!["INPUT","SELECT"].includes(document.activeElement.tagName))render()},30000);
+</script>
+</body>
+</html>
+
+</body></html>
