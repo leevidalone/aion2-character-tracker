@@ -4,6 +4,12 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-18 (newest 10)
+----------------------
+- Membership icon now has a transparent background (cleaner on both light and
+  dark mode) and is a little larger.
+
+
 2026-10-18 (newest 9)
 ---------------------
 - Membership switch (with the membership icon) in the Show on page card. When
