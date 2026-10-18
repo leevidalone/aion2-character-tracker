@@ -4,6 +4,18 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-18 (newest 7)
+---------------------
+- New Characters section with a larger title above the character cards, with
+  Refresh all (updates item level and combat power of every looked-up
+  character) and Collapse all / Expand all buttons on the right.
+- Every part of the page now has a large section title: Timers, Setup, Shared
+  Weekly Progress, Characters, Backup.
+- On collapsed cards the bin icon is at the bottom right of the footer row.
+- Renamed to "Odyle Energy (Shared)" and "Daily Dungeon (Shared)"; the Server
+  Run Count title no longer shows a reset countdown.
+
+
 2026-10-18 (newest 6)
 ---------------------
 - Add a Character: removed the helper sentence under Region/Server, added
