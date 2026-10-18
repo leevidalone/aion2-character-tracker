@@ -112,7 +112,9 @@ label{font-size:.85rem;color:var(--mu);display:flex;flex-direction:column;gap:2p
 #addlk:empty{display:none}
 .lhead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 2px 10px}
 .sech{font-size:1.6rem;font-weight:700;margin:22px 2px 10px;letter-spacing:.2px;color:var(--tx)}
-.lhead h2.sech{margin:22px 0 0}
+.sech.sep{border-top:1px solid var(--bd);padding-top:22px;margin-top:28px}
+.lhead.sep{border-top:1px solid var(--bd);padding-top:22px;margin-top:28px}
+.lhead h2.sech{margin:0}
 .lbtns{display:flex;gap:8px;flex-wrap:wrap}
 .lbtns button{padding:6px 14px;font-size:.88rem}
 .brk{grid-column:1/-1;border-top:1px solid var(--bd);margin:6px 0}
@@ -142,7 +144,7 @@ button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;
 <main>
 <div class="top"><h1>Aion 2 Character Tracker</h1><button type="button" class="thm" id="thm" role="switch" aria-label="Dark mode" title="Toggle light / dark mode"><span class="k"><svg class="su" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="mo" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button></div>
 <p class="sub">Track Odyle Energy, weekly entries, Odyle Morph and shop purchases, shared server crafts and run counts, and estimated Kina income for all your characters. Saved in your browser only. <span class="sech" style="display:block;margin:16px 0 8px">Timers</span><span class="reset" id="reset"></span></p>
-<h2 class="sech">Setup</h2>
+<h2 class="sech sep">Setup</h2>
 <div class="card" id="vis"><b>Show on page</b><div class="row" style="margin-top:8px;gap:16px"><label><input type="checkbox" data-v="add">Add a Character</label><label><input type="checkbox" data-v="srv">Odyle Energy</label><label><input type="checkbox" data-v="dd">Daily Dungeon</label><label><input type="checkbox" data-v="pc">Server Run Count</label></div></div>
 
 <div class="card" id="addcard">
@@ -153,12 +155,12 @@ button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;
   </div>
 </div>
 
-<div id="wk"><h2 class="sech" id="wkh">Shared Weekly Progress</h2><div class="pair"><div class="card" id="pc"></div>
+<div id="wk"><h2 class="sech sep" id="wkh">Shared Weekly Progress</h2><div class="pair"><div class="card" id="pc"></div>
 <div class="card" id="srv"></div>
 <div class="card" id="dd"></div></div></div>
-<div class="lhead"><h2 class="sech">Characters</h2><div class="lbtns"><button class="g" id="refall" type="button">Refresh all</button><button class="g" id="colall" type="button"></button></div></div>
+<div class="lhead sep"><h2 class="sech">Characters</h2><div class="lbtns"><button class="g" id="refall" type="button">Refresh all</button><button class="g" id="colall" type="button"></button></div></div>
 <div id="list"></div>
-<h2 class="sech">Backup</h2>
+<h2 class="sech sep">Backup</h2>
 <details class="card" id="bk"><summary>Backup &amp; transfer your data</summary>
 <div class="mu" style="margin-top:8px">Your data is stored only in this browser. Export it to back it up or move it to another browser or device, then paste it into the box there and press Import. Importing replaces the data here.</div>
 <textarea id="bkt" rows="4" style="width:100%;margin-top:8px;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:8px;font:12px monospace" placeholder="Your backup appears here after Export, or paste a backup here to import"></textarea>

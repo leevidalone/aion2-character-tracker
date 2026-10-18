@@ -4,6 +4,12 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-18 (newest 8)
+---------------------
+- Divider lines between the page sections (Timers, Setup, Shared Weekly
+  Progress, Characters, Backup).
+
+
 2026-10-18 (newest 7)
 ---------------------
 - New Characters section with a larger title above the character cards, with
