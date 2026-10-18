@@ -56,6 +56,8 @@ button.hard{color:#e5484d!important;--hc:#e5484d}
 .info:hover,.info:focus{border-color:var(--ac);color:var(--ac);outline:0}
 .info .tip{display:none;position:absolute;top:28px;right:0;width:210px;z-index:5;padding:8px 10px;border-radius:8px;background:var(--tx);color:var(--bg);font:400 .8rem/1.35 system-ui,sans-serif;text-align:left;box-shadow:0 4px 14px rgba(0,0,0,.3)}
 .info:hover .tip,.info:focus .tip{display:block}
+.info.wide .tip{width:min(300px,80vw)}
+.info{margin-left:auto}
 #dd .srow b,#srv .srow b{font-size:1.2rem;font-weight:700;color:var(--tx)}
 #dd .srow small,#srv .srow small{font-size:.88rem;color:var(--tx);opacity:.85;margin-bottom:2px}
 #dd .srow>div:first-child,#srv .srow>div:first-child{min-width:0}
@@ -133,7 +135,7 @@ button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;
   <div class="row">
     <h2 style="flex-basis:100%;margin:0;font-size:1.1rem;display:flex;align-items:center;gap:8px"><button class="g tog" id="addtog" type="button">▾</button>Add a Character</h2>
     
-    </div><div class="grid2"><label>Character Name<input id="n" placeholder="Character name" maxlength="30"></label><label>Class<select id="clssel"></select></label><label>Energy<input id="e" type="number" min="0" inputmode="numeric" placeholder="0~840"></label><label>Charged Energy<input id="eb" type="number" min="0" max="2000" inputmode="numeric" placeholder="0~2000"></label><label>Nightmare Tickets<input id="nm" type="number" min="0" max="14" inputmode="numeric" placeholder="0~14"></label><label>Nightmare Extra Count<input id="nmb" type="number" min="0" max="14" inputmode="numeric" placeholder="0~14"></label><label>Ascension Trial Tickets<input id="asc" type="number" min="0" max="3" inputmode="numeric" placeholder="0~3"></label><label>Ascension Trial Extra Count<input id="ascb" type="number" min="0" max="30" inputmode="numeric" placeholder="0~30"></label><label>Item Level<input id="il" type="number" min="0" max="10000" inputmode="numeric" placeholder="e.g. 2100"></label><label>Highest run<select id="runsel"></select></label><button id="add" style="grid-column:1/-1">Add character</button>
+    </div><div class="grid2"><label style="grid-column:1/-1">Character Name<input id="n" placeholder="Character name" maxlength="30"></label><input type="hidden" id="clssel"><label>Region (optional)<select id="addreg"><option value="">No lookup</option></select></label><label>Server<select id="addsrv" disabled><option value="">Select region first</option></select></label><div class="mu" id="addlk" style="grid-column:1/-1;margin-top:-4px">Pick a region and server and Add character will fill in the item level and class icon from the game.</div><label>Energy<input id="e" type="number" min="0" inputmode="numeric" placeholder="0~840"></label><label>Charged Energy<input id="eb" type="number" min="0" max="2000" inputmode="numeric" placeholder="0~2000"></label><label>Nightmare Tickets<input id="nm" type="number" min="0" max="14" inputmode="numeric" placeholder="0~14"></label><label>Nightmare Extra Count<input id="nmb" type="number" min="0" max="14" inputmode="numeric" placeholder="0~14"></label><label>Ascension Trial Tickets<input id="asc" type="number" min="0" max="3" inputmode="numeric" placeholder="0~3"></label><label>Ascension Trial Extra Count<input id="ascb" type="number" min="0" max="30" inputmode="numeric" placeholder="0~30"></label><label>Item Level<input id="il" type="number" min="0" max="10000" inputmode="numeric" placeholder="e.g. 2100"></label><label>Highest run<select id="runsel"></select></label><button id="add" style="grid-column:1/-1">Add character</button>
   </div>
 </div>
 
@@ -236,16 +238,63 @@ function incomeInfo(c,now){
   const cw=base+mo+sh+sv,cost=(mo+sv)*50000+sh*100000,total=sum(cw);
   return {sel,cw,base,mo,sh,sv,first,mm:mo+sv,en,isT,cnt,m:mult(t,cnt),cost,total,net:total-cost,now:sum(base),full:sel.k*cw};
 }
+const RELAY="https://aion2-lookup.leedavi-98.workers.dev";
+const REGIONS=[["naw","North America - West"],["nae","North America - East"],["eu","Europe"],["as","Asia"],["la","Latin America"]];
+const SRVL={"naw": ["Israphel", "Kaisinel", "Lumiel", "Marchutan", "Nezekan", "Siel", "Triniel", "Vaizel", "Yustiel", "Zikel"], "nae": ["Ariel", "Azphel", "Beritra", "Ereshkigal", "Fregion", "Hithanya", "Israphel", "Kaisinel", "Lumiel", "Marchutan", "Meslamtaeda", "Nemon", "Nezekan", "Siel", "Triniel", "Vaizel", "Yustiel", "Zikel"], "eu": ["Agnita", "Ariel", "Atiel", "Azphel", "Baba", "Bakarma", "Beritra", "Daminu", "Ereshkigal", "Fafnir", "Fregion", "Gauss", "Hadala", "Hithanya", "Indnath", "Ishtar", "Israphel", "Kaisinel", "Kasaka", "Kochi", "Kromede", "Lamuatan", "Ludra", "Lumiel", "Luteros", "Marchutan", "Meslamtaeda", "Munin", "Nania", "Nathara", "Nemon", "Nezekan", "Odar", "Phernos", "Quai", "Siel", "Tahavatha", "Tassin", "Tiamat", "Triniel", "Tsenka", "Ulgorn", "Vaizel", "Yustiel", "Zemurru", "Zikel"], "as": ["Ariel", "Azphel", "Beritra", "Ereshkigal", "Fregion", "Hadala", "Hithanya", "Israphel", "Kaisinel", "Lumiel", "Marchutan", "Meslamtaeda", "Nania", "Nemon", "Nezekan", "Siel", "Triniel", "Vaizel", "Yustiel", "Zikel"], "la": ["Ariel", "Azphel", "Israphel", "Kaisinel", "Lumiel", "Marchutan", "Nezekan", "Siel", "Triniel", "Vaizel", "Yustiel", "Zikel"]};
+function lookupUi(c){
+  const lk=c.lkIn||c.lk||{},reg=lk.region||"naw",m=c.lkMatches;
+  return `<div class="lk"><b>Game lookup</b><div class="mu">Pick your region and server, then fetch your item level from the official character search.</div>
+    <div class="grid2" style="margin-top:6px"><label>Character name<input data-f="lkn" maxlength="30" value="${esc(lk.name||c.name)}"></label><label>Region<select data-f="lkr" data-a="lkreg">${REGIONS.map(r=>`<option value="${r[0]}"${r[0]===reg?" selected":""}>${r[1]}</option>`).join("")}</select></label>
+    <label style="grid-column:1/-1">Server<select data-f="lks"><option value="">Select server...</option>${(SRVL[reg]||[]).map(n=>`<option value="${n}"${n===lk.server?" selected":""}>${n}</option>`).join("")}</select></label></div>
+    <button class="g" data-a="lookup" style="margin-top:8px;width:100%">Update item level</button>
+    ${c.lkm?`<div class="mu" style="margin-top:6px">${esc(c.lkm)}</div>`:""}</div>`;
+}
+async function fetchIL(name,region,serverId){
+  const q=new URLSearchParams({name,region});if(serverId)q.set("serverId",serverId);
+  const r=await fetch(RELAY+"/?"+q.toString());return r.json();
+}
+function applyIL(c,j,name,region,server){
+  const now=Date.now();
+  if(j&&j.itemLevel!=null){
+    c.il=Math.min(10000,Math.round(j.itemLevel));c.lk={name,region,server:j.serverName,serverId:j.serverId};c.lkIn=null;c.lkAt=now;c.lkMatches=null;
+    if(!c.cls&&CLS[j.className])c.cls=j.className;
+    c.lkm="Updated: "+j.className+" Lv "+j.level+" on "+j.serverName+" · item level "+c.il;return true}
+  if(j&&j.matches){c.lkIn={name,region,server};c.lkMatches=null;c.lkm="No character found with that name on this server.";c.lkIn={name,region,server};return false}
+  c.lkIn={name,region,server};c.lkMatches=null;c.lkm=j&&j.error==="not found"?"No character found with that name on this server.":"Lookup failed. Try again later or enter item level by hand.";return false;
+}
+async function doLookup(c,card){
+  const f=k=>card.querySelector('[data-f="'+k+'"]');
+  const name=(f("lkn").value||"").trim()||c.name,region=f("lkr").value,server=f("lks").value;
+  if(!server){c.lkIn={name,region,server:""};c.lkm="Please pick your server first.";save();render();return}
+  let sid="";
+  if(c.lk&&c.lk.name===name&&c.lk.region===region&&c.lk.server===server)sid=c.lk.serverId;
+  const b=card.querySelector('[data-a="lookup"]');if(b){b.disabled=true;b.textContent="Updating..."}
+  let j=null;
+  try{
+    j=await fetchIL(name,region,sid);
+    if(j&&j.matches){const x=j.matches.find(m=>String(m.serverName).toLowerCase()===server.toLowerCase());
+      j=x?await fetchIL(name,region,x.serverId):{error:"not found"}}
+    else if(j&&j.itemLevel!=null&&String(j.serverName).toLowerCase()!==server.toLowerCase())j={error:"not found"};
+  }catch(e){j=null}
+  applyIL(c,j,name,region,server);save();render();
+}
+async function autoIL(){
+  const now=Date.now();let ch=false;
+  for(const c of chars){
+    if(!c.lk||now-(c.lkAt||0)<1800000)continue;
+    try{const j=await fetchIL(c.lk.name,c.lk.region,c.lk.serverId);
+      if(j&&j.itemLevel!=null){c.il=Math.min(10000,Math.round(j.itemLevel));c.lkAt=Date.now();ch=true}}catch(e){}
+  }
+  if(ch){save();render()}
+}
 function incomeSec(c,now){
   const i=incomeInfo(c,now),n=x=>x.toLocaleString("en-US");
-  const sum=i?`<b style="font-size:1.1rem">${n(i.total)} Kina</b><div class="mu">${i.sel.name} · ${n(i.sel.k)} per cube × ${i.cw} cubes${(c.il||0)<i.sel.il?` · needs item level ${n(i.sel.il)}`:""}</div>
-    <div class="mu">${i.base} from energy (${n(i.en)} ÷ 40) + ${i.mo} from Odyle Morph + ${i.sh} from Odyle Shop Purchases${i.first&&vis.srv?` + ${i.sv} from Weekly Odyle Energy (shared)`:""}</div>
-    <div class="mu">${i.mo+i.sv+i.sh?`Kina costs ${n(i.cost)} (morph ${n((i.mo+i.sv)*50000)} + shop ${n(i.sh*100000)}) · net ${n(i.net)} Kina · `:""}Current energy only: ${n(i.now)} Kina</div>
-    ${i.mm?`<div class="mu">Morph materials: ${n(i.mm*25)} Odyle · ${i.mm*5} Fine Odyle (Bound) · ${i.mm} Pure Odyle (Bound)</div>`:""}
-    <div class="mu">${i.isT?"Transcendence":"Expedition"} server runs ${i.cnt} · starts at ${Math.round(i.m*100)}% Kina${i.total<i.full?` · ${n(i.full)} with no reduction`:""}</div>`:`<div class="mu">Enter an item level of 700 or more to see an estimate.</div>`;
-  return `<div class="sec"><div class="row"><b>Estimated Income</b></div>${sum}
+  const sum=i?`<b style="font-size:1.1rem">${n(i.total)} Kina</b><div class="mu">${i.sel.name}${(c.il||0)<i.sel.il?` · needs item level ${n(i.sel.il)}`:""}</div>`:`<div class="mu">Enter an item level of 700 or more to see an estimate.</div>`;
+  const tip=i?`<b>${i.sel.name}</b>: ${n(i.sel.k)} per cube × ${i.cw} cubes<br>${i.base} from energy (${n(i.en)} ÷ 40) + ${i.mo} from Odyle Morph + ${i.sh} from Odyle Shop Purchases${i.first&&vis.srv?` + ${i.sv} from Weekly Odyle Energy (shared)`:""}<br>${i.mo+i.sv+i.sh?`Kina costs ${n(i.cost)} (morph ${n((i.mo+i.sv)*50000)} + shop ${n(i.sh*100000)}) · net ${n(i.net)} Kina · `:""}Current energy only: ${n(i.now)} Kina<br>${i.mm?`Morph materials: ${n(i.mm*25)} Odyle · ${i.mm*5} Fine Odyle (Bound) · ${i.mm} Pure Odyle (Bound)<br>`:""}${i.isT?"Transcendence":"Expedition"} server runs ${i.cnt} · starts at ${Math.round(i.m*100)}% Kina${i.total<i.full?` · ${n(i.full)} with no reduction`:""}<br><br>`:"";
+  return `<div class="sec"><div class="row"><b>Estimated Income</b><span class="info wide" tabindex="0" role="note" aria-label="Information">i<span class="tip">${tip}Estimate only: each Odyle Morph or shop purchase left is counted as one more cube (40 energy). Morph costs 50,000 Kina plus 25 Odyle, 5 Fine Odyle and 1 Pure Odyle each; only the Kina is taken off the net figure. Each cube counts as one run on the server count, and runs by your other characters aren’t added. Weekly Odyle Energy (shared) crafts are added ONLY to the first character in Your Characters.</span></span></div>${sum}
     <div class="grid2" style="margin-top:8px">${fld("Item Level","il",'type="number" min="0" max="10000" inputmode="numeric" placeholder="0"',' style="grid-column:1/-1"')}<div class="fld" style="grid-column:1/-1"><span>Highest run</span><select data-f="run">${runOpts(c.run)}</select></div></div>
-    <div class="mu" style="margin-top:6px">Estimate only: each Odyle Morph or shop purchase left is counted as one more cube (40 energy). Morph costs 50,000 Kina plus 25 Odyle, 5 Fine Odyle and 1 Pure Odyle each; only the Kina is taken off the net figure. Each cube counts as one run on the server count, and runs by your other characters aren’t added. Weekly Odyle Energy (shared) crafts are added ONLY to the first character in Your Characters.</div></div>`;
+    ${lookupUi(c)}
+  </div>`;
 }
 let pcClosed=false;try{pcClosed=localStorage.getItem(KEY+"-pcclosed")==="1"}catch(e){}
 function pcHtml(now){
@@ -333,21 +382,49 @@ function render(){
       <div class="trashrow"><button class="del trash" data-a="del" title="Remove character" aria-label="Remove character"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button></div>
     </div>`}).join("");
 }
-document.getElementById("add").onclick=()=>{
+{const rs=document.getElementById("addreg"),ss=document.getElementById("addsrv");
+  REGIONS.forEach(r=>rs.add(new Option(r[1],r[0])));
+  rs.onchange=()=>{ss.innerHTML=rs.value?'<option value="">Select server...</option>'+SRVL[rs.value].map(n=>`<option>${n}</option>`).join(""):'<option value="">Select region first</option>';ss.disabled=!rs.value;skipLk=false}}
+let skipLk=false;
+document.getElementById("add").onclick=async()=>{
   if(chars.length>=MAXC)return;
-  const n=document.getElementById("n"),e=document.getElementById("e");
+  const n=document.getElementById("n"),e=document.getElementById("e"),msg=document.getElementById("addlk");
   const name=n.value.trim(),v0=parseInt(e.value,10),v=isNaN(v0)?0:Math.min(840,v0);
   if(!name||v<0)return;
+  const region=document.getElementById("addreg").value,server=document.getElementById("addsrv").value;
+  let lk=null;
+  if(region&&!server){msg.textContent="Please pick a server for the lookup, or set Region back to No lookup.";return}
+  if(region&&!skipLk){
+    const ab=document.getElementById("add");ab.disabled=true;ab.textContent="Looking up...";
+    let j=null;
+    try{j=await fetchIL(name,region,"");
+      if(j&&j.matches){const x=j.matches.find(m=>String(m.serverName).toLowerCase()===server.toLowerCase());j=x?await fetchIL(name,region,x.serverId):{error:"not found"}}
+      else if(j&&j.itemLevel!=null&&String(j.serverName).toLowerCase()!==server.toLowerCase())j={error:"not found"}}catch(err){j=null}
+    ab.disabled=false;render();
+    if(j&&j.itemLevel!=null){
+      document.getElementById("il").value=Math.min(10000,Math.round(j.itemLevel));
+      if(CLS[j.className])document.getElementById("clssel").value=j.className;
+      lk={name,region,server:j.serverName,serverId:j.serverId};
+      msg.textContent="Found: "+j.className+" Lv "+j.level+" on "+j.serverName+" · item level "+Math.round(j.itemLevel)}
+    else{
+      skipLk=true;
+      msg.textContent=(j&&j.error==="not found"?"No character found with that name on this server.":"Lookup failed.")+" Press Add character again to add it without the lookup, or fix the details.";return}
+  }
   const g=id=>{const x=parseInt(document.getElementById(id).value,10);return isNaN(x)||x<0?0:x};
   const now=Date.now(),left=document.getElementById("asc").value.trim()===""?3:Math.min(3,g("asc"));
-  chars.push({id:now+Math.random(),name,base:v,at:now,cap:840,amt:15,hrs:3,eb:Math.min(2000,g("eb")),nm:Math.min(14,g("nm")),nmAt:now,nmb:Math.min(14,g("nmb")),asc:3-left,ascAt:now,ascb:Math.min(30,g("ascb")),il:g("il"),run:document.getElementById("runsel").value,cls:document.getElementById("clssel").value});
+  const c={id:now+Math.random(),name,base:v,at:now,cap:840,amt:15,hrs:3,eb:Math.min(2000,g("eb")),nm:Math.min(14,g("nm")),nmAt:now,nmb:Math.min(14,g("nmb")),asc:3-left,ascAt:now,ascb:Math.min(30,g("ascb")),il:g("il"),run:document.getElementById("runsel").value,cls:document.getElementById("clssel").value};
+  if(lk){c.lk=lk;c.lkAt=now}
+  chars.push(c);
   ["eb","nm","nmb","asc","ascb","il"].forEach(i=>document.getElementById(i).value="");document.getElementById("clssel").value="";
-  n.value="";e.value="";save();render();
+  n.value="";e.value="";skipLk=false;
+  const rs=document.getElementById("addreg");rs.value="";rs.onchange();
+  save();render();
 };
 document.getElementById("list").onclick=ev=>{
   const b=ev.target.closest("button");if(!b)return;
   const card=b.closest(".card"),i=chars.findIndex(c=>String(c.id)===card.dataset.id);if(i<0)return;
   const c=chars[i],f=k=>card.querySelector('[data-f="'+k+'"]');
+  if(b.dataset.a==="lookup"){doLookup(c,card);return}
   if(b.dataset.a==="del"){chars.splice(i,1)}
   else if(b.dataset.a==="s"){
     const k=b.dataset.k,now=Date.now(),step=c.hrs*3600000;
@@ -463,7 +540,10 @@ document.getElementById("hry").onclick=()=>{try{Object.keys(localStorage).filter
 document.getElementById("runsel").innerHTML=runOpts("auto");
 document.getElementById("clssel").innerHTML=clsOpts("");
 document.getElementById("list").onchange=ev=>{
-  const t=ev.target;if(!t.matches||!t.matches('select[data-f="run"]'))return;
+  const t=ev.target;
+  if(t.matches&&t.matches('select[data-f="lkr"]')){const card=t.closest(".card"),c=chars.find(x=>String(x.id)===card.dataset.id);if(!c)return;
+    const n=card.querySelector('[data-f="lkn"]').value;c.lkIn={name:n,region:t.value,server:""};c.lkMatches=null;render();return}
+  if(!t.matches||!t.matches('select[data-f="run"]'))return;
   const card=t.closest(".card"),c=chars.find(x=>String(x.id)===card.dataset.id);if(!c)return;
   c.run=t.value;save();render();
 };
@@ -475,7 +555,7 @@ document.getElementById("pc").onclick=ev=>{
   if(isNaN(v)||v<0)return;
   srv[k]=Math.min(9999,v);srv[k+"at"]=Date.now();saveSrv();render();
 };
-load();chars.forEach(c=>{if(c.eb>2000)c.eb=2000;if(c.nmb>14)c.nmb=14;if(c.ascb>30)c.ascb=30});render();setInterval(()=>{if(!document.activeElement||!["INPUT","SELECT"].includes(document.activeElement.tagName))render()},30000);
+load();chars.forEach(c=>{if(c.eb>2000)c.eb=2000;if(c.nmb>14)c.nmb=14;if(c.ascb>30)c.ascb=30});render();autoIL();setInterval(()=>{if(!document.activeElement||!["INPUT","SELECT"].includes(document.activeElement.tagName))render()},30000);
 </script>
 </body>
 </html>

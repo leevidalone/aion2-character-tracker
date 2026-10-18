@@ -4,8 +4,23 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
-2026-10-18 (latest)
+2026-10-18 (newest)
 -------------------
+- Game lookup: item level and class icon can be pulled automatically from the
+  official AION 2 character data (through a small Cloudflare Worker relay).
+  Pick Region and Server when adding a character and Add character fills in
+  the item level and class icon. Each character also has a Game lookup box in
+  its Estimated Income section (Update item level button).
+- Item levels of looked-up characters refresh automatically when the page is
+  opened, at most once every 30 minutes per character.
+- A server must be picked whenever a region is chosen. Class dropdown removed
+  from Add a Character (the class comes from the lookup).
+- Estimated Income details moved into an info (i) icon next to the heading.
+- Manual item level box is still there as a fallback.
+
+
+2026-10-18 (earlier)
+--------------------
 - Character limit of 8. The Add character button shows the count (for example
   3/8) and is disabled once the limit is reached.
 
