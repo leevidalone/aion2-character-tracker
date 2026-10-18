@@ -4,6 +4,17 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-18 (newest 4)
+---------------------
+- Collapse all / Expand all button above the character list.
+- Collapsed cards: the Expedition and Transcendence 40 / 80 buttons moved to a
+  footer row at the bottom of the card.
+- Add a Character remembers the Region and Server you last picked (saved in
+  your browser).
+- Game lookup moved into each character's Settings menu (with a divider
+  above it). Settings stays open after a lookup.
+
+
 2026-10-18 (newest 3)
 ---------------------
 - Combat power now uses the crossed swords emoji; refresh button uses the

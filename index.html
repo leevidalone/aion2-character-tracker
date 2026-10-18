@@ -84,7 +84,8 @@ button[data-sk][data-d="-1"],button[data-sk][data-d="all"],button[data-dk][data-
 .mini b{font-size:1.15rem}
 .mini .cv{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.mini .cv button{padding:2px 9px;font-size:.8rem;border-radius:6px}
 .mini{align-items:start}
-.mini .eg{display:flex;align-items:center;gap:6px;margin-top:6px}
+.mini .eg{display:flex;align-items:center;gap:6px}
+.mini .mft{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 24px;padding-top:12px;border-top:1px solid var(--bd)}
 .mini .eg span{font-size:.78rem;color:var(--mu);width:98px;flex:none}
 @media (max-width:480px){.mini .eg{flex-wrap:wrap;gap:4px 6px}.mini .eg span{width:100%}}
 .mini .eg button{padding:3px 0;width:38px;font-size:.85rem;font-weight:600;border-radius:6px}
@@ -145,6 +146,7 @@ button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;
 <div id="wk"><div class="pair"><div class="card" id="srv"></div>
 <div class="card" id="dd"></div></div></div>
 <div class="card" id="pc"></div>
+<div id="listbar" style="display:none;justify-content:flex-end;margin:0 0 8px"><button class="g" id="colall" type="button"></button></div>
 <div id="list"></div>
 <details class="card" id="bk"><summary>Backup &amp; transfer your data</summary>
 <div class="mu" style="margin-top:8px">Your data is stored only in this browser. Export it to back it up or move it to another browser or device, then paste it into the box there and press Import. Importing replaces the data here.</div>
@@ -197,9 +199,9 @@ function mini(c,r,now){
   const bl=x=>x?` <span class="bl">(+${x})</span>`:"";
   const cell=(l,v,x)=>x?`<div><small>${l}</small><div class="cv"><b>${v}</b>${x}</div></div>`:`<div><small>${l}</small><b>${v}</b></div>`;
   const sp=(m,l)=>`<div class="eg"><span>${l}</span>${[40,80].map(x=>`<button data-a="espend" data-n="${x}" data-m="${m}" ${r.cur+(c.eb||0)>=x?"":"disabled"}>${x}</button>`).join("")}</div>`;
-  const energy=`<div><small>Energy</small><b>${r.cur}/${c.cap}${bl(c.eb)}</b>${sp("xc","Expedition")}${sp("tc","Transcendence")}</div>`;
+  const energy=`<div><small>Energy</small><b>${r.cur}/${c.cap}${bl(c.eb)}</b></div>`;
   const trash=`<button class="del trash" data-a="del" title="Remove character" aria-label="Remove character"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button>`;
-  return `<div class="mini">${energy}${cell("Nightmare",`${n.cur}/14${bl(c.nmb)}`,`<button data-a="adj" data-k="nm" data-d="-1" ${n.cur+(c.nmb||0)>0?"":"disabled"}>-1</button>`)}${cell("Ascension",`${a.left}/3${bl(c.ascb)}`,`<button data-a="adj" data-k="asc" data-d="-1" ${a.left+(c.ascb||0)>0?"":"disabled"}>-1</button>`)}${cell("Odyle Morph",`${4-crUsed(c,now)}/4`)}${cell("Shop Purchases",`${20-shUsed(c,now)}/20`)}<div class="kt"><div><small>Est. Kina</small><b>${inf?`${(inf.total/1e6).toFixed(1)}M`:"&ndash;"}</b></div>${trash}</div></div>`;
+  return `<div class="mini">${energy}${cell("Nightmare",`${n.cur}/14${bl(c.nmb)}`,`<button data-a="adj" data-k="nm" data-d="-1" ${n.cur+(c.nmb||0)>0?"":"disabled"}>-1</button>`)}${cell("Ascension",`${a.left}/3${bl(c.ascb)}`,`<button data-a="adj" data-k="asc" data-d="-1" ${a.left+(c.ascb||0)>0?"":"disabled"}>-1</button>`)}${cell("Odyle Morph",`${4-crUsed(c,now)}/4`)}${cell("Shop Purchases",`${20-shUsed(c,now)}/20`)}<div class="kt"><div><small>Est. Kina</small><b>${inf?`${(inf.total/1e6).toFixed(1)}M`:"&ndash;"}</b></div>${trash}</div><div class="mft">${sp("xc","Expedition")}${sp("tc","Transcendence")}</div></div>`;
 }
 const SKEY=KEY+"-srv";
 let srv={cu:0,cat:0,su:0,sat:0,du:0,dat:0,db:0,xc:0,xcat:0,tc:0,tcat:0};
@@ -250,7 +252,7 @@ const REGIONS=[["naw","North America - West"],["nae","North America - East"],["e
 const SRVL={"naw": ["Israphel", "Kaisinel", "Lumiel", "Marchutan", "Nezekan", "Siel", "Triniel", "Vaizel", "Yustiel", "Zikel"], "nae": ["Ariel", "Azphel", "Beritra", "Ereshkigal", "Fregion", "Hithanya", "Israphel", "Kaisinel", "Lumiel", "Marchutan", "Meslamtaeda", "Nemon", "Nezekan", "Siel", "Triniel", "Vaizel", "Yustiel", "Zikel"], "eu": ["Agnita", "Ariel", "Atiel", "Azphel", "Baba", "Bakarma", "Beritra", "Daminu", "Ereshkigal", "Fafnir", "Fregion", "Gauss", "Hadala", "Hithanya", "Indnath", "Ishtar", "Israphel", "Kaisinel", "Kasaka", "Kochi", "Kromede", "Lamuatan", "Ludra", "Lumiel", "Luteros", "Marchutan", "Meslamtaeda", "Munin", "Nania", "Nathara", "Nemon", "Nezekan", "Odar", "Phernos", "Quai", "Siel", "Tahavatha", "Tassin", "Tiamat", "Triniel", "Tsenka", "Ulgorn", "Vaizel", "Yustiel", "Zemurru", "Zikel"], "as": ["Ariel", "Azphel", "Beritra", "Ereshkigal", "Fregion", "Hadala", "Hithanya", "Israphel", "Kaisinel", "Lumiel", "Marchutan", "Meslamtaeda", "Nania", "Nemon", "Nezekan", "Siel", "Triniel", "Vaizel", "Yustiel", "Zikel"], "la": ["Ariel", "Azphel", "Israphel", "Kaisinel", "Lumiel", "Marchutan", "Nezekan", "Siel", "Triniel", "Vaizel", "Yustiel", "Zikel"]};
 function lookupUi(c){
   const lk=c.lkIn||c.lk||{},reg=lk.region||"naw",m=c.lkMatches;
-  return `<div class="lk"><b>Game lookup</b><div class="mu">Pick your region and server, then fetch your item level from the official character search.</div>
+  return `<div class="lk" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--bd)"><b>Game lookup</b><div class="mu">Pick your region and server, then fetch your item level from the official character search.</div>
     <div class="grid2" style="margin-top:6px"><label>Character name<input data-f="lkn" maxlength="30" value="${esc(lk.name||c.name)}"></label><label>Region<select data-f="lkr" data-a="lkreg">${REGIONS.map(r=>`<option value="${r[0]}"${r[0]===reg?" selected":""}>${r[1]}</option>`).join("")}</select></label>
     <label style="grid-column:1/-1">Server<select data-f="lks"><option value="">Select server...</option>${(SRVL[reg]||[]).map(n=>`<option value="${n}"${n===lk.server?" selected":""}>${n}</option>`).join("")}</select></label></div>
     <button class="g" data-a="lookup" style="margin-top:8px;width:100%">Update item level</button>
@@ -308,7 +310,6 @@ function incomeSec(c,now){
   const tip=i?`<b>${i.sel.name}</b>: ${n(i.sel.k)} per cube × ${i.cw} cubes<br>${i.base} from energy (${n(i.en)} ÷ 40) + ${i.mo} from Odyle Morph + ${i.sh} from Odyle Shop Purchases${i.first&&vis.srv?` + ${i.sv} from Weekly Odyle Energy (shared)`:""}<br>${i.mo+i.sv+i.sh?`Kina costs ${n(i.cost)} (morph ${n((i.mo+i.sv)*50000)} + shop ${n(i.sh*100000)}) · net ${n(i.net)} Kina · `:""}Current energy only: ${n(i.now)} Kina<br>${i.mm?`Morph materials: ${n(i.mm*25)} Odyle · ${i.mm*5} Fine Odyle (Bound) · ${i.mm} Pure Odyle (Bound)<br>`:""}${i.isT?"Transcendence":"Expedition"} server runs ${i.cnt} · starts at ${Math.round(i.m*100)}% Kina${i.total<i.full?` · ${n(i.full)} with no reduction`:""}<br><br>`:"";
   return `<div class="sec"><div class="row"><b>Estimated Income</b><span class="info wide" tabindex="0" role="note" aria-label="Information">i<span class="tip">${tip}Estimate only: each Odyle Morph or shop purchase left is counted as one more cube (40 energy). Morph costs 50,000 Kina plus 25 Odyle, 5 Fine Odyle and 1 Pure Odyle each; only the Kina is taken off the net figure. Each cube counts as one run on the server count, and runs by your other characters aren’t added. Weekly Odyle Energy (shared) crafts are added ONLY to the first character in Your Characters.</span></span></div>${sum}
     <div class="grid2" style="margin-top:8px">${fld("Item Level","il",'type="number" min="0" max="10000" inputmode="numeric" placeholder="0"',' style="grid-column:1/-1"')}<div class="fld" style="grid-column:1/-1"><span>Highest run</span><select data-f="run">${runOpts(c.run)}</select></div></div>
-    ${lookupUi(c)}
   </div>`;
 }
 let pcClosed=false;try{pcClosed=localStorage.getItem(KEY+"-pcclosed")==="1"}catch(e){}
@@ -374,6 +375,7 @@ function render(){
   
   document.getElementById("pc").innerHTML=pcHtml(now);
   const el=document.getElementById("list");
+  {const lb=document.getElementById("listbar"),allc=chars.length>0&&chars.every(c=>c.col);lb.style.display=chars.length>0?"flex":"none";document.getElementById("colall").textContent=allc?"Expand all":"Collapse all"}
   if(!chars.length){el.innerHTML='<div class="card empty">No characters yet. Add one above.</div>';return}
   el.innerHTML=chars.map(c=>{
     const r=calc(c,now),pct=Math.min(100,r.cur/c.cap*100);
@@ -387,20 +389,24 @@ function render(){
       <div class="grid2" style="margin-top:10px">${fld("Energy","sync",'type="number" min="0" inputmode="numeric" placeholder="0"')}${fld("Charged Energy","eb",'type="number" min="0" max="2000" inputmode="numeric" placeholder="0"')}<div class="fld" style="grid-column:2"><span>Add Charged Energy</span><div class="ib"><input type="number" min="1" max="2000" inputmode="numeric" placeholder="Amount to add" data-f="eadd"><button data-a="eadd" style="--hc:#1a9d5c">Add</button></div></div></div>
       
       ${trackers(c,now)}${incomeSec(c,now)}
-      <details><summary>Settings</summary>
+      <details data-so="1"${c.so?" open":""}><summary>Settings</summary>
         <div class="row" style="margin-top:8px">
           <label>Cap<input type="number" min="1" value="${c.cap}" data-f="cap"></label>
           <label>Gain per tick<input type="number" min="1" value="${c.amt}" data-f="amt"></label>
           <label>Class<select data-f="cls">${clsOpts(c.cls)}</select></label><button class="g" data-a="cfg" style="align-self:end">Save</button>
         </div>
+        ${lookupUi(c)}
       </details>`}
       <div class="trashrow"><button class="del trash" data-a="del" title="Remove character" aria-label="Remove character"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button></div>
     </div>`}).join("");
 }
+let skipLk=false;
 {const rs=document.getElementById("addreg"),ss=document.getElementById("addsrv");
   REGIONS.forEach(r=>rs.add(new Option(r[1],r[0])));
-  rs.onchange=()=>{ss.innerHTML=rs.value?'<option value="">Select server...</option>'+SRVL[rs.value].map(n=>`<option>${n}</option>`).join(""):'<option value="">Select region first</option>';ss.disabled=!rs.value;skipLk=false}}
-let skipLk=false;
+  const saveAddLk=()=>{try{localStorage.setItem(KEY+"-addlk",JSON.stringify({region:rs.value,server:ss.value}))}catch(e){}};
+  rs.onchange=()=>{ss.innerHTML=rs.value?'<option value="">Select server...</option>'+SRVL[rs.value].map(n=>`<option>${n}</option>`).join(""):'<option value="">Select region first</option>';ss.disabled=!rs.value;skipLk=false;saveAddLk()};
+  ss.onchange=()=>{skipLk=false;saveAddLk()};
+  try{const x=JSON.parse(localStorage.getItem(KEY+"-addlk"));if(x&&SRVL[x.region]){rs.value=x.region;rs.onchange();if(SRVL[x.region].includes(x.server)){ss.value=x.server;saveAddLk()}}}catch(e){}}
 document.getElementById("add").onclick=async()=>{
   if(chars.length>=MAXC)return;
   const n=document.getElementById("n"),e=document.getElementById("e"),msg=document.getElementById("addlk");
@@ -432,9 +438,10 @@ document.getElementById("add").onclick=async()=>{
   chars.push(c);
   ["eb","nm","nmb","asc","ascb","il"].forEach(i=>document.getElementById(i).value="");document.getElementById("clssel").value="";
   n.value="";e.value="";skipLk=false;
-  const rs=document.getElementById("addreg");rs.value="";rs.onchange();
   save();render();
 };
+document.getElementById("list").addEventListener("toggle",ev=>{const d=ev.target;if(!d.dataset||!d.dataset.so)return;const card=d.closest(".card"),c=chars.find(x=>String(x.id)===card.dataset.id);if(c){c.so=d.open;save()}},true);
+document.getElementById("colall").onclick=()=>{const to=!chars.every(c=>c.col);chars.forEach(c=>c.col=to);save();render()};
 document.getElementById("list").onclick=ev=>{
   const b=ev.target.closest("button");if(!b)return;
   const card=b.closest(".card"),i=chars.findIndex(c=>String(c.id)===card.dataset.id);if(i<0)return;
