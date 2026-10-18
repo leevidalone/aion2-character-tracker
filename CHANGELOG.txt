@@ -4,6 +4,18 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-19 (newest 11)
+----------------------
+- Pages sidebar on the left: Character Tracker (the existing page) and a new
+  Pet Tracker page. The page you were on is remembered.
+- Pet Tracker: list of 200 pets with Elyos / Asmodian / Abyss tick or cross,
+  a "View location" link, genus type and notes. Tick the box on the left to
+  hide a pet you have; Find box and genus filter; "Show hidden pets" /
+  "Hide ticked pets again" button. Ticks are saved in your browser.
+- With the membership switch off, the Energy cap shows 560 instead of 840
+  (characters on the standard cap only).
+
+
 2026-10-18 (newest 10)
 ----------------------
 - Membership icon now has a transparent background (cleaner on both light and
