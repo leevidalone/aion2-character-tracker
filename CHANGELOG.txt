@@ -4,6 +4,14 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-18 (newest 5)
+---------------------
+- Import button (Backup & transfer) is now green.
+- Server Run Count moved to the left of Weekly Odyle Energy (shared), so the
+  three shared cards sit in one row (stacked on phones).
+- Server Run Count explanation moved into an info (i) icon next to the title.
+
+
 2026-10-18 (newest 4)
 ---------------------
 - Collapse all / Expand all button above the character list.

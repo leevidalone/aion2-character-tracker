@@ -112,8 +112,8 @@ label{font-size:.85rem;color:var(--mu);display:flex;flex-direction:column;gap:2p
 button:disabled{opacity:.4;cursor:default}
 .bl{color:#2f8fff;font-weight:600}
 button{--hc:var(--ac);background:transparent!important;color:var(--tx,#e8eaed)!important;font-weight:600;border:1.5px solid var(--hc)!important;transition:background .15s,color .15s,border-color .15s}
-button.del,button[data-a="adj"][data-d="-1"],button[data-sk][data-d="-1"],button[data-sk][data-d="all"],button[data-dk][data-d="-1"]{--hc:#e5484d}
-button[data-a="adj"][data-d="1"],button[data-sk][data-d="1"],button[data-dk][data-d="1"]{--hc:#1a9d5c}
+button.del:not(#bki),button[data-a="adj"][data-d="-1"],button[data-sk][data-d="-1"],button[data-sk][data-d="all"],button[data-dk][data-d="-1"]{--hc:#e5484d}
+button[data-a="adj"][data-d="1"],button[data-sk][data-d="1"],button[data-dk][data-d="1"],button#bki{--hc:#1a9d5c}
 button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;border-color:var(--hc)!important}
 .cico{width:38px;height:38px;border-radius:10px;background:#1d2026;border:1px solid #3a3f4a;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;margin-right:10px;flex:none}.cico img{width:30px;height:30px;object-fit:contain}
 .runs{font-size:.9rem;color:var(--mu);white-space:nowrap}.runs b{font-size:1.3rem;color:var(--tx);margin-right:2px}.trashrow{display:flex;justify-content:flex-end;margin-top:12px}.trash{padding:6px 10px;color:#e5484d!important;display:inline-flex}
@@ -143,9 +143,9 @@ button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;
   </div>
 </div>
 
-<div id="wk"><div class="pair"><div class="card" id="srv"></div>
+<div id="wk"><div class="pair"><div class="card" id="pc"></div>
+<div class="card" id="srv"></div>
 <div class="card" id="dd"></div></div></div>
-<div class="card" id="pc"></div>
 <div id="listbar" style="display:none;justify-content:flex-end;margin:0 0 8px"><button class="g" id="colall" type="button"></button></div>
 <div id="list"></div>
 <details class="card" id="bk"><summary>Backup &amp; transfer your data</summary>
@@ -315,7 +315,7 @@ function incomeSec(c,now){
 let pcClosed=false;try{pcClosed=localStorage.getItem(KEY+"-pcclosed")==="1"}catch(e){}
 function pcHtml(now){
   const rows=[["xc","Expedition",EXP_T],["tc","Transcendence",TRA_T]];
-  const head=`<h2 style="margin:0 0 8px;font-size:1.1rem;display:flex;align-items:center;gap:8px"><button class="g tog" data-pt="1" type="button">${pcClosed?"▸":"▾"}</button>Server Run Count (resets in ${fmt(nextReset()-now)})</h2>`;
+  const head=`<h2 style="margin:0 0 8px;font-size:1.1rem;display:flex;align-items:center;gap:8px"><button class="g tog" data-pt="1" type="button">${pcClosed?"▸":"▾"}</button>Server Run Count (resets in ${fmt(nextReset()-now)})<span class="info" tabindex="0" role="note" aria-label="Information">i<span class="tip">Each Spend button on a character adds 1 run to its mode. You can also set the number from the game. Counted across the whole server, and reset at the weekly reset.</span></span></h2>`;
   if(pcClosed)return head+`<div class="grid2" style="margin-top:0">`+rows.map(([k,l,t])=>{const c=srvCount(k,now),m=mult(t,c),nx=t.find(x=>c<=x[0]),left=nx?nx[0]-c+1:null,nm=nx?(t[t.indexOf(nx)+1]?t[t.indexOf(nx)+1][1]:.2):null;return `<div class="fld"><span>${l}</span><div style="color:var(--tx)"><b style="font-size:1.4rem">${c}</b> <span class="mu">runs</span> · <b style="color:${m===1?"var(--ok)":m<=.4?"#e5484d":"var(--wa)"}">${Math.round(m*100)}% Kina</b></div><div class="mu">${nx?`${left} more run${left===1?"":"s"} until ${Math.round(nm*100)}%`:"Lowest rate reached"}</div></div>`}).join("")+`</div>`;
   return head+`<div class="grid2">`+
     rows.map(([k,l,t])=>{const c=srvCount(k,now),m=mult(t,c),nx=t.find(x=>c<=x[0]),left=nx?nx[0]-c+1:null,nm=nx?(t[t.indexOf(nx)+1]?t[t.indexOf(nx)+1][1]:.2):null;
@@ -324,7 +324,7 @@ function pcHtml(now){
         <div style="color:${m===1?"var(--ok)":m<=.4?"#e5484d":"var(--wa)"};font-weight:600;font-size:1.05rem">${Math.round(m*100)}% Kina</div>
         <div class="mu">${nx?`${left} more run${left===1?"":"s"} until ${Math.round(nm*100)}%`:"Lowest rate reached"}</div>
         <div class="ib" style="margin-top:6px"><input type="number" min="0" max="9999" inputmode="numeric" placeholder="Set count" data-pk="${k}"><button data-set="${k}">Set</button></div></div>`}).join("")+
-    `</div><div class="mu" style="margin-top:8px">Each Spend button on a character adds 1 run to its mode. You can also set the number from the game. Counted across the whole server, and reset at the weekly reset.</div>`;
+    `</div>`;
 }
 function ddState(now){const used=lastWeekly(now)>srv.dat?0:srv.du;return {used,left:14-used,db:srv.db||0}}
 let ddClosed=false;try{ddClosed=localStorage.getItem(KEY+"-ddclosed")==="1"}catch(e){}
@@ -367,7 +367,7 @@ function render(){
   const now=Date.now();
   {const ab=document.getElementById("add"),full=chars.length>=MAXC;ab.disabled=full;ab.textContent=full?"Character limit reached ("+MAXC+"/"+MAXC+")":"Add character ("+chars.length+"/"+MAXC+")"}
   for(const [k,id] of [["add","addcard"],["srv","srv"],["dd","dd"],["pc","pc"]])document.getElementById(id).style.display=vis[k]?"":"none";
-  document.querySelector(".pair").style.display=(vis.srv||vis.dd)?"":"none";
+  document.querySelector(".pair").style.display=(vis.srv||vis.dd||vis.pc)?"":"none";
   document.querySelectorAll("#vis input").forEach(i=>{i.checked=!!vis[i.dataset.v]});
   document.getElementById("reset").innerHTML='<span class="rc"><small>Daily reset in</small><b>'+fmt(lastDaily(now)+86400000-now)+'</b></span><span class="rc"><small>Weekly reset in</small><b>'+fmt(nextReset()-now)+'</b></span><span class="rc" title="Starts every hour on the hour (community-confirmed schedule)"><small>Shugo Festival in</small><b style="color:var(--ac)">'+fmt((Math.floor(now/3600000)+1)*3600000-now)+'</b></span><span class="rc" title="Opens every 3 hours, at 02:00, 05:00, 08:00 ... UTC (community-observed, not an official schedule)"><small>Spacetime Rift in</small><b style="color:var(--ac)">'+fmt((Math.floor((now-7200000)/10800000)+1)*10800000+7200000-now)+'</b></span>';
   document.getElementById("srv").innerHTML='<h2 style="margin:0 0 4px;font-size:1.1rem;display:flex;align-items:center;justify-content:space-between;gap:8px">Weekly Odyle Energy (shared)<span class="info" tabindex="0" role="note" aria-label="Information">i<span class="tip">Morphs left here are added to the first character’s estimated Kina.</span></span></h2>'+srvHtml(now);
