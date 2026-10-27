@@ -4,6 +4,13 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-27 (newest 16)
+----------------------
+- Ranger Arcana: hover (or tap) a card sub skill to read its description
+  (type, cooldown / MP cost and what it does). Descriptions are
+  community-reported and may change with patches.
+
+
 2026-10-27 (newest 15)
 ----------------------
 - Ranger page - new Arcana section: Chalice of Vigor, Parchment of Vigor,
