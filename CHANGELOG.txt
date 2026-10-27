@@ -4,6 +4,24 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-27 (newest 15)
+----------------------
+- Ranger page - new Arcana section: Chalice of Vigor, Parchment of Vigor,
+  Compass of Magic, Bell of Magic and Mirror of Magic, each with the card
+  art, its type, enhancement level (+5) and its four card sub skills with
+  their icons and levels (Bell of Magic has two empty slots).
+  A note under the title says these cards are an ideal case scenario and
+  do not all have to be copied exactly.
+
+
+2026-10-27 (newest 14)
+----------------------
+- Est. Kina (collapsed card and Estimated Income) now takes off 100,000
+  Kina for every Odyle Shop Purchase left, e.g. 20 left = -2,000,000 Kina.
+  The info (i) tips show the figure before and after the shop cost. Morph
+  costs are still only taken off the net figure in the info tip.
+
+
 2026-10-27 (newest 13)
 ----------------------
 - Sidebar title (top left) now reads "Daveeb's Aion 2 Stuff" on one line.
