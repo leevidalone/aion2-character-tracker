@@ -438,7 +438,7 @@ function mini(c,r,now){
   const sp=(m,l)=>`<div class="eg"><span>${l}</span>${[40,80].map(x=>`<button data-a="espend" data-n="${x}" data-m="${m}" ${r.cur+(c.eb||0)>=x?"":"disabled"}>${x}</button>`).join("")}</div>`;
   const energy=`<div><small>Energy</small><b>${r.cur}/${ecap(c)}${bl(c.eb)}</b></div>`;
   const trash=`<button class="del trash" data-a="del" title="Remove character" aria-label="Remove character"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button>`;
-  return `<div class="mini">${energy}${cell("Nightmare",`${n.cur}/14${bl(c.nmb)}`,`<button data-a="adj" data-k="nm" data-d="-1" ${n.cur+(c.nmb||0)>0?"":"disabled"}>-1</button>`)}${cell("Ascension",`${a.left}/3${bl(c.ascb)}`,`<button data-a="adj" data-k="asc" data-d="-1" ${a.left+(c.ascb||0)>0?"":"disabled"}>-1</button>`)}${cell("Odyle Morph",`${4-crUsed(c,now)}/4`)}${mem?cell("Shop Purchases <span class='info sm tl' tabindex='0' role='note' aria-label='Information'>i<span class='tip'>Membership is required to buy these. They are only sold by the Windbreeze Merchants.</span></span>",`${20-shUsed(c,now)}/20`):""}<div class="kt"><div><small>Est. Kina <span class="info sm" tabindex="0" role="note" aria-label="Information">i<span class="tip">Estimate from your current energy only (plus any Odyle Morph and shop purchases left), with 100,000 Kina taken off for each shop purchase left. Energy that recharges later is not included.</span></span></small><b>${inf?`${(inf.est/1e6).toFixed(1)}M`:"&ndash;"}</b></div></div><div class="mft">${sp("xc","Expedition")}${sp("tc","Transcendence")}${trash}</div></div>`;
+  return `<div class="mini">${energy}${cell("Nightmare",`${n.cur}/14${bl(c.nmb)}`,`<button data-a="adj" data-k="nm" data-d="-1" ${n.cur+(c.nmb||0)>0?"":"disabled"}>-1</button>`)}${cell("Ascension",`${a.left}/3${bl(c.ascb)}`,`<button data-a="adj" data-k="asc" data-d="-1" ${a.left+(c.ascb||0)>0?"":"disabled"}>-1</button>`)}${cell("Odyle Morph",`${4-crUsed(c,now)}/4`)}${mem?cell("Shop Purchases <span class='info sm tl' tabindex='0' role='note' aria-label='Information'>i<span class='tip'>Membership is required to buy these. They are only sold by the Windbreeze Merchants.</span></span>",`${4-shUsed(c,now)}/4`):""}<div class="kt"><div><small>Est. Kina <span class="info sm" tabindex="0" role="note" aria-label="Information">i<span class="tip">Estimate from your current energy only (plus any Odyle Morph and shop purchases left), with 100,000 Kina taken off for each shop purchase left. Energy that recharges later is not included.</span></span></small><b>${inf?`${(inf.est/1e6).toFixed(1)}M`:"&ndash;"}</b></div></div><div class="mft">${sp("xc","Expedition")}${sp("tc","Transcendence")}${trash}</div></div>`;
 }
 const SKEY=KEY+"-srv";
 let srv={cu:0,cat:0,su:0,sat:0,du:0,dat:0,db:0,xc:0,xcat:0,tc:0,tcat:0};
@@ -477,7 +477,7 @@ function incomeInfo(c,now){
   if(!sel)return null;
   const isT=sel.id[0]==="t",t=isT?TRA_T:EXP_T,cnt=srvCount(isT?"tc":"xc",now);
   const en=calc(c,now).cur+(c.eb||0),base=Math.floor(en/40);
-  const mo=Math.max(0,4-crUsed(c,now)),sh=mem?Math.max(0,20-shUsed(c,now)):0;
+  const mo=Math.max(0,4-crUsed(c,now)),sh=mem?Math.max(0,4-shUsed(c,now)):0;
   const first=chars.length>0&&String(chars[0].id)===String(c.id),sv=first&&vis.srv?Math.max(0,16-srvUsed("c",now)):0;
   const sum=n=>{let x=0;for(let i=0;i<n;i++)x+=sel.k*mult(t,cnt+i);return Math.round(x)};
   const cw=base+mo+sh+sv,cost=(mo+sv)*50000+sh*100000,total=sum(cw);
@@ -576,7 +576,7 @@ function ddHtml(now){
     <div class="sbtn"><button data-dk="d" data-d="1" ${sb} ${s.left<14?"":"disabled"}>+1</button><button data-dk="db" data-d="1" ${sb} ${s.db<30?"":"disabled"}>Extra</button><button data-dk="d" data-d="-1" ${sb} ${s.left+s.db>0?"":"disabled"}>-1</button></div></div>
     <div class="ib"><input type="number" min="1" max="44" inputmode="numeric" placeholder="Amount Used" id="ddn"><button class="del" data-dk="rm">Use</button><button class="del" data-dk="rmall" ${s.left+s.db>0?"":"disabled"}>Use All</button></div>`;
 }
-function shUsed(c,now){return lastWeekly(now)>(c.shAt??0)?0:(c.sh??0)}
+function shUsed(c,now){return lastWeekly(now)>(c.shAt??0)?0:Math.min(4,c.sh??0)}
 function spendHtml(c,r){return `<div style="margin-top:10px">${[["xc","Expedition"],["tc","Transcendence"]].map(([m,l])=>`<div class="spr"><span class="spl">${l}:</span>${[40,80].map(a=>`<button class="spb" data-a="espend" data-n="${a}" data-m="${m}" ${r.cur+(c.eb||0)>=a?"":"disabled"}>${a}</button>`).join("")}</div>`).join("")}</div>`}
 function fld(label,k,attrs,extra){
   return `<div class="fld"${extra||""}><span>${label}</span><div class="ib"><input ${attrs} data-f="${k}"><button data-a="s" data-k="${k}">Sync</button></div></div>`;
@@ -589,8 +589,8 @@ function trackers(c,now){
     <div class="row3"><button class="g" data-a="adj" data-k="asc" data-d="-1" ${a.left+(c.ascb||0)>0?"":"disabled"}>-1</button><button class="del" data-a="useall" data-k="asc" ${a.left+(c.ascb||0)>0?"":"disabled"}>Use All</button><button class="g" data-a="adj" data-k="asc" data-d="1" ${a.left<3?"":"disabled"}>+1</button><button class="g" data-a="adj" data-k="ascb" data-d="1" ${(c.ascb||0)<30?"":"disabled"}>Extra</button></div></div>
     <div class="sec"><div class="row"><b>Odyle Morph</b><span class="mu">${4-crUsed(c,now)} / 4 left · resets in ${fmt(nextReset()-now)}</span></div>
     <div class="grid2" style="margin-top:8px;grid-template-columns:1fr 1fr 2fr"><button class="g sm" data-a="adj" data-k="cr" data-d="-1" ${crUsed(c,now)<4?"":"disabled"}>-1</button><button class="del sm" data-a="crall" ${crUsed(c,now)<4?"":"disabled"}>Morph All</button><button class="g" data-a="adj" data-k="cr" data-d="1" ${crUsed(c,now)>0?"":"disabled"}>+1</button></div></div>
-    ${mem?`<div class="sec"><div class="row"><b>Odyle Shop Purchases<span class="info sm inl" tabindex="0" role="note" aria-label="Information">i<span class="tip">Membership is required to buy these. They are only sold by the Windbreeze Merchants.</span></span></b><span class="mu">${20-shUsed(c,now)} / 20 left · resets in ${fmt(nextReset()-now)}</span></div>
-    <div class="grid2" style="margin-top:8px;grid-template-columns:1fr 1fr 2fr"><button class="g sm" data-a="adj" data-k="sh" data-d="-1" ${shUsed(c,now)<20?"":"disabled"}>-1</button><button class="del sm" data-a="shall" ${shUsed(c,now)<20?"":"disabled"}>Purchase All</button><button class="g" data-a="adj" data-k="sh" data-d="1" ${shUsed(c,now)>0?"":"disabled"}>+1</button></div>
+    ${mem?`<div class="sec"><div class="row"><b>Odyle Shop Purchases<span class="info sm inl" tabindex="0" role="note" aria-label="Information">i<span class="tip">Membership is required to buy these. They are only sold by the Windbreeze Merchants.</span></span></b><span class="mu">${4-shUsed(c,now)} / 4 left · resets in ${fmt(nextReset()-now)}</span></div>
+    <div class="grid2" style="margin-top:8px;grid-template-columns:1fr 1fr 2fr"><button class="g sm" data-a="adj" data-k="sh" data-d="-1" ${shUsed(c,now)<4?"":"disabled"}>-1</button><button class="del sm" data-a="shall" ${shUsed(c,now)<4?"":"disabled"}>Purchase All</button><button class="g" data-a="adj" data-k="sh" data-d="1" ${shUsed(c,now)>0?"":"disabled"}>+1</button></div>
     <div class="ib" style="margin-top:8px"><input type="number" min="1" max="20" inputmode="numeric" placeholder="Amount to remove" data-f="shn"><button class="del" data-a="shrm">Remove</button></div></div>`:""}`;
 }
 function parseDur(s){
@@ -722,8 +722,8 @@ document.getElementById("list").onclick=ev=>{
   else if(b.dataset.a==="eadd"){const v=parseInt(f("eadd").value,10);if(isNaN(v)||v<1)return;c.eb=Math.min(2000,(c.eb||0)+v)}
   else if(b.dataset.a==="crall"){c.cr=4;c.crAt=Date.now()}
   else if(b.dataset.a==="useall"){const now=Date.now();if(b.dataset.k==="nm"){c.nm=0;c.nmAt=now;c.nmb=0}else{c.asc=3;c.ascAt=now;c.ascb=0}}
-  else if(b.dataset.a==="shall"){c.sh=20;c.shAt=Date.now()}
-  else if(b.dataset.a==="shrm"){const now=Date.now(),v=parseInt(f("shn").value,10);if(isNaN(v)||v<1)return;c.sh=Math.min(20,shUsed(c,now)+v);c.shAt=now}
+  else if(b.dataset.a==="shall"){c.sh=4;c.shAt=Date.now()}
+  else if(b.dataset.a==="shrm"){const now=Date.now(),v=parseInt(f("shn").value,10);if(isNaN(v)||v<1)return;c.sh=Math.min(4,shUsed(c,now)+v);c.shAt=now}
   else if(b.dataset.a==="adj"){
     const k=b.dataset.k,d=parseInt(b.dataset.d,10),now=Date.now();
     if(k==="nm"){const cur=nmCalc(c,now).cur,v=cur+d;
@@ -735,7 +735,7 @@ document.getElementById("list").onclick=ev=>{
       else{if(v<0||v>3)return;c.asc=v;c.ascAt=now}}
     else if(k==="ascb"){const v=(c.ascb||0)+d;if(v<0||v>30||(d<0&&ascCalc(c,now).left>0))return;c.ascb=v}
     else if(k==="cr"){const v=crUsed(c,now)-d;if(v<0||v>4)return;c.cr=v;c.crAt=now}
-    else if(k==="sh"){const v=shUsed(c,now)-d;if(v<0||v>20)return;c.sh=v;c.shAt=now}}
+    else if(k==="sh"){const v=shUsed(c,now)-d;if(v<0||v>4)return;c.sh=v;c.shAt=now}}
   else if(b.dataset.a==="cfg"){
     const cur=calc(c,Date.now()).cur;
     const cap=parseInt(f("cap").value,10),amt=parseInt(f("amt").value,10);c.cls=f("cls").value;

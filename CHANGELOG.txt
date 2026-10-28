@@ -4,6 +4,14 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-29 (newest 17)
+----------------------
+- Odyle Shop Purchases limit changed from 20 to 4 a week (the game changed
+  it). The counter now shows x / 4, Purchase All spends all 4, and Est.
+  Kina takes off 100,000 per purchase left (so at most 400,000). Saved
+  purchase counts above 4 are capped at 4.
+
+
 2026-10-27 (newest 16)
 ----------------------
 - Ranger Arcana: hover (or tap) a card sub skill to read its description
