@@ -4,6 +4,18 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-29 (newest 18)
+----------------------
+- Collapsed character card: new +10 and +40 buttons under Energy that add
+  that much Charged Energy (shown as (+N) after the energy), on one line
+  under the Energy number, in green like the +1 buttons. Charged Energy
+  stops at 2000.
+- Collapsed character card: the -1 buttons for Nightmare and Ascension now
+  sit on their own line under the number (same red colour), and Odyle Morph
+  and Shop Purchases each get a -1 button there too (uses one morph / one
+  shop purchase). Each -1 also has a green +1 next to it to undo.
+
+
 2026-10-29 (newest 17)
 ----------------------
 - Odyle Shop Purchases limit changed from 20 to 4 a week (the game changed
