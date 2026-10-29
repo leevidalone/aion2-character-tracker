@@ -4,6 +4,21 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-29 (newest 20)
+----------------------
+- Ranger page - Equipment: Earrings is now Earring 1 and Earring 2, and
+  Rings is now Ring 1 and Ring 2, so each piece can be marked separately.
+  "Multi-Hit Chance = Attack" now just reads "Multi-Hit Chance".
+  (Earring/Ring lines you marked before this update need marking again.)
+- Ranger page - Genus Insight: the title of each square (Cogni, Fera,
+  Natura, Varian, Special) is now centred.
+- Ranger page - Arcana: each card now shows its Card Stat at +5 with what
+  it gives: Chalice of Vigor Time +25 (Combat Speed +2.5%, Double Resist
+  +2.5%), Parchment of Vigor Life +25 (HP, Regeneration), Compass of Magic
+  Death +25 (Critical Hit, Regeneration Penetration), Bell of Magic
+  Destruction +25 (Attack, Perfect Resist), Mirror of Magic Wisdom +25
+  (Double Chance +2.5%, MP Cost -2.5%). Community-reported: 0.1% per point.
+
 2026-10-29 (newest 19)
 ----------------------
 - Ranger page - Equipment: click a line to mark it as one you already have
