@@ -4,6 +4,14 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-10-29 (newest 19)
+----------------------
+- Ranger page - Equipment: click a line to mark it as one you already have
+  on that piece. It turns green with a tick; click again to unmark. Weapon
+  and Guard are tracked separately. Marks are saved in your browser (and
+  included in Backup & transfer).
+
+
 2026-10-29 (newest 18)
 ----------------------
 - Collapsed character card: new +10 and +40 buttons under Energy that add
