@@ -4,6 +4,39 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-11-02 (newest 25)
+----------------------
+- New Templar page under Class Information (third tab, below Cleric),
+  built from a questlog.gg Templar endgame build:
+  - Equipment: same slots and lines as the other classes plus the Templar
+    skill lines - Fury, Insulting Roar and Impact Hit on armor, Earrings
+    and Necklace; Judgment, Vicious Strike and Punishment on Rings (and
+    Precision on Rings). Click-to-mark works like the other pages.
+  - Genus Insight: same as the other classes.
+  - Arcana: five cards from your guide - Chalice of Vigor, Parchment of
+    Vigor, Compass of Vigor, Bell of Vigor and Mirror of Magic at +5, each
+    with its Card Stat and the Templar lines listed best first (priority
+    lines outlined, "to 20" / "to 16" targets), plus the Small gains and
+    "Or make it with" notes. Hover a line for its description.
+  - Skills: Skill Priority (Active: Judgment, Vicious Strike Lv 16,
+    Punishment Lv 15, Pummel Lv 16; Stigma: Noble Armor Lv 15, Battlefield
+    Banner, Shield of Protection Lv 10, Taunt; Passive: Fury, Insulting
+    Roar, Impact Hit, Punishing Benediction, Enhance Health, Ironclad
+    Defense) and Macro 1 (Judgment, 10 ms, Taunt) from your screenshot.
+    Keyboard Setup: your hotbar layout from the screenshot (keys 1-10,
+    mouse, 12 across four rows) with each skill in its slot; hover or tap
+    a skill for its name.
+    Skill Specialties: cards like the Cleric and Ranger ones (Level 20,
+    16, 12; no stigmas) with the specialty slot numbers to pick for each skill,
+    from the questlog Templar skill build linked to build 21139. Hover an
+    icon for what each specialty does.
+    Specialties: hover or tap any skill in Skill Priority or Keyboard
+    Setup to see its specialties (unlock level and effect), taken from the
+    questlog Templar skill build linked to build 21139. The level in the
+    tooltip is that build's level, which can differ from the guide's.
+- Sidebar: the connector line on the third class tab reaches up to Class
+  Information like the others.
+
 2026-11-02 (newest 24)
 ----------------------
 - Cleric page - Equipment: added the lines from a questlog.gg Cleric
