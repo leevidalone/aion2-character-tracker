@@ -4,6 +4,23 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-11-02 (newest 21)
+----------------------
+- Class Information: new Cleric page (under Class Information, below
+  Ranger) with the same three sections as Ranger.
+  Equipment: the same lines as Ranger but with the Ranger skill lines
+  removed (Boots, Rings). Marks are saved separately from Ranger.
+  Genus Insight: same stats as Ranger (not class specific).
+  Arcana: Chalice of Vigor, Parchment of Vigor, Compass of Vigor, Bell of
+  Magic and Mirror of Vigor with their Cleric sub skills and levels, the
+  Card Stat for each card, and hoverable skill descriptions (community-
+  reported, base values). Compass of Vigor: Freedom +25 (Accuracy,
+  Evasion +2.5%). Mirror of Vigor: Illusion +25 (Cooldown -2.5%,
+  Endurance Penetration +2.5%).
+- Cleric Arcana lists the skills one per row so the longer names fit.
+- The sidebar elbow line of the second class tab (Cleric) stretches up to
+  Class Information.
+
 2026-10-29 (newest 20)
 ----------------------
 - Ranger page - Equipment: Earrings is now Earring 1 and Earring 2, and
