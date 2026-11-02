@@ -6,6 +6,24 @@ Updating the site never resets anyone's saved characters.
 
 2026-11-02 (newest 25)
 ----------------------
+- Ranger and Templar: the Macros card now sits on the RIGHT of the
+  Keyboard Setup (same height as it). Ranger has a second set below:
+  Keyboard Setup (Manual Buff) with Macros (Manual Buff) - Gale Arrow,
+  Drill Dart, Drill Dart at 10 ms, in the same format as the other macro.
+  The first Ranger macro is now titled Macros (Auto buff).
+- Ranger and Templar: Macros and Keyboard Setup now sit side by side, and
+  the keyboard is smaller (about half the old size). On phones and narrow
+  windows they stack again. Cleric has no keyboard yet, so it is unchanged.
+  The two cards are the same height side by side.
+- Ranger page: replaced the 15 blurry skill icons with your sharp ones
+  (Deadshot, Gale Arrow, Drill Dart, Snipe, Tempest Shot, Burst Arrow,
+  Vaizel's Authority, Supporting Fire, Bow of Blessing, Griffon Arrow,
+  Explosive Arrow, Snare Shot, Marking Shot, Explosion Trap, plus the
+  keyboard setup). They show everywhere on the page.
+- Ranger page: new Keyboard Setup (Auto buff) after Macros, from your
+  screenshot (keys 1-10, mouse, 12 over four rows). The macro skills sit
+  in it: Burst Arrow on 1, Gale Arrow on 2, Drill Dart on 12. Hover or
+  tap a skill for its name.
 - Templar Skills: sharper skill icons (larger source images, including the
   ones you sent). New Keyboard Setup from your screenshot (keys 1-10,
   mouse, 12 over four rows, including Debilitating Smash); hover or tap a
