@@ -4,6 +4,25 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-11-02 (newest 23)
+----------------------
+- Ranger page - Stigma Priority: Griffon Arrow added with a
+  note on the right that it is only better than Supporting Fire once it
+  reaches Lv 15. Also added to the Skill Priority stigma row.
+- Ranger stigma order is now Vaizel's Authority > Supporting Fire >
+  Bow of Blessing > Griffon Arrow > Explosive Arrow (Explosive Arrow and
+  Supporting Fire had their names swapped before).
+- Ranger Skills: Explosion Trap and Suppressing Arrow now have icons.
+- Ranger Stigma Priority table now follows your sheet: rows by character
+  level / stigma (Level 22, 27, 37, 32 Stigma ... 300 Stigma) with the
+  Vaizel, Support, Blessing, Griffon and Explosive levels for each.
+- Ranger Macros: now one macro - Gale Arrow, 10 ms, Drill Dart, 10 ms,
+  Burst Arrow, 10 ms, Drill Dart (replaces the Snare Shot / Gale Arrow
+  macros).
+- Ranger and Cleric Skills: the skill numbers are now called Specialties
+  (header above the numbers) and are lined up in a column, with the grey
+  text (Max damage, + 3 if Lv 20, Lv 12 ...) on their left.
+
 2026-11-02 (newest 22)
 ----------------------
 - Ranger and Cleric pages: new Skills section (at the bottom, after
