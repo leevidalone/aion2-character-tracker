@@ -6,6 +6,19 @@ Updating the site never resets anyone's saved characters.
 
 2026-11-02 (newest 25)
 ----------------------
+- Cleric Keyboard Setup: column 10 moved to column 9 (Judgment, Light of
+  Regeneration, Divine Aura, Debilitating Mark), Lightning Strike moved from
+  column 9 to column 5, and Bolt added to column 10 (bottom row).
+- Cleric page: new Keyboard Setup from your screenshot, on the left of the
+  Cleric Macros (same layout as Ranger and Templar). Hover any skill for its
+  details.
+- Cleric page: 19 blurry icons replaced with your sharp ones (Earth's
+  Retribution, Judgment, Bolt, Chain of Torment, Debilitating Mark, Light of
+  Regeneration, Healing Light, Divine Aura, Radiant Recovery, Condemnation,
+  Lightning Strike, Earth Punishment, Light of Protection, Prayer of
+  Amplification, Noble Aura, Warm Benediction, Empyrean Lord's Grace,
+  Healing Enhancement, Earth's Grace). Radiant Benediction and Immortal Veil
+  are still the old icons.
 - Stigma Priority tables: the column headings (Level, Vaizel, Support...) are
   now bold and darker so they read more clearly.
 - Ranger Stigma Priority: removed the note "Griffon Arrow is only better
