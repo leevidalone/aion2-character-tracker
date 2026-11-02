@@ -4,6 +4,15 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-11-02 (newest 24)
+----------------------
+- Cleric page - Equipment: added the lines from a questlog.gg Cleric
+  build. Empyrean Lord's Grace on Hat, Pauldron, Top, Bottom, Gloves,
+  Cloak, Boots, both Earrings and Necklace; Critical Hit on Bottom,
+  Boots, both Earrings and Necklace; Condemnation, Divine Aura, Bolt and
+  Radiant Recovery on both Rings. Chances are shown as not published
+  (the ring skill lines use the same estimate as Ranger).
+
 2026-11-02 (newest 23)
 ----------------------
 - Ranger page - Stigma Priority: Griffon Arrow added with a
