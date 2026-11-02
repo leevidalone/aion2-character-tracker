@@ -6,6 +6,11 @@ Updating the site never resets anyone's saved characters.
 
 2026-11-02 (newest 25)
 ----------------------
+- Ranger Passive Priority: "Only these 2 are important." now sits to the
+  right of the Main icons (under them on phones) instead of on its own row.
+- Ranger page: 7 more blurry icons replaced with your sharp ones (Focused
+  Eye, Hunter's Resolve, Hunter's Soul, Concentrated Fire, Rooting Eye,
+  Melee Fire and Defiance).
 - Ranger and Templar: the Macros card now sits on the RIGHT of the
   Keyboard Setup (same height as it). Ranger has a second set below:
   Keyboard Setup (Manual Buff) with Macros (Manual Buff) - Gale Arrow,
