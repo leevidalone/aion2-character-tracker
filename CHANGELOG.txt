@@ -6,6 +6,12 @@ Updating the site never resets anyone's saved characters.
 
 2026-11-02 (newest 25)
 ----------------------
+- Templar Skills: sharper skill icons (larger source images, including the
+  ones you sent). New Keyboard Setup from your screenshot (keys 1-10,
+  mouse, 12 over four rows, including Debilitating Smash); hover or tap a
+  skill for its specialties.
+- Ranger, Cleric and Templar pages: the description lines under the
+  Equipment, Genus Insight and Arcana titles are removed too.
 - The Changelog button in the sidebar is hidden for now.
 - Ranger, Cleric and Templar pages: the description line under the Skills
   title is removed.
@@ -27,7 +33,7 @@ Updating the site never resets anyone's saved characters.
   - Skills: Passive Priority (Fury, Insulting Roar, Impact Hit, Punishing
     Benediction, Enhance Health, Ironclad Defense), so the sections run in
     the same order as Ranger: Skill Priority, Skill Specialties, Passive
-    Priority, Stigma Priority, Macros (Templar also has Keyboard Setup).
+    Priority, Stigma Priority, Macros.
   - Skills: Stigma Priority in order - Noble Armor to 15, Battlefield
     Banner to 10, Shield of Protection to 10, Taunt to 5, Battlefield
     Banner to 20, Taunt to 20, Shield of Protection to 20.
@@ -36,15 +42,12 @@ Updating the site never resets anyone's saved characters.
     Banner, Shield of Protection, Taunt; Passive: Fury, Insulting
     Roar, Impact Hit, Punishing Benediction, Enhance Health, Ironclad
     Defense) and Macro 1 (Judgment, 10 ms, Taunt) from your screenshot.
-    Keyboard Setup: your hotbar layout from the screenshot (keys 1-10,
-    mouse, 12 across four rows) with each skill in its slot; hover or tap
-    a skill for its name.
     Skill Specialties: cards like the Cleric and Ranger ones (Level 20,
     16, 12; no stigmas, all the same height) with the specialty slot numbers to pick for each skill,
     from the questlog Templar skill build linked to build 21139. Hover an
     icon for what each specialty does.
-    Specialties: hover or tap any skill in Skill Priority or Keyboard
-    Setup to see its specialties (unlock level and effect), taken from the
+    Specialties: hover or tap any skill in Skill Priority or Stigma
+    Priority to see its specialties (unlock level and effect), taken from the
     questlog Templar skill build linked to build 21139. The level in the
     tooltip is that build's level, which can differ from the guide's.
 - Sidebar: the connector line on the third class tab reaches up to Class
