@@ -6,6 +6,19 @@ Updating the site never resets anyone's saved characters.
 
 2026-11-02 (newest 25)
 ----------------------
+- Stigma Priority tables: the column headings (Level, Vaizel, Support...) are
+  now bold and darker so they read more clearly.
+- Ranger Stigma Priority: removed the note "Griffon Arrow is only better
+  than Supporting Fire once it reaches Lv 15." (the bullet list below it is
+  unchanged).
+- Ranger, Cleric and Templar: every skill icon now shows its details on
+  hover (tap on phones): name, Active/Passive/Stigma and the skill's
+  description (from questlog). This covers Skill Priority, Skill
+  Specialties, Passive/Stigma Priority, the Macros and the Keyboard Setups.
+  Damage and heal amounts show as [value] because they scale with level and
+  gear. Templar tooltips keep their specialty notes underneath.
+  Numbers in the tooltips (20%, 10s, 4m, 384-461, [value]) are bold and
+  coloured (gold on dark tooltips, amber on light ones) so values stand out.
 - Ranger Passive Priority: "Only these 2 are important." now sits to the
   right of the Main icons (under them on phones) instead of on its own row.
 - Ranger page: 7 more blurry icons replaced with your sharp ones (Focused
