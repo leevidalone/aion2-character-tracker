@@ -6,6 +6,12 @@ Updating the site never resets anyone's saved characters.
 
 2026-11-02 (newest 25)
 ----------------------
+- The Changelog button in the sidebar is hidden for now.
+- Ranger, Cleric and Templar pages: the description line under the Skills
+  title is removed.
+- Skill Specialties cards on the Ranger, Cleric and Templar pages are now
+  all the same height within a row (extra space stays grey), so the three
+  classes look the same.
 - New Templar page under Class Information (third tab, below Cleric),
   built from a questlog.gg Templar endgame build:
   - Equipment: same slots and lines as the other classes plus the Templar
@@ -13,21 +19,28 @@ Updating the site never resets anyone's saved characters.
     and Necklace; Judgment, Vicious Strike and Punishment on Rings (and
     Precision on Rings). Click-to-mark works like the other pages.
   - Genus Insight: same as the other classes.
-  - Arcana: five cards from your guide - Chalice of Vigor, Parchment of
-    Vigor, Compass of Vigor, Bell of Vigor and Mirror of Magic at +5, each
-    with its Card Stat and the Templar lines listed best first (priority
-    lines outlined, "to 20" / "to 16" targets), plus the Small gains and
-    "Or make it with" notes. Hover a line for its description.
-  - Skills: Skill Priority (Active: Judgment, Vicious Strike Lv 16,
-    Punishment Lv 15, Pummel Lv 16; Stigma: Noble Armor Lv 15, Battlefield
-    Banner, Shield of Protection Lv 10, Taunt; Passive: Fury, Insulting
+  - Arcana: five cards from your questlog build screenshots - Chalice of
+    Vigor, Parchment of Vigor, Compass of Vigor, Bell of Magic and Mirror
+    of Magic at +5, each with its Card Stat and its four card sub skills
+    with their levels (Mirror has two empty slots), like the Ranger and
+    Cleric pages. Hover a skill for its description.
+  - Skills: Passive Priority (Fury, Insulting Roar, Impact Hit, Punishing
+    Benediction, Enhance Health, Ironclad Defense), so the sections run in
+    the same order as Ranger: Skill Priority, Skill Specialties, Passive
+    Priority, Stigma Priority, Macros (Templar also has Keyboard Setup).
+  - Skills: Stigma Priority in order - Noble Armor to 15, Battlefield
+    Banner to 10, Shield of Protection to 10, Taunt to 5, Battlefield
+    Banner to 20, Taunt to 20, Shield of Protection to 20.
+  - Skills: Skill Priority, names only (Active: Judgment, Vicious Strike,
+    Punishment, Pummel; Stigma: Noble Armor, Battlefield
+    Banner, Shield of Protection, Taunt; Passive: Fury, Insulting
     Roar, Impact Hit, Punishing Benediction, Enhance Health, Ironclad
     Defense) and Macro 1 (Judgment, 10 ms, Taunt) from your screenshot.
     Keyboard Setup: your hotbar layout from the screenshot (keys 1-10,
     mouse, 12 across four rows) with each skill in its slot; hover or tap
     a skill for its name.
     Skill Specialties: cards like the Cleric and Ranger ones (Level 20,
-    16, 12; no stigmas) with the specialty slot numbers to pick for each skill,
+    16, 12; no stigmas, all the same height) with the specialty slot numbers to pick for each skill,
     from the questlog Templar skill build linked to build 21139. Hover an
     icon for what each specialty does.
     Specialties: hover or tap any skill in Skill Priority or Keyboard
