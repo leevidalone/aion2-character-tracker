@@ -362,7 +362,7 @@ button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;
 .ppp h2{font-size:1.05rem;margin:0 0 2px}.ppst{color:var(--mu);font-size:.82rem;margin-bottom:10px}
 .ppslot{display:flex;align-items:center;gap:8px;min-height:58px;margin-bottom:8px;padding:4px;border:1px dashed var(--bd);border-radius:10px;cursor:pointer}
 .ppslot.over{border-color:var(--ac);background:var(--bg)}.ppslot.sel{border:1px solid var(--hl,#ffd166);box-shadow:0 0 0 2px var(--hl,#ffd166)}
-.pprole{flex:0 0 46px;text-align:center;font-size:.7rem;font-weight:700;letter-spacing:.04em;color:var(--mu)}
+.pprole{flex:0 0 100px}select.pprs{width:100%;padding:8px 10px;font-size:.88rem;font-weight:700;color:var(--mu)}
 .ppempty{color:var(--mu);font-size:.85rem;flex:1;text-align:center}
 .ppcard{flex:1;display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--bd);border-left:4px solid var(--c,#888);border-radius:8px;padding:8px 10px;cursor:grab;user-select:none;min-width:0}
 .ppcard.dragging{opacity:.4}.ppinfo{flex:1;min-width:0}.ppname{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1236,21 +1236,24 @@ render()})();
   let o=true;try{if(localStorage.getItem(KEY+"-clsopen")==="0")o=false}catch(e){}setCls(o);
 })();
 (function(){
-const ROLES=["Tank","DPS","DPS","DPS/C","SUP"],N=16,K=KEY+"-party2";try{localStorage.removeItem(KEY+"-party")}catch(e){}
-const COL={Templar:"#2f5fd0",Gladiator:"#7fd4ff",Ranger:"#7ee787",Sorcerer:"#c792ea","Spirit Master":"#f78fb3",Chanter:"#ff9f1c",Cleric:"#ffd166",Assassin:"#b0b8c8"};
+const ROLES=["Tank","DPS","DPS","DPS/C","SUP"],ROLE_OPTS=["Tank","DPS","DPS/C","SUP"],N=16,K=KEY+"-party2";try{localStorage.removeItem(KEY+"-party")}catch(e){}
+const COL={Templar:"#2f5fd0",Gladiator:"#7fd4ff",Ranger:"#5fd06e",Sorcerer:"#b18ee8","Spirit Master":"#c56ec4",Chanter:"#ff9f1c",Cleric:"#ffd166",Assassin:"#8ff29c"};
 const $=id=>document.getElementById(id);
-function fresh(){return{players:{},slots:Array(N).fill(null),next:1}}
-function load(){try{const s=JSON.parse(localStorage.getItem(K));if(s&&s.players&&Array.isArray(s.slots)&&s.slots.length===N)return s}catch(e){}return fresh()}
+function fresh(){return{players:{},slots:Array(N).fill(null),next:1,roles:[...ROLES,...ROLES]}}
+function load(){try{const s=JSON.parse(localStorage.getItem(K));if(s&&s.players&&Array.isArray(s.slots)&&s.slots.length===N){if(!Array.isArray(s.roles)||s.roles.length!==10||s.roles.some(r=>!ROLE_OPTS.includes(r)))s.roles=[...ROLES,...ROLES];return s}}catch(e){}return fresh()}
 let S=load(),sel=null,drag=null,ed=null;
 function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function roleSel(i){return `<select class="pprs" data-ppr="${i}" aria-label="Role">${ROLE_OPTS.map(r=>`<option${r===S.roles[i]?" selected":""}>${r}</option>`).join("")}</select>`}
 function slotH(i){const id=S.slots[i],p=id&&S.players[id];
   const inner=p?`<div class="ppcard" draggable="true" data-ppi="${i}" style="--c:${COL[p.cls]||"#888"}"><div class="ppinfo"><div class="ppname">${esc(p.name)}</div><div class="ppcls">${esc(p.cls)}</div></div><div class="pppw">${esc(p.power)}</div><button type="button" class="ppedit" data-ppe="${i}" title="Edit">✏️</button></div>`:`<div class="ppempty">+ add player</div>`;
-  return `<div class="ppslot${sel===i?" sel":""}" data-pps="${i}"><div class="pprole">${i<10?ROLES[i%5]:""}</div>${inner}</div>`}
+  return `<div class="ppslot${sel===i?" sel":""}" data-pps="${i}">${i<10?`<div class="pprole">${roleSel(i)}</div>`:""}${inner}</div>`}
 function stats(f){let sum=0,u=0;for(let i=f;i<f+5;i++){const p=S.slots[i]&&S.players[S.slots[i]];if(!p)continue;const m=/^(\d+(?:\.\d+)?)k?$/i.exec(String(p.power).trim());if(m)sum+=parseFloat(m[1]);else u++}return"Total "+sum.toLocaleString()+"k"+(u?" · "+u+" unknown":"")}
 function render(){let h="";[0,5].forEach((f,n)=>{h+=`<div class="card ppp"><h2>Party ${n+1}</h2><div class="ppst">${stats(f)}</div>`;for(let i=f;i<f+5;i++)h+=slotH(i);h+="</div>"});$("ppgrid").innerHTML=h;let b="";for(let i=10;i<N;i++)b+=slotH(i);$("ppbench").innerHTML=b}
 function swap(a,b){[S.slots[a],S.slots[b]]=[S.slots[b],S.slots[a]];save();render()}
 const pg=$("pg-party");
+pg.addEventListener("change",e=>{const r=e.target.closest("[data-ppr]");if(!r)return;S.roles[+r.dataset.ppr]=r.value;save()});
 pg.addEventListener("click",e=>{
+  if(e.target.closest("[data-ppr]"))return;
   const ee=e.target.closest("[data-ppe]");if(ee){e.stopPropagation();openEd(+ee.dataset.ppe);return}
   const s=e.target.closest("[data-pps]");if(!s)return;const i=+s.dataset.pps;
   if(sel===null){if(S.slots[i])sel=i;else{openEd(i);return}render()}
@@ -1269,7 +1272,7 @@ $("ppdel").onclick=()=>{const id=S.slots[ed];if(id){delete S.players[id];S.slots
 $("ppshuf").onclick=()=>{const ids=S.slots.slice(0,10).filter(Boolean);for(let i=ids.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ids[i],ids[j]]=[ids[j],ids[i]]}for(let i=0;i<10;i++)S.slots[i]=ids[i]||null;sel=null;save();render()};
 const rb=$("pprst");let armed=0;
 rb.onclick=()=>{if(armed){S=fresh();sel=null;armed=0;rb.textContent="🗑️ Reset";$("ppsn").value="";$("ppsm").textContent="";$("ppmsg").textContent="";save();render();return}armed=1;rb.textContent="⚠️ Click again to confirm";setTimeout(()=>{armed=0;rb.textContent="🗑️ Reset"},3000)};
-function asText(){const ln=i=>{const p=S.slots[i]&&S.players[S.slots[i]];return(ROLES[i%5]+":").padEnd(7)+(p?`${p.name} (${p.power}) - ${p.cls}`:"(empty)")};let t="";[0,5].forEach((f,n)=>{t+=`Party ${n+1}\n`;for(let i=f;i<f+5;i++)t+=ln(i)+"\n";t+="\n"});return t.trim()}
+function asText(){const ln=i=>{const p=S.slots[i]&&S.players[S.slots[i]];return(S.roles[i]+":").padEnd(7)+(p?`${p.name} (${p.power}) - ${p.cls}`:"(empty)")};let t="";[0,5].forEach((f,n)=>{t+=`Party ${n+1}\n`;for(let i=f;i<f+5;i++)t+=ln(i)+"\n";t+="\n"});return t.trim()}
 $("ppcopy").onclick=async()=>{const t=asText();try{await navigator.clipboard.writeText(t);$("ppmsg").textContent="Copied";setTimeout(()=>$("ppmsg").textContent="",2000)}catch(e){$("ppout").value=t;$("pptxt").showModal();$("ppout").select()}};
 $("ppclose").onclick=()=>$("pptxt").close();
 const SK=K+"-find",rs=$("ppsr"),ss=$("ppss"),sm=$("ppsm");

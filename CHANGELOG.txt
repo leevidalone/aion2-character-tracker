@@ -18,6 +18,14 @@ Updating the site never resets anyone's saved characters.
 - Party Planner: now starts empty (the sample players are gone) and Reset
   clears the whole page, including the bench and the search box. Reset is red
   and asks you to click twice to confirm. All Planner buttons now have emojis.
+- Party Planner: the role on the left of each party slot (Tank, DPS, DPS/C, SUP)
+  is now a dropdown you can change. Roles belong to the slot and are saved;
+  Reset puts them back to the defaults.
+- Party Planner: Sorcerer is now violet and Spirit Master orchid purple (colours
+  taken from the in-game icons), and the role dropdowns are wider so they are
+  no longer squished.
+- Party Planner: Ranger is a slightly darker green, and Assassin now has its own
+  colour, a slightly brighter green than Ranger.
 
 
 2026-11-02 (newest 25)
