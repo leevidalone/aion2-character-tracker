@@ -41,6 +41,10 @@ Updating the site never resets anyone's saved characters.
 - Party Planner: removed the Shuffle button. Each party now has a "Clear party"
   button at its bottom right that moves that party's players to the bench
   (the bench grows if it needs to). Roles stay as they are.
+- Party Planner: added some space between the parties and the bench.
+- Party Planner: party members now have an X button next to the edit button that
+  moves them straight to the bench (the bench grows if it is full). It is a
+  red button with a white X.
 
 
 2026-11-02 (newest 25)

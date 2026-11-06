@@ -358,7 +358,7 @@ button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;
 .pgrid a{color:var(--ac)}
 .pgrid.done{opacity:.55}.pgrid>span:last-child{text-align:center}
 .pnote{display:block;font-size:.75rem;color:var(--mu)}
-.ppgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}.ppgrid .card,.ppbench.card{margin:0}
+.ppgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}.ppgrid .card{margin:0}
 .ppp h2{font-size:1.05rem;margin:0 0 2px}.ppst{color:var(--mu);font-size:.82rem;margin-bottom:10px}
 .ppslot{display:flex;align-items:center;gap:8px;min-height:58px;margin-bottom:8px;padding:4px;border:1px dashed var(--bd);border-radius:10px;cursor:pointer}
 .ppslot.over{border-color:var(--ac);background:var(--bg)}.ppslot.sel{border:1px solid var(--hl,#ffd166);box-shadow:0 0 0 2px var(--hl,#ffd166)}
@@ -369,9 +369,10 @@ button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;
 .ppcls{font-size:.78rem;color:var(--mu)}.pppw{font-variant-numeric:tabular-nums;font-weight:600}
 button.ppedit{padding:2px 7px;font-size:.85rem;background:transparent;border:0;color:var(--mu)}
 #pprst{background:#e5484d!important;color:#fff!important;border-color:#e5484d!important}#pprst:hover:not(:disabled){background:#c93a3f!important;border-color:#c93a3f!important}
+button.ppx{background:#e5484d!important;color:#fff!important;border-color:#e5484d!important;font-weight:700}button.ppx:hover:not(:disabled){background:#c93a3f!important;border-color:#c93a3f!important}
 .ppfoot{display:flex;justify-content:flex-end;margin-top:4px}
 .ppsrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.ppsrow input{flex:2 1 160px}.ppsrow select{flex:1 1 140px;min-width:0}
-.ppbench{margin-top:14px}.ppbench h2{font-size:1.05rem;margin:0 0 10px}.ppbg{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.ppbench.card{margin:16px 0 0}.ppbench h2{font-size:1.05rem;margin:0 0 10px}.ppbg{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
 #ppmodal .ppbox label{display:block;font-size:.8rem;color:var(--mu);margin:10px 0 3px}#ppmodal .ppbox input{width:100%}
 #ppmodal,#pptxt{border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx);padding:18px;width:min(340px,92vw)}
 #ppmodal::backdrop,#pptxt::backdrop{background:rgba(0,0,0,.6)}
@@ -1248,7 +1249,7 @@ function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
 Object.keys(COL).forEach(k=>COLN[cnorm(k)]=COL[k]);
 function roleSel(i){return `<select class="pprs" data-ppr="${i}" aria-label="Role">${ROLE_OPTS.map(r=>`<option${r===S.roles[i]?" selected":""}>${r}</option>`).join("")}</select>`}
 function slotH(i){const id=S.slots[i],p=id&&S.players[id];
-  const inner=p?`<div class="ppcard" draggable="true" data-ppi="${i}" style="--c:${COLN[cnorm(p.cls)]||"#888"}"><div class="ppinfo"><div class="ppname">${esc(p.name)}</div><div class="ppcls">${esc(p.cls)}</div></div><div class="pppw">${esc(p.power)}</div><button type="button" class="ppedit" data-ppe="${i}" title="Edit">✏️</button></div>`:`<div class="ppempty">+ add player</div>`;
+  const inner=p?`<div class="ppcard" draggable="true" data-ppi="${i}" style="--c:${COLN[cnorm(p.cls)]||"#888"}"><div class="ppinfo"><div class="ppname">${esc(p.name)}</div><div class="ppcls">${esc(p.cls)}</div></div><div class="pppw">${esc(p.power)}</div><button type="button" class="ppedit" data-ppe="${i}" title="Edit">✏️</button>${i<10?`<button type="button" class="ppedit ppx" data-ppx="${i}" title="Move to bench" aria-label="Move to bench">✕</button>`:""}</div>`:`<div class="ppempty">+ add player</div>`;
   return `<div class="ppslot${sel===i?" sel":""}" data-pps="${i}">${i<10?`<div class="pprole">${roleSel(i)}</div>`:""}${inner}</div>`}
 function stats(f){let sum=0,n=0,u=0;for(let i=f;i<f+5;i++){const p=S.slots[i]&&S.players[S.slots[i]];if(!p)continue;const m=/^(\d+(?:\.\d+)?)k?$/i.exec(String(p.power).trim());if(m){sum+=parseFloat(m[1]);n++}else u++}const r=x=>(Math.round(x*10)/10).toLocaleString();return"Total "+r(sum)+"k · Avg "+(n?r(sum/n)+"k":"–")+(u?" · "+u+" unknown":"")}
 function fitBench(){let filled=0,last=9;for(let i=10;i<S.slots.length;i++)if(S.slots[i]){filled++;last=i}
@@ -1256,12 +1257,14 @@ function fitBench(){let filled=0,last=9;for(let i=10;i<S.slots.length;i++)if(S.s
   while(S.slots.length<t)S.slots.push(null);S.slots.length=t;return S.slots.length!==before}
 function render(){if(fitBench())save();let h="";[0,5].forEach((f,n)=>{h+=`<div class="card ppp"><h2>Party ${n+1}</h2><div class="ppst">${stats(f)}</div>`;for(let i=f;i<f+5;i++)h+=slotH(i);h+=`<div class="ppfoot"><button type="button" class="g" data-ppclr="${n}">\uD83E\uDDF9 Clear party</button></div></div>`});$("ppgrid").innerHTML=h;let b="";for(let i=10;i<S.slots.length;i++)b+=slotH(i);$("ppbench").innerHTML=b}
 function clearParty(n){let moved=0;for(let i=n*5;i<n*5+5;i++){const id=S.slots[i];if(!id)continue;let j=S.slots.indexOf(null,10);if(j<0){S.slots.push(null);j=S.slots.length-1}S.slots[j]=id;S.slots[i]=null;moved++}sel=null;save();render();$("ppmsg").textContent=moved?"Moved "+moved+" player"+(moved===1?"":"s")+" from Party "+(n+1)+" to the bench.":"Party "+(n+1)+" is already empty."}
+function toBench(i){const id=S.slots[i];if(!id)return;let j=S.slots.indexOf(null,10);if(j<0){S.slots.push(null);j=S.slots.length-1}S.slots[j]=id;S.slots[i]=null;sel=null;save();render();$("ppmsg").textContent="Moved "+S.players[id].name+" to the bench."}
 function swap(a,b){[S.slots[a],S.slots[b]]=[S.slots[b],S.slots[a]];save();render()}
 const pg=$("pg-party");
 pg.addEventListener("change",e=>{const r=e.target.closest("[data-ppr]");if(!r)return;S.roles[+r.dataset.ppr]=r.value;save()});
 pg.addEventListener("click",e=>{
   if(e.target.closest("[data-ppr]"))return;
   const cl=e.target.closest("[data-ppclr]");if(cl){clearParty(+cl.dataset.ppclr);return}
+  const xb=e.target.closest("[data-ppx]");if(xb){e.stopPropagation();toBench(+xb.dataset.ppx);return}
   const ee=e.target.closest("[data-ppe]");if(ee){e.stopPropagation();openEd(+ee.dataset.ppe);return}
   const s=e.target.closest("[data-pps]");if(!s)return;const i=+s.dataset.pps;
   if(sel===null){if(S.slots[i])sel=i;else{openEd(i);return}render()}
