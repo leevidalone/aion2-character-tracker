@@ -15,6 +15,9 @@ Updating the site never resets anyone's saved characters.
   and server, and it fetches the class and combat power from the official
   character search and adds the character to the bench (or updates them if
   they are already in the planner).
+- Party Planner: now starts empty (the sample players are gone) and Reset
+  clears the whole page, including the bench and the search box. Reset is red
+  and asks you to click twice to confirm. All Planner buttons now have emojis.
 
 
 2026-11-02 (newest 25)
