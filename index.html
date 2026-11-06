@@ -821,7 +821,7 @@ button.ppedit{padding:2px 7px;font-size:.85rem;background:transparent;border:0;c
     <label>Name</label><input id="ppfn" maxlength="30">
     <label>Power (e.g. 211k)</label><input id="ppfp" maxlength="10">
     <label>Class</label><input id="ppfc" list="ppcl" maxlength="20">
-    <datalist id="ppcl"><option>Templar<option>Gladiator<option>Ranger<option>Sorcerer<option>Spirit Master<option>Chanter<option>Cleric<option>Assassin</datalist>
+    <datalist id="ppcl"><option>Templar<option>Gladiator<option>Ranger<option>Sorcerer<option>Spiritmaster<option>Chanter<option>Cleric<option>Assassin</datalist>
     <div class="row" style="margin-top:16px;justify-content:flex-end"><button type="button" class="del" id="ppdel">🗑️ Delete</button><button type="button" class="g" id="ppcan">✖️ Cancel</button><button type="button" id="ppsave">💾 Save</button></div></div></dialog>
   <dialog id="pptxt"><b>Copy this</b><textarea id="ppout" readonly></textarea><div class="row" style="margin-top:12px;justify-content:flex-end"><button type="button" id="ppclose">✖️ Close</button></div></dialog>
 </main>
@@ -1237,17 +1237,19 @@ render()})();
 })();
 (function(){
 const ROLES=["Tank","DPS","DPS","DPS/C","SUP"],ROLE_OPTS=["Tank","DPS","DPS/C","SUP"],N=16,K=KEY+"-party2";try{localStorage.removeItem(KEY+"-party")}catch(e){}
-const COL={Templar:"#2f5fd0",Gladiator:"#7fd4ff",Ranger:"#5fd06e",Sorcerer:"#b18ee8","Spirit Master":"#c56ec4",Chanter:"#ff9f1c",Cleric:"#ffd166",Assassin:"#8ff29c"};
+const COLN={},cnorm=x=>String(x).replace(/\s+/g,"").toLowerCase();
+const COL={Templar:"#2f5fd0",Gladiator:"#7fd4ff",Ranger:"#5fd06e",Sorcerer:"#b18ee8",Spiritmaster:"#c56ec4",Chanter:"#ff9f1c",Cleric:"#ffd166",Assassin:"#8ff29c"};
 const $=id=>document.getElementById(id);
 function fresh(){return{players:{},slots:Array(N).fill(null),next:1,roles:[...ROLES,...ROLES]}}
 function load(){try{const s=JSON.parse(localStorage.getItem(K));if(s&&s.players&&Array.isArray(s.slots)&&s.slots.length===N){if(!Array.isArray(s.roles)||s.roles.length!==10||s.roles.some(r=>!ROLE_OPTS.includes(r)))s.roles=[...ROLES,...ROLES];return s}}catch(e){}return fresh()}
 let S=load(),sel=null,drag=null,ed=null;
 function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+Object.keys(COL).forEach(k=>COLN[cnorm(k)]=COL[k]);
 function roleSel(i){return `<select class="pprs" data-ppr="${i}" aria-label="Role">${ROLE_OPTS.map(r=>`<option${r===S.roles[i]?" selected":""}>${r}</option>`).join("")}</select>`}
 function slotH(i){const id=S.slots[i],p=id&&S.players[id];
-  const inner=p?`<div class="ppcard" draggable="true" data-ppi="${i}" style="--c:${COL[p.cls]||"#888"}"><div class="ppinfo"><div class="ppname">${esc(p.name)}</div><div class="ppcls">${esc(p.cls)}</div></div><div class="pppw">${esc(p.power)}</div><button type="button" class="ppedit" data-ppe="${i}" title="Edit">✏️</button></div>`:`<div class="ppempty">+ add player</div>`;
+  const inner=p?`<div class="ppcard" draggable="true" data-ppi="${i}" style="--c:${COLN[cnorm(p.cls)]||"#888"}"><div class="ppinfo"><div class="ppname">${esc(p.name)}</div><div class="ppcls">${esc(p.cls)}</div></div><div class="pppw">${esc(p.power)}</div><button type="button" class="ppedit" data-ppe="${i}" title="Edit">✏️</button></div>`:`<div class="ppempty">+ add player</div>`;
   return `<div class="ppslot${sel===i?" sel":""}" data-pps="${i}">${i<10?`<div class="pprole">${roleSel(i)}</div>`:""}${inner}</div>`}
-function stats(f){let sum=0,u=0;for(let i=f;i<f+5;i++){const p=S.slots[i]&&S.players[S.slots[i]];if(!p)continue;const m=/^(\d+(?:\.\d+)?)k?$/i.exec(String(p.power).trim());if(m)sum+=parseFloat(m[1]);else u++}return"Total "+sum.toLocaleString()+"k"+(u?" · "+u+" unknown":"")}
+function stats(f){let sum=0,n=0,u=0;for(let i=f;i<f+5;i++){const p=S.slots[i]&&S.players[S.slots[i]];if(!p)continue;const m=/^(\d+(?:\.\d+)?)k?$/i.exec(String(p.power).trim());if(m){sum+=parseFloat(m[1]);n++}else u++}const r=x=>(Math.round(x*10)/10).toLocaleString();return"Total "+r(sum)+"k · Avg "+(n?r(sum/n)+"k":"–")+(u?" · "+u+" unknown":"")}
 function render(){let h="";[0,5].forEach((f,n)=>{h+=`<div class="card ppp"><h2>Party ${n+1}</h2><div class="ppst">${stats(f)}</div>`;for(let i=f;i<f+5;i++)h+=slotH(i);h+="</div>"});$("ppgrid").innerHTML=h;let b="";for(let i=10;i<N;i++)b+=slotH(i);$("ppbench").innerHTML=b}
 function swap(a,b){[S.slots[a],S.slots[b]]=[S.slots[b],S.slots[a]];save();render()}
 const pg=$("pg-party");

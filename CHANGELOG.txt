@@ -26,6 +26,11 @@ Updating the site never resets anyone's saved characters.
   no longer squished.
 - Party Planner: Ranger is a slightly darker green, and Assassin now has its own
   colour, a slightly brighter green than Ranger.
+- Party Planner fix: Spiritmaster now gets its colour (the class name is spelled
+  "Spiritmaster" in the game lookup, which did not match the colour list).
+  Class colours now ignore spacing and capital letters.
+- Party Planner: each party now shows its average combat power next to the
+  total (players with an unknown power are left out of the average).
 
 
 2026-11-02 (newest 25)
