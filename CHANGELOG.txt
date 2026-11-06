@@ -4,6 +4,19 @@ All data is stored only in each person's own browser (localStorage).
 Updating the site never resets anyone's saved characters.
 
 
+2026-11-06
+----------
+- New "Party Planner" page in the sidebar: two parties of five (Tank, DPS,
+  DPS, DPS/C, SUP) plus a bench. Drag a player onto another slot to swap
+  (tap one, then tap the target, on phones), shuffle everyone, add / edit /
+  delete players, and copy the lineup as text. Class colours: Templar dark
+  blue, Gladiator light blue, Chanter orange. Saved in your browser only.
+- Party Planner: new "Find a character" search. Type a name, pick your region
+  and server, and it fetches the class and combat power from the official
+  character search and adds the character to the bench (or updates them if
+  they are already in the planner).
+
+
 2026-11-02 (newest 25)
 ----------------------
 - Cleric Keyboard Setup: column 10 moved to column 9 (Judgment, Light of

@@ -358,6 +358,23 @@ button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;
 .pgrid a{color:var(--ac)}
 .pgrid.done{opacity:.55}.pgrid>span:last-child{text-align:center}
 .pnote{display:block;font-size:.75rem;color:var(--mu)}
+.ppgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}.ppgrid .card,.ppbench.card{margin:0}
+.ppp h2{font-size:1.05rem;margin:0 0 2px}.ppst{color:var(--mu);font-size:.82rem;margin-bottom:10px}
+.ppslot{display:flex;align-items:center;gap:8px;min-height:58px;margin-bottom:8px;padding:4px;border:1px dashed var(--bd);border-radius:10px;cursor:pointer}
+.ppslot.over{border-color:var(--ac);background:var(--bg)}.ppslot.sel{border:1px solid var(--hl,#ffd166);box-shadow:0 0 0 2px var(--hl,#ffd166)}
+.pprole{flex:0 0 46px;text-align:center;font-size:.7rem;font-weight:700;letter-spacing:.04em;color:var(--mu)}
+.ppempty{color:var(--mu);font-size:.85rem;flex:1;text-align:center}
+.ppcard{flex:1;display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--bd);border-left:4px solid var(--c,#888);border-radius:8px;padding:8px 10px;cursor:grab;user-select:none;min-width:0}
+.ppcard.dragging{opacity:.4}.ppinfo{flex:1;min-width:0}.ppname{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ppcls{font-size:.78rem;color:var(--mu)}.pppw{font-variant-numeric:tabular-nums;font-weight:600}
+button.ppedit{padding:2px 7px;font-size:.85rem;background:transparent;border:0;color:var(--mu)}
+.ppsrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.ppsrow input{flex:2 1 160px}.ppsrow select{flex:1 1 140px;min-width:0}
+.ppbench{margin-top:14px}.ppbench h2{font-size:1.05rem;margin:0 0 10px}.ppbg{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+#ppmodal .ppbox label{display:block;font-size:.8rem;color:var(--mu);margin:10px 0 3px}#ppmodal .ppbox input{width:100%}
+#ppmodal,#pptxt{border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx);padding:18px;width:min(340px,92vw)}
+#ppmodal::backdrop,#pptxt::backdrop{background:rgba(0,0,0,.6)}
+#ppout{width:100%;height:200px;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:8px;font:.8rem/1.4 monospace}
+@media(max-width:700px){.ppgrid,.ppbg{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -367,6 +384,7 @@ button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;
   <div class="sidelbl">Pages</div>
   <a href="#char" class="pgl" data-pg="char">Character Tracker</a>
   <a href="#pet" class="pgl" data-pg="pet">Pet Tracker</a>
+  <a href="#party" class="pgl" data-pg="party">Party Planner</a>
   <div class="pggrp"><a href="#cls" class="pgl pgfold" id="clstg" data-pg="cls" aria-expanded="true" aria-controls="clssub" title="Click to collapse / expand">Class Information<span class="chev" aria-hidden="true">▾</span></a><div id="clssub"><a href="#cls-ranger" class="pgl pgsub" data-pg="cls-ranger">Ranger</a><a href="#cls-cleric" class="pgl pgsub" data-pg="cls-cleric">Cleric</a><a href="#cls-templar" class="pgl pgsub" data-pg="cls-templar">Templar</a></div></div>
   <div class="sidefoot"><button type="button" class="clb" id="clbtn">Changelog</button><button type="button" class="thm" id="thm" role="switch" aria-label="Dark mode" title="Toggle light / dark mode"><span class="k"><svg class="su" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="mo" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button></div>
 </nav>
@@ -789,6 +807,23 @@ button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;
     <div class="pwrap"><div class="pgrid phd"><span></span><span>Pet</span><span class="pc" title="Elyos">Elyos</span><span class="pc" title="Asmodian">Asmodian</span><span class="pc" title="Abyss">Abyss</span><span class="pc">Location</span><span>Genus</span></div><div id="plist"></div></div>
   </div>
 </main>
+<main id="pg-party" hidden>
+  <div class="top"><h1>Party Planner</h1></div>
+  <p class="sub">Drag a player onto another slot to swap. On touch, tap a player, then tap where it should go. Tap an empty slot to add a player, or the pencil to edit one. Saved in this browser.</p>
+  <div class="row" style="margin-bottom:12px"><button type="button" id="ppshuf">Shuffle all</button><button type="button" class="g" id="ppcopy">Copy as text</button><button type="button" class="g" id="pprst">Reset</button><span class="mu" id="ppmsg" style="font-size:.85rem"></span></div>
+  <div class="card" id="ppfind"><b>Find a character</b><div class="mu" style="font-size:.85rem">Looks up the class and combat power from the official character search and adds the character to the bench.</div>
+    <div class="ppsrow"><input id="ppsn" placeholder="Character name" maxlength="30" autocomplete="off" aria-label="Character name"><select id="ppsr" aria-label="Region"></select><select id="ppss" aria-label="Server"></select><button type="button" id="ppsgo">Search &amp; add to bench</button></div>
+    <div class="mu" id="ppsm" style="margin-top:8px;font-size:.85rem"></div></div>
+  <div class="ppgrid" id="ppgrid"></div>
+  <div class="card ppbench"><h2>Bench</h2><div class="ppbg" id="ppbench"></div></div>
+  <dialog id="ppmodal"><div class="ppbox"><b id="ppmt">Player</b>
+    <label>Name</label><input id="ppfn" maxlength="30">
+    <label>Power (e.g. 211k)</label><input id="ppfp" maxlength="10">
+    <label>Class</label><input id="ppfc" list="ppcl" maxlength="20">
+    <datalist id="ppcl"><option>Templar<option>Gladiator<option>Ranger<option>Sorcerer<option>Spirit Master<option>Chanter<option>Cleric<option>Assassin</datalist>
+    <div class="row" style="margin-top:16px;justify-content:flex-end"><button type="button" class="del" id="ppdel">Delete</button><button type="button" class="g" id="ppcan">Cancel</button><button type="button" id="ppsave">Save</button></div></div></dialog>
+  <dialog id="pptxt"><b>Copy this</b><textarea id="ppout" readonly></textarea><div class="row" style="margin-top:12px;justify-content:flex-end"><button type="button" id="ppclose">Close</button></div></dialog>
+</main>
 </div>
 </div>
 <script>
@@ -1199,7 +1234,74 @@ render()})();
   window.setCls=setCls;
   let o=true;try{if(localStorage.getItem(KEY+"-clsopen")==="0")o=false}catch(e){}setCls(o);
 })();
-(function(){const PG={char:["pg-char","Aion 2 Character Tracker"],pet:["pg-pet","Pet Tracker"],cls:["pg-cls","Class Information"],"cls-cleric":["pg-cls-cleric","Cleric - Class Information"],"cls-templar":["pg-cls-templar","Templar - Class Information"],"cls-ranger":["pg-cls-ranger","Ranger - Class Information"]};
+(function(){
+const ROLES=["Tank","DPS","DPS","DPS/C","SUP"],N=16,K=KEY+"-party";
+const COL={Templar:"#2f5fd0",Gladiator:"#7fd4ff",Ranger:"#7ee787",Sorcerer:"#c792ea","Spirit Master":"#f78fb3",Chanter:"#ff9f1c",Cleric:"#ffd166",Assassin:"#b0b8c8"};
+const DEF=[["Pochie","211k","Templar"],["Deitu","210k","Gladiator"],["Ibuprofen400","210k","Gladiator"],["Uxee","209k","Ranger"],["Unknown","xxxk","Cleric"],["Default","220k","Ranger"],["Lnly","210k","Sorcerer"],["Yujin","207k","Spirit Master"],["Svens","180k","Chanter"],["Mat7YouSay","236k","Cleric"]];
+const $=id=>document.getElementById(id);
+function fresh(){const p={},s=Array(N).fill(null);DEF.forEach((d,i)=>{p[i+1]={name:d[0],power:d[1],cls:d[2]};s[i]=i+1});return{players:p,slots:s,next:DEF.length+1}}
+function load(){try{const s=JSON.parse(localStorage.getItem(K));if(s&&s.players&&Array.isArray(s.slots)&&s.slots.length===N)return s}catch(e){}return fresh()}
+let S=load(),sel=null,drag=null,ed=null;
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function slotH(i){const id=S.slots[i],p=id&&S.players[id];
+  const inner=p?`<div class="ppcard" draggable="true" data-ppi="${i}" style="--c:${COL[p.cls]||"#888"}"><div class="ppinfo"><div class="ppname">${esc(p.name)}</div><div class="ppcls">${esc(p.cls)}</div></div><div class="pppw">${esc(p.power)}</div><button type="button" class="ppedit" data-ppe="${i}" title="Edit">✎</button></div>`:`<div class="ppempty">+ add player</div>`;
+  return `<div class="ppslot${sel===i?" sel":""}" data-pps="${i}"><div class="pprole">${i<10?ROLES[i%5]:""}</div>${inner}</div>`}
+function stats(f){let sum=0,u=0;for(let i=f;i<f+5;i++){const p=S.slots[i]&&S.players[S.slots[i]];if(!p)continue;const m=/^(\d+(?:\.\d+)?)k?$/i.exec(String(p.power).trim());if(m)sum+=parseFloat(m[1]);else u++}return"Total "+sum.toLocaleString()+"k"+(u?" · "+u+" unknown":"")}
+function render(){let h="";[0,5].forEach((f,n)=>{h+=`<div class="card ppp"><h2>Party ${n+1}</h2><div class="ppst">${stats(f)}</div>`;for(let i=f;i<f+5;i++)h+=slotH(i);h+="</div>"});$("ppgrid").innerHTML=h;let b="";for(let i=10;i<N;i++)b+=slotH(i);$("ppbench").innerHTML=b}
+function swap(a,b){[S.slots[a],S.slots[b]]=[S.slots[b],S.slots[a]];save();render()}
+const pg=$("pg-party");
+pg.addEventListener("click",e=>{
+  const ee=e.target.closest("[data-ppe]");if(ee){e.stopPropagation();openEd(+ee.dataset.ppe);return}
+  const s=e.target.closest("[data-pps]");if(!s)return;const i=+s.dataset.pps;
+  if(sel===null){if(S.slots[i])sel=i;else{openEd(i);return}render()}
+  else if(sel===i){sel=null;render()}else{const a=sel;sel=null;swap(a,i)}});
+pg.addEventListener("dragstart",e=>{const c=e.target.closest(".ppcard");if(!c)return;drag=+c.dataset.ppi;sel=null;e.dataTransfer.setData("text/plain",String(drag));e.dataTransfer.effectAllowed="move";setTimeout(()=>c.classList.add("dragging"),0)});
+pg.addEventListener("dragover",e=>{const s=e.target.closest("[data-pps]");if(!s||drag===null)return;e.preventDefault();pg.querySelectorAll(".ppslot.over").forEach(x=>x.classList.remove("over"));s.classList.add("over")});
+pg.addEventListener("drop",e=>{const s=e.target.closest("[data-pps]");if(!s||drag===null)return;e.preventDefault();const to=+s.dataset.pps,from=drag;drag=null;if(from!==to)swap(from,to);else render()});
+pg.addEventListener("dragend",()=>{drag=null;render()});
+function openEd(i){ed=i;const p=S.slots[i]&&S.players[S.slots[i]];$("ppmt").textContent=p?"Edit player":"Add player";$("ppfn").value=p?p.name:"";$("ppfp").value=p?p.power:"";$("ppfc").value=p?p.cls:"";$("ppdel").style.display=p?"":"none";$("ppmodal").showModal();$("ppfn").focus()}
+function closeEd(){$("ppmodal").close();ed=null}
+$("ppcan").onclick=closeEd;
+$("ppsave").onclick=()=>{const name=$("ppfn").value.trim();if(!name){$("ppfn").focus();return}
+  const d={name,power:$("ppfp").value.trim()||"?",cls:$("ppfc").value.trim()||"?"},id=S.slots[ed];
+  if(id)S.players[id]=d;else{S.players[S.next]=d;S.slots[ed]=S.next++}save();closeEd();render()};
+$("ppdel").onclick=()=>{const id=S.slots[ed];if(id){delete S.players[id];S.slots[ed]=null}save();closeEd();render()};
+$("ppshuf").onclick=()=>{const ids=S.slots.slice(0,10).filter(Boolean);for(let i=ids.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ids[i],ids[j]]=[ids[j],ids[i]]}for(let i=0;i<10;i++)S.slots[i]=ids[i]||null;sel=null;save();render()};
+const rb=$("pprst");let armed=0;
+rb.onclick=()=>{if(armed){S=fresh();sel=null;armed=0;rb.textContent="Reset";save();render();return}armed=1;rb.textContent="Click again to confirm";setTimeout(()=>{armed=0;rb.textContent="Reset"},3000)};
+function asText(){const ln=i=>{const p=S.slots[i]&&S.players[S.slots[i]];return(ROLES[i%5]+":").padEnd(7)+(p?`${p.name} (${p.power}) - ${p.cls}`:"(empty)")};let t="";[0,5].forEach((f,n)=>{t+=`Party ${n+1}\n`;for(let i=f;i<f+5;i++)t+=ln(i)+"\n";t+="\n"});return t.trim()}
+$("ppcopy").onclick=async()=>{const t=asText();try{await navigator.clipboard.writeText(t);$("ppmsg").textContent="Copied";setTimeout(()=>$("ppmsg").textContent="",2000)}catch(e){$("ppout").value=t;$("pptxt").showModal();$("ppout").select()}};
+$("ppclose").onclick=()=>$("pptxt").close();
+const SK=K+"-find",rs=$("ppsr"),ss=$("ppss"),sm=$("ppsm");
+REGIONS.forEach(r=>rs.add(new Option(r[1],r[0])));
+function fillSrv(){ss.innerHTML='<option value="">Select server...</option>'+(SRVL[rs.value]||[]).map(n=>`<option>${n}</option>`).join("")}
+function saveF(){try{localStorage.setItem(SK,JSON.stringify({region:rs.value,server:ss.value}))}catch(e){}}
+{let x=null;try{x=JSON.parse(localStorage.getItem(SK))||JSON.parse(localStorage.getItem(KEY+"-addlk"))}catch(e){}
+ rs.value=x&&SRVL[x.region]?x.region:"naw";fillSrv();if(x&&(SRVL[rs.value]||[]).includes(x.server))ss.value=x.server}
+rs.onchange=()=>{fillSrv();saveF()};ss.onchange=saveF;
+async function find(){
+  const name=$("ppsn").value.trim(),region=rs.value,server=ss.value,b=$("ppsgo");
+  if(!name){sm.textContent="Type a character name first.";$("ppsn").focus();return}
+  if(!server){sm.textContent="Pick a server first.";return}
+  b.disabled=true;b.textContent="Searching...";sm.textContent="";
+  let j=null;
+  try{j=await fetchIL(name,region,"");
+    if(j&&j.matches){const x=j.matches.find(m=>String(m.serverName).toLowerCase()===server.toLowerCase());j=x?await fetchIL(name,region,x.serverId):{error:"not found"}}
+    else if(j&&j.itemLevel!=null&&String(j.serverName).toLowerCase()!==server.toLowerCase())j={error:"not found"}}catch(e){j=null}
+  b.disabled=false;b.textContent="Search & add to bench";
+  if(!(j&&j.itemLevel!=null)){sm.textContent=j&&j.error==="not found"?"No character found with that name on this server.":"Lookup failed. Try again later, or add the player by hand on the bench.";return}
+  const cp=Math.round(j.combatPower||0),power=cp?(cp/1000).toFixed(1).replace(/\.0$/,"")+"k":"?",cls=j.className||"?";
+  const have=Object.keys(S.players).find(id=>S.players[id].name.toLowerCase()===name.toLowerCase());
+  if(have){S.players[have]={name:S.players[have].name,power,cls};save();render();sm.textContent=name+" is already in the planner. Updated to "+cls+", "+power+".";$("ppsn").value="";return}
+  let slot=-1;for(let i=10;i<N;i++)if(!S.slots[i]){slot=i;break}
+  if(slot<0){sm.textContent="The bench is full. Delete a bench player first.";return}
+  S.players[S.next]={name,power,cls};S.slots[slot]=S.next++;save();render();
+  sm.textContent="Added "+name+" ("+cls+", "+power+") to the bench.";$("ppsn").value=""}
+$("ppsgo").onclick=find;
+$("ppsn").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();find()}});
+render();
+})();
+(function(){const PG={char:["pg-char","Aion 2 Character Tracker"],pet:["pg-pet","Pet Tracker"],party:["pg-party","Party Planner"],cls:["pg-cls","Class Information"],"cls-cleric":["pg-cls-cleric","Cleric - Class Information"],"cls-templar":["pg-cls-templar","Templar - Class Information"],"cls-ranger":["pg-cls-ranger","Ranger - Class Information"]};
   function show(n){if(!PG[n])n="char";
     for(const k in PG)document.getElementById(PG[k][0]).hidden=k!==n;
     document.querySelectorAll(".pgl").forEach(a=>{if(a.dataset.pg===n)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
