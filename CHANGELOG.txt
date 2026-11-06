@@ -51,6 +51,15 @@ Updating the site never resets anyone's saved characters.
 - Party Planner: removed the "Moved X to the bench" message. The messages that
   are left next to the buttons (refresh and copy results) now disappear by
   themselves after a few seconds.
+- Party Planner: the bench now packs itself. When a bench player moves into a
+  party (or is removed), the players below move up so the empty slots are
+  always at the bottom, in the same order.
+- Party Planner: new toggle next to the title switches between Party Planner
+  (only Party 1) and Force Planner (Parties 1 to 4, and the title changes to
+  Force Planner). Switching back to Party Planner only hides Parties 2 to 4,
+  the players are kept and come back when you switch to Force Planner again.
+  Copy as text only includes the parties you can see. Your saved lineup carries
+  over.
 
 
 2026-11-02 (newest 25)
