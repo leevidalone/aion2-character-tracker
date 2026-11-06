@@ -31,6 +31,10 @@ Updating the site never resets anyone's saved characters.
   Class colours now ignore spacing and capital letters.
 - Party Planner: each party now shows its average combat power next to the
   total (players with an unknown power are left out of the average).
+- Party Planner: new "Refresh combat power" button. It re-checks every player
+  added through the search (and any player whose name matches a character in
+  your Character Tracker) and updates their combat power. Players added by
+  hand are skipped because the game lookup needs their region and server.
 
 
 2026-11-02 (newest 25)

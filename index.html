@@ -811,7 +811,7 @@ button.ppedit{padding:2px 7px;font-size:.85rem;background:transparent;border:0;c
 <main id="pg-party" hidden>
   <div class="top"><h1>Party Planner</h1></div>
   <p class="sub">Drag a player onto another slot to swap. On touch, tap a player, then tap where it should go. Tap an empty slot to add a player, or the pencil to edit one. Saved in this browser.</p>
-  <div class="row" style="margin-bottom:12px"><button type="button" id="ppshuf">🎲 Shuffle all</button><button type="button" class="g" id="ppcopy">📋 Copy as text</button><button type="button" class="del" id="pprst">🗑️ Reset</button><span class="mu" id="ppmsg" style="font-size:.85rem"></span></div>
+  <div class="row" style="margin-bottom:12px"><button type="button" id="ppshuf">🎲 Shuffle all</button><button type="button" class="g" id="ppcopy">📋 Copy as text</button><button type="button" class="g" id="pprefresh">🔄 Refresh combat power</button><button type="button" class="del" id="pprst">🗑️ Reset</button><span class="mu" id="ppmsg" style="font-size:.85rem"></span></div>
   <div class="card" id="ppfind"><b>Find a character</b><div class="mu" style="font-size:.85rem">Looks up the class and combat power from the official character search and adds the character to the bench.</div>
     <div class="ppsrow"><input id="ppsn" placeholder="Character name" maxlength="30" autocomplete="off" aria-label="Character name"><select id="ppsr" aria-label="Region"></select><select id="ppss" aria-label="Server"></select><button type="button" id="ppsgo">🔍 Search &amp; add to bench</button></div>
     <div class="mu" id="ppsm" style="margin-top:8px;font-size:.85rem"></div></div>
@@ -1269,7 +1269,7 @@ function closeEd(){$("ppmodal").close();ed=null}
 $("ppcan").onclick=closeEd;
 $("ppsave").onclick=()=>{const name=$("ppfn").value.trim();if(!name){$("ppfn").focus();return}
   const d={name,power:$("ppfp").value.trim()||"?",cls:$("ppfc").value.trim()||"?"},id=S.slots[ed];
-  if(id)S.players[id]=d;else{S.players[S.next]=d;S.slots[ed]=S.next++}save();closeEd();render()};
+  if(id){const o=S.players[id];if(o.lk&&o.name.toLowerCase()===name.toLowerCase())d.lk=o.lk;S.players[id]=d}else{S.players[S.next]=d;S.slots[ed]=S.next++}save();closeEd();render()};
 $("ppdel").onclick=()=>{const id=S.slots[ed];if(id){delete S.players[id];S.slots[ed]=null}save();closeEd();render()};
 $("ppshuf").onclick=()=>{const ids=S.slots.slice(0,10).filter(Boolean);for(let i=ids.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ids[i],ids[j]]=[ids[j],ids[i]]}for(let i=0;i<10;i++)S.slots[i]=ids[i]||null;sel=null;save();render()};
 const rb=$("pprst");let armed=0;
@@ -1295,13 +1295,28 @@ async function find(){
     else if(j&&j.itemLevel!=null&&String(j.serverName).toLowerCase()!==server.toLowerCase())j={error:"not found"}}catch(e){j=null}
   b.disabled=false;b.textContent="🔍 Search & add to bench";
   if(!(j&&j.itemLevel!=null)){sm.textContent=j&&j.error==="not found"?"No character found with that name on this server.":"Lookup failed. Try again later, or add the player by hand on the bench.";return}
-  const cp=Math.round(j.combatPower||0),power=cp?(cp/1000).toFixed(1).replace(/\.0$/,"")+"k":"?",cls=j.className||"?";
+  const cp=Math.round(j.combatPower||0),power=cp?(cp/1000).toFixed(1).replace(/\.0$/,"")+"k":"?",cls=j.className||"?",lk={name,region,serverId:j.serverId};
   const have=Object.keys(S.players).find(id=>S.players[id].name.toLowerCase()===name.toLowerCase());
-  if(have){S.players[have]={name:S.players[have].name,power,cls};save();render();sm.textContent=name+" is already in the planner. Updated to "+cls+", "+power+".";$("ppsn").value="";return}
+  if(have){S.players[have]={name:S.players[have].name,power,cls,lk};save();render();sm.textContent=name+" is already in the planner. Updated to "+cls+", "+power+".";$("ppsn").value="";return}
   let slot=-1;for(let i=10;i<N;i++)if(!S.slots[i]){slot=i;break}
   if(slot<0){sm.textContent="The bench is full. Delete a bench player first.";return}
-  S.players[S.next]={name,power,cls};S.slots[slot]=S.next++;save();render();
+  S.players[S.next]={name,power,cls,lk};S.slots[slot]=S.next++;save();render();
   sm.textContent="Added "+name+" ("+cls+", "+power+") to the bench.";$("ppsn").value=""}
+function lkFor(p){if(p.lk)return p.lk;const c=(typeof chars!=="undefined"?chars:[]).find(x=>x.lk&&String(x.name).toLowerCase()===p.name.toLowerCase());return c?c.lk:null}
+async function refreshAll(){
+  const b=$("pprefresh"),m=$("ppmsg"),ids=[...new Set(S.slots.filter(Boolean))];
+  if(!ids.length){m.textContent="No players to refresh.";return}
+  const jobs=ids.map(id=>({p:S.players[id],lk:lkFor(S.players[id])})),todo=jobs.filter(x=>x.lk),skipped=jobs.length-todo.length;
+  if(!todo.length){m.textContent="None of these players have game lookup info. Add them with the search above.";return}
+  b.disabled=true;b.textContent="\u23F3 Refreshing...";m.textContent="";
+  let ok=0,failed=0,changed=0;
+  for(const x of todo){
+    try{const j=await fetchIL(x.lk.name,x.lk.region,x.lk.serverId),cp=Math.round(j&&j.combatPower||0);
+      if(cp){const pw=(cp/1000).toFixed(1).replace(/\.0$/,"")+"k";if(pw!==x.p.power)changed++;x.p.power=pw;if(!x.p.lk)x.p.lk=x.lk;if((!x.p.cls||x.p.cls==="?")&&j.className)x.p.cls=j.className;ok++}else failed++}
+    catch(e){failed++}}
+  save();render();b.disabled=false;b.textContent="\uD83D\uDD04 Refresh combat power";
+  m.textContent="Checked "+ok+" player"+(ok===1?"":"s")+" ("+changed+" changed)"+(failed?", "+failed+" couldn't be updated":"")+(skipped?", "+skipped+" skipped (no game lookup info)":"")+"."}
+$("pprefresh").onclick=refreshAll;
 $("ppsgo").onclick=find;
 $("ppsn").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();find()}});
 render();
