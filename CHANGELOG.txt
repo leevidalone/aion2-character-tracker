@@ -45,6 +45,12 @@ Updating the site never resets anyone's saved characters.
 - Party Planner: party members now have an X button next to the edit button that
   moves them straight to the bench (the bench grows if it is full). It is a
   red button with a white X.
+- Party Planner: bench players now have a red X button to remove them from the
+  planner. It asks you to click twice ("Remove?") so you don't delete someone
+  by accident.
+- Party Planner: removed the "Moved X to the bench" message. The messages that
+  are left next to the buttons (refresh and copy results) now disappear by
+  themselves after a few seconds.
 
 
 2026-11-02 (newest 25)
