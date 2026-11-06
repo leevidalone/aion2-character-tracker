@@ -35,6 +35,12 @@ Updating the site never resets anyone's saved characters.
   added through the search (and any player whose name matches a character in
   your Character Tracker) and updates their combat power. Players added by
   hand are skipped because the game lookup needs their region and server.
+- Party Planner: the bench now grows by itself. It starts with 6 slots and adds
+  another row whenever it fills up, and shrinks back when the extra rows at
+  the end are empty again.
+- Party Planner: removed the Shuffle button. Each party now has a "Clear party"
+  button at its bottom right that moves that party's players to the bench
+  (the bench grows if it needs to). Roles stay as they are.
 
 
 2026-11-02 (newest 25)

@@ -369,6 +369,7 @@ button:hover:not(:disabled){background:var(--hc)!important;color:#fff!important;
 .ppcls{font-size:.78rem;color:var(--mu)}.pppw{font-variant-numeric:tabular-nums;font-weight:600}
 button.ppedit{padding:2px 7px;font-size:.85rem;background:transparent;border:0;color:var(--mu)}
 #pprst{background:#e5484d!important;color:#fff!important;border-color:#e5484d!important}#pprst:hover:not(:disabled){background:#c93a3f!important;border-color:#c93a3f!important}
+.ppfoot{display:flex;justify-content:flex-end;margin-top:4px}
 .ppsrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.ppsrow input{flex:2 1 160px}.ppsrow select{flex:1 1 140px;min-width:0}
 .ppbench{margin-top:14px}.ppbench h2{font-size:1.05rem;margin:0 0 10px}.ppbg{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
 #ppmodal .ppbox label{display:block;font-size:.8rem;color:var(--mu);margin:10px 0 3px}#ppmodal .ppbox input{width:100%}
@@ -811,7 +812,7 @@ button.ppedit{padding:2px 7px;font-size:.85rem;background:transparent;border:0;c
 <main id="pg-party" hidden>
   <div class="top"><h1>Party Planner</h1></div>
   <p class="sub">Drag a player onto another slot to swap. On touch, tap a player, then tap where it should go. Tap an empty slot to add a player, or the pencil to edit one. Saved in this browser.</p>
-  <div class="row" style="margin-bottom:12px"><button type="button" id="ppshuf">🎲 Shuffle all</button><button type="button" class="g" id="ppcopy">📋 Copy as text</button><button type="button" class="g" id="pprefresh">🔄 Refresh combat power</button><button type="button" class="del" id="pprst">🗑️ Reset</button><span class="mu" id="ppmsg" style="font-size:.85rem"></span></div>
+  <div class="row" style="margin-bottom:12px"><button type="button" class="g" id="ppcopy">📋 Copy as text</button><button type="button" class="g" id="pprefresh">🔄 Refresh combat power</button><button type="button" class="del" id="pprst">🗑️ Reset</button><span class="mu" id="ppmsg" style="font-size:.85rem"></span></div>
   <div class="card" id="ppfind"><b>Find a character</b><div class="mu" style="font-size:.85rem">Looks up the class and combat power from the official character search and adds the character to the bench.</div>
     <div class="ppsrow"><input id="ppsn" placeholder="Character name" maxlength="30" autocomplete="off" aria-label="Character name"><select id="ppsr" aria-label="Region"></select><select id="ppss" aria-label="Server"></select><button type="button" id="ppsgo">🔍 Search &amp; add to bench</button></div>
     <div class="mu" id="ppsm" style="margin-top:8px;font-size:.85rem"></div></div>
@@ -1241,7 +1242,7 @@ const COLN={},cnorm=x=>String(x).replace(/\s+/g,"").toLowerCase();
 const COL={Templar:"#2f5fd0",Gladiator:"#7fd4ff",Ranger:"#5fd06e",Sorcerer:"#b18ee8",Spiritmaster:"#c56ec4",Chanter:"#ff9f1c",Cleric:"#ffd166",Assassin:"#8ff29c"};
 const $=id=>document.getElementById(id);
 function fresh(){return{players:{},slots:Array(N).fill(null),next:1,roles:[...ROLES,...ROLES]}}
-function load(){try{const s=JSON.parse(localStorage.getItem(K));if(s&&s.players&&Array.isArray(s.slots)&&s.slots.length===N){if(!Array.isArray(s.roles)||s.roles.length!==10||s.roles.some(r=>!ROLE_OPTS.includes(r)))s.roles=[...ROLES,...ROLES];return s}}catch(e){}return fresh()}
+function load(){try{const s=JSON.parse(localStorage.getItem(K));if(s&&s.players&&Array.isArray(s.slots)&&s.slots.length>=N){if(!Array.isArray(s.roles)||s.roles.length!==10||s.roles.some(r=>!ROLE_OPTS.includes(r)))s.roles=[...ROLES,...ROLES];return s}}catch(e){}return fresh()}
 let S=load(),sel=null,drag=null,ed=null;
 function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
 Object.keys(COL).forEach(k=>COLN[cnorm(k)]=COL[k]);
@@ -1250,12 +1251,17 @@ function slotH(i){const id=S.slots[i],p=id&&S.players[id];
   const inner=p?`<div class="ppcard" draggable="true" data-ppi="${i}" style="--c:${COLN[cnorm(p.cls)]||"#888"}"><div class="ppinfo"><div class="ppname">${esc(p.name)}</div><div class="ppcls">${esc(p.cls)}</div></div><div class="pppw">${esc(p.power)}</div><button type="button" class="ppedit" data-ppe="${i}" title="Edit">✏️</button></div>`:`<div class="ppempty">+ add player</div>`;
   return `<div class="ppslot${sel===i?" sel":""}" data-pps="${i}">${i<10?`<div class="pprole">${roleSel(i)}</div>`:""}${inner}</div>`}
 function stats(f){let sum=0,n=0,u=0;for(let i=f;i<f+5;i++){const p=S.slots[i]&&S.players[S.slots[i]];if(!p)continue;const m=/^(\d+(?:\.\d+)?)k?$/i.exec(String(p.power).trim());if(m){sum+=parseFloat(m[1]);n++}else u++}const r=x=>(Math.round(x*10)/10).toLocaleString();return"Total "+r(sum)+"k · Avg "+(n?r(sum/n)+"k":"–")+(u?" · "+u+" unknown":"")}
-function render(){let h="";[0,5].forEach((f,n)=>{h+=`<div class="card ppp"><h2>Party ${n+1}</h2><div class="ppst">${stats(f)}</div>`;for(let i=f;i<f+5;i++)h+=slotH(i);h+="</div>"});$("ppgrid").innerHTML=h;let b="";for(let i=10;i<N;i++)b+=slotH(i);$("ppbench").innerHTML=b}
+function fitBench(){let filled=0,last=9;for(let i=10;i<S.slots.length;i++)if(S.slots[i]){filled++;last=i}
+  let t=Math.max(N-10,filled+1,last-9);if(t%2)t++;t+=10;const before=S.slots.length;
+  while(S.slots.length<t)S.slots.push(null);S.slots.length=t;return S.slots.length!==before}
+function render(){if(fitBench())save();let h="";[0,5].forEach((f,n)=>{h+=`<div class="card ppp"><h2>Party ${n+1}</h2><div class="ppst">${stats(f)}</div>`;for(let i=f;i<f+5;i++)h+=slotH(i);h+=`<div class="ppfoot"><button type="button" class="g" data-ppclr="${n}">\uD83E\uDDF9 Clear party</button></div></div>`});$("ppgrid").innerHTML=h;let b="";for(let i=10;i<S.slots.length;i++)b+=slotH(i);$("ppbench").innerHTML=b}
+function clearParty(n){let moved=0;for(let i=n*5;i<n*5+5;i++){const id=S.slots[i];if(!id)continue;let j=S.slots.indexOf(null,10);if(j<0){S.slots.push(null);j=S.slots.length-1}S.slots[j]=id;S.slots[i]=null;moved++}sel=null;save();render();$("ppmsg").textContent=moved?"Moved "+moved+" player"+(moved===1?"":"s")+" from Party "+(n+1)+" to the bench.":"Party "+(n+1)+" is already empty."}
 function swap(a,b){[S.slots[a],S.slots[b]]=[S.slots[b],S.slots[a]];save();render()}
 const pg=$("pg-party");
 pg.addEventListener("change",e=>{const r=e.target.closest("[data-ppr]");if(!r)return;S.roles[+r.dataset.ppr]=r.value;save()});
 pg.addEventListener("click",e=>{
   if(e.target.closest("[data-ppr]"))return;
+  const cl=e.target.closest("[data-ppclr]");if(cl){clearParty(+cl.dataset.ppclr);return}
   const ee=e.target.closest("[data-ppe]");if(ee){e.stopPropagation();openEd(+ee.dataset.ppe);return}
   const s=e.target.closest("[data-pps]");if(!s)return;const i=+s.dataset.pps;
   if(sel===null){if(S.slots[i])sel=i;else{openEd(i);return}render()}
@@ -1271,7 +1277,6 @@ $("ppsave").onclick=()=>{const name=$("ppfn").value.trim();if(!name){$("ppfn").f
   const d={name,power:$("ppfp").value.trim()||"?",cls:$("ppfc").value.trim()||"?"},id=S.slots[ed];
   if(id){const o=S.players[id];if(o.lk&&o.name.toLowerCase()===name.toLowerCase())d.lk=o.lk;S.players[id]=d}else{S.players[S.next]=d;S.slots[ed]=S.next++}save();closeEd();render()};
 $("ppdel").onclick=()=>{const id=S.slots[ed];if(id){delete S.players[id];S.slots[ed]=null}save();closeEd();render()};
-$("ppshuf").onclick=()=>{const ids=S.slots.slice(0,10).filter(Boolean);for(let i=ids.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ids[i],ids[j]]=[ids[j],ids[i]]}for(let i=0;i<10;i++)S.slots[i]=ids[i]||null;sel=null;save();render()};
 const rb=$("pprst");let armed=0;
 rb.onclick=()=>{if(armed){S=fresh();sel=null;armed=0;rb.textContent="🗑️ Reset";$("ppsn").value="";$("ppsm").textContent="";$("ppmsg").textContent="";save();render();return}armed=1;rb.textContent="⚠️ Click again to confirm";setTimeout(()=>{armed=0;rb.textContent="🗑️ Reset"},3000)};
 function asText(){const ln=i=>{const p=S.slots[i]&&S.players[S.slots[i]];return(S.roles[i]+":").padEnd(7)+(p?`${p.name} (${p.power}) - ${p.cls}`:"(empty)")};let t="";[0,5].forEach((f,n)=>{t+=`Party ${n+1}\n`;for(let i=f;i<f+5;i++)t+=ln(i)+"\n";t+="\n"});return t.trim()}
@@ -1298,7 +1303,7 @@ async function find(){
   const cp=Math.round(j.combatPower||0),power=cp?(cp/1000).toFixed(1).replace(/\.0$/,"")+"k":"?",cls=j.className||"?",lk={name,region,serverId:j.serverId};
   const have=Object.keys(S.players).find(id=>S.players[id].name.toLowerCase()===name.toLowerCase());
   if(have){S.players[have]={name:S.players[have].name,power,cls,lk};save();render();sm.textContent=name+" is already in the planner. Updated to "+cls+", "+power+".";$("ppsn").value="";return}
-  let slot=-1;for(let i=10;i<N;i++)if(!S.slots[i]){slot=i;break}
+  let slot=-1;for(let i=10;i<S.slots.length;i++)if(!S.slots[i]){slot=i;break}
   if(slot<0){sm.textContent="The bench is full. Delete a bench player first.";return}
   S.players[S.next]={name,power,cls,lk};S.slots[slot]=S.next++;save();render();
   sm.textContent="Added "+name+" ("+cls+", "+power+") to the bench.";$("ppsn").value=""}
